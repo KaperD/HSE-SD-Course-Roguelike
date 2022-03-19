@@ -171,22 +171,22 @@ HseRogue — игра в жанре roguelike с консольной графи
 #### MapView
 Чтобы изменения показались на экране, нужно вызвать метод show()
 
-Макет для MapState
+Макет для MapState:
 ![Map View](images/map_view.png)
 
-Макет для MapFreeModeState
+Макет для MapFreeModeState:
 ![Map Free Mode View](images/map_free_mode_view.png)
 
 #### InventoryView
 Чтобы изменения показались на экране, нужно вызвать метод show()
 
-Макет
+Макет:
 ![Inventory View](images/inventory_view.png)
 
 #### HelpView
 Чтобы изменения показались на экране, нужно вызвать метод show()
 
-Макет
+Макет:
 ![Help View](images/help_view.png)
 
 #### Drawable
