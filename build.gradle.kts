@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.6.10"
     application
     id("io.gitlab.arturbosch.detekt") version "1.19.0"
+    id("jacoco")
 }
 
 group = "ru.hse"
@@ -45,5 +46,45 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
     reports {
         xml.required.set(false)
         html.required.set(true)
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+tasks.jacocoTestReport {
+    classDirectories.setFrom(
+        files(
+            classDirectories.files.map {
+                fileTree(it) {
+                    exclude("ru/hse/Main*")
+                }
+            }
+        )
+    )
+    reports {
+        csv.required.set(false)
+        xml.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+    }
+}
+
+tasks.jacocoTestCoverageVerification {
+    classDirectories.setFrom(
+        files(
+            classDirectories.files.map {
+                fileTree(it) {
+                    exclude("ru/hse/Main*")
+                }
+            }
+        )
+    )
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.9".toBigDecimal()
+            }
+        }
     }
 }
