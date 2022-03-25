@@ -1,0 +1,24 @@
+build:
+    maxIssues: 0
+
+empty-blocks:
+    EmptyFunctionBlock:
+        ignoreOverridden: true
+
+exceptions:
+    TooGenericExceptionThrown:
+        excludes: [ '**/test*/**' ]
+
+style:
+    WildcardImport:
+        active: false # https://ktor.io/quickstart/code-style.html#with-star-imports
+    MaxLineLength:
+        active: false # MaximumLineLength klint wrapper rule is used instead
+    UnnecessaryAbstractClass:
+        excludes: [ '**/test*/**' ]
+
+formatting:
+    NoWildcardImports:
+        active: false
+    MaximumLineLength:
+        maxLineLength: 120
