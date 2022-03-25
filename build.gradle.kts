@@ -1,4 +1,8 @@
+import groovy.time.TimeCategory
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.util.*
 
 plugins {
     kotlin("jvm") version "1.6.10"
@@ -88,3 +92,13 @@ tasks.jacocoTestCoverageVerification {
         }
     }
 }
+
+// based on https://gist.github.com/orip/4951642?permalink_comment_id=3092364#gistcomment-3092364
+tasks.withType<AbstractTestTask> {
+    afterSuite(KotlinClosure2({ desc: TestDescriptor, result: TestResult ->
+        if (desc.parent == null) { // will match the outermost suite
+            println("Test result: ${result.resultType} (${result.testCount} tests: ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)")
+        }
+    }))
+}
+
