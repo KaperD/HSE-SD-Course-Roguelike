@@ -37,6 +37,6 @@ fun main() {
             mapView.setCellInfo(cell)
             mapView.show()
             val input = terminal.readInput()
-        } while (input.keyType != KeyType.Escape)
+        } while (input.keyType !in listOf(KeyType.Escape, KeyType.EOF))
     }
 }
