@@ -1,23 +1,36 @@
 package ru.hse.roguelike.ui
 
+import com.googlecode.lanterna.TextColor
+
 interface Color {
     val red: Int
     val green: Int
     val blue: Int
+    val textColor: TextColor
 
     enum class ANSI(
-        override val red: Int,
-        override val green: Int,
-        override val blue: Int
+        override val textColor: TextColor
     ) : Color {
-        Black(0, 0, 0),
-        Red(170, 0, 0),
-        Green(0, 170, 0),
-        Yellow(170, 85, 0),
-        Blue(0, 0, 170),
-        Magenta(170, 0, 170),
-        Cyan(0, 170, 170),
-        White(170, 170, 170),
-        Default(0, 0, 0)
+        Black(TextColor.ANSI.BLACK),
+        Red(TextColor.ANSI.RED),
+        Green(TextColor.ANSI.GREEN),
+        Yellow(TextColor.ANSI.YELLOW),
+        Blue(TextColor.ANSI.BLUE),
+        Magenta(TextColor.ANSI.MAGENTA),
+        Cyan(TextColor.ANSI.CYAN),
+        White(TextColor.ANSI.WHITE),
+        Default(TextColor.ANSI.WHITE_BRIGHT),
+        BlackBright(TextColor.ANSI.BLACK_BRIGHT),
+        RedBright(TextColor.ANSI.RED_BRIGHT),
+        GreenBright(TextColor.ANSI.GREEN_BRIGHT),
+        YellowBright(TextColor.ANSI.YELLOW_BRIGHT),
+        BlueBright(TextColor.ANSI.BLUE_BRIGHT),
+        MagentaBright(TextColor.ANSI.MAGENTA_BRIGHT),
+        CyanBright(TextColor.ANSI.CYAN_BRIGHT),
+        WhiteBright(TextColor.ANSI.WHITE_BRIGHT);
+
+        override val red: Int = textColor.red
+        override val green: Int = textColor.green
+        override val blue: Int = textColor.blue
     }
 }

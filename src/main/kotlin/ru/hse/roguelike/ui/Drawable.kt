@@ -1,11 +1,15 @@
 package ru.hse.roguelike.ui
 
-import ru.hse.roguelike.ui.Color.ANSI.Default
-import ru.hse.roguelike.ui.Color.ANSI.White
+import ru.hse.roguelike.ui.Color.ANSI.*
 
 interface Drawable {
-    fun set(x: Int, y: Int, symbol: Char, foreground: Color = Default, background: Color = Default)
-    fun setLine(x: Int, y: Int, line: String, foreground: Color = Default, background: Color = White)
-    fun setText(x: Int, y: Int, text: String, foreground: Color = Default, background: Color = White)
+    val width: Int
+    val height: Int
+
+    fun set(x: Int, y: Int, symbol: Char, foreground: Color = Black, background: Color = Default)
+    fun setLine(x: Int, y: Int, line: String, foreground: Color = Black, background: Color = Default)
+    fun setText(x: Int, y: Int, text: String, foreground: Color = Black, background: Color = Default)
+    fun subImage(topLeftX: Int, topLeftY: Int, width: Int, height: Int): Drawable
+    fun fill(symbol: Char, foreground: Color = Black, background: Color = Default)
     fun clear()
 }

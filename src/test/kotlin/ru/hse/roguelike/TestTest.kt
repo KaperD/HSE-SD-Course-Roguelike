@@ -7,6 +7,5 @@ class TestTest {
     @Test
     fun test() {
         Assertions.assertEquals(1, 1)
-        main(emptyArray())
     }
 }
