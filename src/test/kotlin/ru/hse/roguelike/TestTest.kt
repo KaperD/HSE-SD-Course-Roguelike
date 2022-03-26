@@ -1,4 +1,4 @@
-package ru.hse
+package ru.hse.roguelike
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.googlecode.lanterna:lanterna:3.1.1")
     testImplementation(kotlin("test"))
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
 }
@@ -37,7 +38,7 @@ tasks.withType<JavaCompile> {
 }
 
 application {
-    mainClass.set("MainKt")
+    mainClass.set("ru/hse/roguelike/MainKt")
 }
 
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
@@ -101,4 +102,3 @@ tasks.withType<AbstractTestTask> {
         }
     }))
 }
-
