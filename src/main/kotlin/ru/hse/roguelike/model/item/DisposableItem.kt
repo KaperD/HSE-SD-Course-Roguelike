@@ -16,6 +16,7 @@ class DisposableItem(
 
     override fun apply(hero: Hero) {
         hero.action()
+        hero.items.remove(this)
         isUsed = true
     }
 

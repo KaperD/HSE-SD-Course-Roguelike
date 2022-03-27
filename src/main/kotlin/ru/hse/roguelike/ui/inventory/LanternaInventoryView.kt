@@ -45,7 +45,7 @@ class LanternaInventoryView(
     override fun setHeroStats(hero: Hero) {
         heroStatsImage.drawText {
             appendTitle("Hero stats:")
-            appendLine("HP = ${hero.health}")
+            appendLine("HP = ${hero.health}/${hero.maximumHealth}")
             appendLine("Items count = ${hero.items.size}")
         }
     }
@@ -68,6 +68,9 @@ class LanternaInventoryView(
             } else {
                 drawItem(item, i)
             }
+        }
+        if (items.isEmpty()) {
+            infoImage.clear()
         }
     }
 

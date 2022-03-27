@@ -48,7 +48,7 @@ fun main() {
                 Position(x, y),
                 mutableListOf(
                     ReusableItem("item1", "description1", ItemType.Body, 3),
-                    DisposableItem("item2", "description2") {}
+                    DisposableItem("item2", "description2") { health += 3 }
                 )
             )
         )
