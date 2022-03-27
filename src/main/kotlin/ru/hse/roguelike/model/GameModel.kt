@@ -5,6 +5,6 @@ class GameModel(
     val hero: Hero
 ) {
     init {
-        require(field.get(hero.position).creature == hero)
+//        require(field.get(hero.position).creature == hero)
     }
 }

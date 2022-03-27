@@ -7,8 +7,7 @@ class DisposableItem(
     override val description: String,
     private val action: Hero.() -> Unit
 ) : Item {
-    private var _isUsed = false
-    override val isUsed = _isUsed
+    override var isUsed = false
 
     override fun canApply(hero: Hero): Boolean {
         require(!isUsed)
@@ -17,7 +16,7 @@ class DisposableItem(
 
     override fun apply(hero: Hero) {
         hero.action()
-        _isUsed = true
+        isUsed = true
     }
 
     override fun cancel(hero: Hero) {

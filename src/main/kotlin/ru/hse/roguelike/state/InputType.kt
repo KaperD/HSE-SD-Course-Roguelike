@@ -4,7 +4,10 @@ enum class InputType {
     m,
     f,
     i,
-    h;
+    h,
+    ArrowUp,
+    ArrowDown,
+    Enter;
 
     companion object {
         fun String.toInputType() = valueOf(this)
