@@ -5,8 +5,6 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFrame
 import ru.hse.roguelike.model.Cell
 import ru.hse.roguelike.model.GroundType
-import ru.hse.roguelike.model.Hero
-import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.ui.map.LanternaMapView
 import ru.hse.roguelike.ui.map.MapView
 import ru.hse.roguelike.ui.window.LanternaGameWindow
@@ -62,14 +60,17 @@ val map = (1..30).map {
 }
 
 fun setup(mapView: MapView) {
-    Cell::class.java.getResourceAsStream("/level1.txt")!!.bufferedReader().lineSequence().withIndex().forEach {
-        val y = it.index
-        for ((x, c) in it.value.withIndex()) {
-            val cell = Cell(c.groundType(), mutableListOf(), null)
-            map[y][x] = cell
-            mapView.set(x, y, cell)
+    Cell::class.java.getResourceAsStream("/level1.txt")!!.bufferedReader().lineSequence()
+        .filter { it.isNotBlank() }
+        .withIndex()
+        .forEach {
+            val y = it.index
+            for ((x, c) in it.value.withIndex()) {
+                val cell = Cell(c.groundType(), mutableListOf(), null)
+                map[y][x] = cell
+                mapView.set(x, y, cell)
+            }
         }
-    }
 }
 
 fun Char.groundType(): GroundType = when (this) {

@@ -23,7 +23,7 @@ class LanternaGameWindow(
         )
     )
     private var textGraphics = terminal.newTextGraphics()
-    private var currentImage = createImage()
+    private val currentImage = createImage()
     private val resizeMessageImage = createImage().also { it.setLine(0, 0, "Make terminal bigger, please") }
     private var currentSize = terminal.terminalSize
 
@@ -37,7 +37,7 @@ class LanternaGameWindow(
 
     @Synchronized
     override fun show(image: Image) {
-        currentImage = image
+        image.copyTo(currentImage)
         if (currentSize.columns >= width && currentSize.rows >= height) {
             drawImage(currentImage)
             terminal.flush()
