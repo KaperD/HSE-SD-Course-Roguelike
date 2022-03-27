@@ -1,4 +1,4 @@
-package ru.hse.roguelike
+package ru.hse.roguelike.property
 
 import ru.hse.roguelike.model.Cell
 import java.util.Properties

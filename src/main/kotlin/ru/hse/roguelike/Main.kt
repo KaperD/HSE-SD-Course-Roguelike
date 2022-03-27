@@ -5,6 +5,7 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFrame
 import ru.hse.roguelike.model.Cell
 import ru.hse.roguelike.model.GroundType
+import ru.hse.roguelike.property.Properties
 import ru.hse.roguelike.ui.map.LanternaMapView
 import ru.hse.roguelike.ui.map.MapView
 import ru.hse.roguelike.ui.window.LanternaGameWindow
