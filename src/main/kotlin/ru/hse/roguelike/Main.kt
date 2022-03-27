@@ -27,43 +27,30 @@ fun main() {
         terminal.enterPrivateMode()
         val window = LanternaGameWindow(terminal, imageWidth, imageHeight)
         val mapView = LanternaMapView(window, mapWidth, mapHeight)
-        val hero = Hero(100, 100, Position(0, 0), mutableListOf())
         setup(mapView)
-        map[0][0].creature = hero
-        mapView.set(0, 0, map[0][0])
         var x = 0
         var y = 0
         while (true) {
+            mapView.setHighlighted(x, y, map[y][x])
+            mapView.setCellInfo(map[y][x])
             mapView.show()
             when (terminal.readInput().keyType) {
                 KeyType.Escape, KeyType.EOF -> break
                 KeyType.ArrowUp -> {
-                    map[y][x].creature = null
                     mapView.set(x, y, map[y][x])
                     y = max(0, y - 1)
-                    map[y][x].creature = hero
-                    mapView.set(x, y, map[y][x])
                 }
                 KeyType.ArrowDown -> {
-                    map[y][x].creature = null
                     mapView.set(x, y, map[y][x])
                     y = min(mapHeight - 1, y + 1)
-                    map[y][x].creature = hero
-                    mapView.set(x, y, map[y][x])
                 }
                 KeyType.ArrowLeft -> {
-                    map[y][x].creature = null
                     mapView.set(x, y, map[y][x])
                     x = max(0, x - 1)
-                    map[y][x].creature = hero
-                    mapView.set(x, y, map[y][x])
                 }
                 KeyType.ArrowRight -> {
-                    map[y][x].creature = null
                     mapView.set(x, y, map[y][x])
                     x = min(mapWidth - 1, x + 1)
-                    map[y][x].creature = hero
-                    mapView.set(x, y, map[y][x])
                 }
             }
         }
@@ -88,7 +75,7 @@ fun setup(mapView: MapView) {
 fun Char.groundType(): GroundType = when (this) {
     '.' -> GroundType.Land
     '~' -> GroundType.Water
-    '$' -> GroundType.Fire
+    '@' -> GroundType.Fire
     '*' -> GroundType.Stone
     '!' -> GroundType.LevelEnd
     else -> throw IllegalStateException("Unknown char")

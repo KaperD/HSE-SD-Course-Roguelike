@@ -28,7 +28,8 @@ interface Color {
         CyanBright(TextColor.ANSI.CYAN_BRIGHT),
         WhiteBright(TextColor.ANSI.WHITE_BRIGHT),
         Default(TextColor.ANSI.WHITE_BRIGHT),
-        BorderColor(TextColor.ANSI.WHITE);
+        BorderColor(TextColor.ANSI.WHITE),
+        TitleColor(TextColor.ANSI.BLUE);
 
         override val red: Int = textColor.red
         override val green: Int = textColor.green

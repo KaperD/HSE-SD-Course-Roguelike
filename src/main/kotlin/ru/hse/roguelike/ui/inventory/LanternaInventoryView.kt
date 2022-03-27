@@ -5,6 +5,7 @@ import ru.hse.roguelike.model.item.Item
 import ru.hse.roguelike.ui.Color
 import ru.hse.roguelike.ui.Drawable
 import ru.hse.roguelike.ui.window.GameWindow
+import ru.hse.roguelike.utils.drawText
 
 class LanternaInventoryView(
     private val window: GameWindow
@@ -13,7 +14,6 @@ class LanternaInventoryView(
     private val itemsImage: Drawable
     private val heroStatsImage: Drawable
     private val infoImage: Drawable
-    private val titleColor = Color.ANSI.Blue
 
     init {
         val itemsImageWidth = image.width / 2
@@ -43,15 +43,11 @@ class LanternaInventoryView(
     }
 
     override fun setHeroStats(hero: Hero) {
-        heroStatsImage.clear()
-        heroStatsImage.setLine(0, 0, "Hero stats:", foreground = titleColor)
-        heroStatsImage.setText(
-            0, 1,
-            """
-            HP = ${hero.health}
-            Items count = ${hero.items.size}
-            """.trimIndent()
-        )
+        heroStatsImage.drawText {
+            appendTitle("Hero stats:")
+            appendLine("HP = ${hero.health}")
+            appendLine("Items count = ${hero.items.size}")
+        }
     }
 
     override fun setChosenItem(position: Int) {
@@ -65,7 +61,7 @@ class LanternaInventoryView(
 
     private fun drawItems() {
         itemsImage.clear()
-        itemsImage.setLine(0, 0, "Items:", foreground = titleColor)
+        itemsImage.setLine(0, 0, "Items:", foreground = Color.ANSI.TitleColor)
         for ((i, item) in items.withIndex()) {
             if (i == chosenPosition) {
                 drawSelectedItem(item, i)
@@ -86,8 +82,9 @@ class LanternaInventoryView(
     }
 
     private fun drawItemInfo(item: Item) {
-        infoImage.clear()
-        infoImage.setLine(0, 0, "Item info:", foreground = titleColor)
-        infoImage.setText(0, 1, item.description)
+        infoImage.drawText {
+            appendTitle("Item info:")
+            appendText(item.description)
+        }
     }
 }

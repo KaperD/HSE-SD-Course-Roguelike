@@ -7,6 +7,7 @@ import ru.hse.roguelike.model.GroundType.*
 import ru.hse.roguelike.model.Hero
 import ru.hse.roguelike.ui.Color
 import ru.hse.roguelike.ui.window.GameWindow
+import ru.hse.roguelike.utils.drawText
 
 class LanternaMapView(
     private val window: GameWindow,
@@ -33,21 +34,22 @@ class LanternaMapView(
     }
 
     override fun setHeroStats(hero: Hero) {
-        infoImage.setLine(0, 0, "Hero stats:")
-        infoImage.setLine(0, 1, "HP = ${hero.health}")
+        infoImage.drawText {
+            appendTitle("Hero stats:")
+            appendLine("HP = ${hero.health}")
+        }
     }
 
     override fun setCellInfo(cell: Cell) {
-        val text = buildString {
-            appendLine("Cell info:")
+        infoImage.drawText {
+            appendTitle("Cell info:")
             appendLine("Cell type = ${cell.groundType.name}")
             appendLine("Items count = ${cell.items.size}")
             cell.creature?.let { creature ->
-                appendLine("Creature info:")
-                appendLine(creature.info())
+                appendTitle("Creature info:")
+                appendText(creature.info())
             }
         }
-        infoImage.setText(0, 0, text)
     }
 
     override fun show() {
@@ -74,8 +76,8 @@ class LanternaMapView(
     private fun GroundType.representation(): Pair<Char, Color> = when (this) {
         Land -> '.' to Color.ANSI.Black
         Water -> '~' to Color.ANSI.Blue
-        Fire -> '$' to Color.ANSI.Red
-        Stone -> '*' to Color.ANSI.Magenta
+        Fire -> '@' to Color.ANSI.Red
+        Stone -> '*' to Color.ANSI.Yellow
         LevelEnd -> '!' to Color.ANSI.Green
     }
 }
