@@ -13,20 +13,14 @@ class LanternaMapView(
     mapWidth: Int,
     mapHeight: Int
 ) : MapView {
-    private val image = window.createImage()
-    private val mapImage = image.subImage(0, 0, mapWidth, mapHeight)
+    private val image = window.createImage().apply { fill(' ', background = Color.ANSI.BorderColor) }
+    private val mapImage = image.subImage(0, 0, mapWidth, mapHeight).apply { clear() }
     private val infoImage = image.subImage(
         mapWidth + 1,
         0,
         image.width - (mapWidth + 1),
         image.height
-    )
-
-    init {
-        for (y in 0 until image.height) {
-            image.set(mapWidth, y, ' ', background = Color.ANSI.White)
-        }
-    }
+    ).apply { clear() }
 
     override fun set(x: Int, y: Int, cell: Cell) {
         val (symbol, foreground) = cell.representation()

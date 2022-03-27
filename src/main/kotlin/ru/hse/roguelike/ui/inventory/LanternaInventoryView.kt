@@ -9,7 +9,7 @@ import ru.hse.roguelike.ui.window.GameWindow
 class LanternaInventoryView(
     private val window: GameWindow
 ) : InventoryView {
-    private val image = window.createImage()
+    private val image = window.createImage().apply { fill(' ', background = Color.ANSI.BorderColor) }
     private val itemsImage: Drawable
     private val heroStatsImage: Drawable
     private val infoImage: Drawable
@@ -17,26 +17,20 @@ class LanternaInventoryView(
 
     init {
         val itemsImageWidth = image.width / 2
-        itemsImage = image.subImage(0, 0, itemsImageWidth, image.height)
+        itemsImage = image.subImage(0, 0, itemsImageWidth, image.height).apply { clear() }
         val heroStatsImageHeight = image.height / 2
         heroStatsImage = image.subImage(
             itemsImageWidth + 1,
             0,
             image.width - (itemsImageWidth + 1),
             heroStatsImageHeight
-        )
+        ).apply { clear() }
         infoImage = image.subImage(
             itemsImageWidth + 1,
             heroStatsImageHeight + 1,
             image.width - (itemsImageWidth + 1),
             image.height - (heroStatsImageHeight + 1)
-        )
-        for (y in 0 until image.height) {
-            image.set(itemsImageWidth, y, ' ', background = Color.ANSI.White)
-        }
-        for (x in itemsImageWidth until image.width) {
-            image.set(x, heroStatsImageHeight, ' ', background = Color.ANSI.White)
-        }
+        ).apply { clear() }
     }
 
     private var items: List<Item> = emptyList()

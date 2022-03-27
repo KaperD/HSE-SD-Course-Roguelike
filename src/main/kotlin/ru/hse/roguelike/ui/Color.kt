@@ -19,7 +19,6 @@ interface Color {
         Magenta(TextColor.ANSI.MAGENTA),
         Cyan(TextColor.ANSI.CYAN),
         White(TextColor.ANSI.WHITE),
-        Default(TextColor.ANSI.WHITE_BRIGHT),
         BlackBright(TextColor.ANSI.BLACK_BRIGHT),
         RedBright(TextColor.ANSI.RED_BRIGHT),
         GreenBright(TextColor.ANSI.GREEN_BRIGHT),
@@ -27,7 +26,9 @@ interface Color {
         BlueBright(TextColor.ANSI.BLUE_BRIGHT),
         MagentaBright(TextColor.ANSI.MAGENTA_BRIGHT),
         CyanBright(TextColor.ANSI.CYAN_BRIGHT),
-        WhiteBright(TextColor.ANSI.WHITE_BRIGHT);
+        WhiteBright(TextColor.ANSI.WHITE_BRIGHT),
+        Default(TextColor.ANSI.WHITE_BRIGHT),
+        BorderColor(TextColor.ANSI.WHITE);
 
         override val red: Int = textColor.red
         override val green: Int = textColor.green
