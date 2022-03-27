@@ -1,5 +1,7 @@
 package ru.hse.roguelike.model
 
+import ru.hse.roguelike.model.item.Item
+
 data class Cell(
     val groundType: GroundType,
     val items: MutableList<Item>,

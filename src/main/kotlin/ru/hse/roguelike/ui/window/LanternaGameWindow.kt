@@ -26,7 +26,6 @@ class LanternaGameWindow(
     private var currentImage = createImage()
     private val resizeMessageImage = createImage().also { it.setLine(0, 0, "Make terminal bigger, please") }
     private var currentSize = terminal.terminalSize
-    private val topLeftCorner = TerminalPosition(1, 1)
 
     init {
         terminal.setCursorVisible(false)
@@ -69,5 +68,9 @@ class LanternaGameWindow(
 
     private fun drawImage(image: Image) {
         textGraphics.drawImage(topLeftCorner, image)
+    }
+
+    companion object {
+        private val topLeftCorner = TerminalPosition(1, 1)
     }
 }

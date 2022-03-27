@@ -1,7 +1,7 @@
 package ru.hse.roguelike.ui.inventory
 
 import ru.hse.roguelike.model.Hero
-import ru.hse.roguelike.model.Item
+import ru.hse.roguelike.model.item.Item
 import ru.hse.roguelike.ui.Color
 import ru.hse.roguelike.ui.Drawable
 import ru.hse.roguelike.ui.window.GameWindow

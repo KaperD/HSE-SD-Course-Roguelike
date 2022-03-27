@@ -1,4 +1,6 @@
-package ru.hse.roguelike.model
+package ru.hse.roguelike.model.item
+
+import ru.hse.roguelike.model.Hero
 
 interface Item {
     val isUsed: Boolean

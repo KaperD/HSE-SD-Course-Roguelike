@@ -10,19 +10,15 @@ import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.ui.map.LanternaMapView
 import ru.hse.roguelike.ui.map.MapView
 import ru.hse.roguelike.ui.window.LanternaGameWindow
-import java.util.Properties
 import javax.swing.JFrame
 import kotlin.math.max
 import kotlin.math.min
 
 fun main() {
-    val properties = Properties().apply {
-        load(Cell::class.java.getResourceAsStream("/application.properties"))
-    }
-    val mapWidth = properties.getProperty("map.width").toInt()
-    val mapHeight = properties.getProperty("map.height").toInt()
-    val imageWidth = properties.getProperty("image.width").toInt()
-    val imageHeight = properties.getProperty("image.height").toInt()
+    val mapWidth = Properties.mapWidth
+    val mapHeight = Properties.mapHeight
+    val imageWidth = Properties.imageWidth
+    val imageHeight = Properties.imageHeight
     val factory = DefaultTerminalFactory()
     factory.createTerminal().use { terminal ->
         if (terminal is SwingTerminalFrame) {
@@ -31,7 +27,7 @@ fun main() {
         terminal.enterPrivateMode()
         val window = LanternaGameWindow(terminal, imageWidth, imageHeight)
         val mapView = LanternaMapView(window, mapWidth, mapHeight)
-        val hero = Hero(100, Position(0, 0), mutableListOf())
+        val hero = Hero(100, 100, Position(0, 0), mutableListOf())
         setup(mapView)
         map[0][0].creature = hero
         mapView.set(0, 0, map[0][0])
