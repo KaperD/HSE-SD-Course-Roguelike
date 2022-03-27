@@ -56,7 +56,7 @@ open class SubImage(
 
     override fun fill(symbol: Char, foreground: Color, background: Color) {
         val s = TextCharacter.fromCharacter(symbol, foreground.textColor, background.textColor).first()
-        textGraphics.drawRectangle(TerminalPosition(topLeftX, topLeftY), TerminalSize(width, height), s)
+        textGraphics.fillRectangle(TerminalPosition(topLeftX, topLeftY), TerminalSize(width, height), s)
     }
 
     override fun clear() {

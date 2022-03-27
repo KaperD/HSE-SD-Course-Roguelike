@@ -1,6 +1,6 @@
 package ru.hse.roguelike.ui.help
 
 interface HelpView {
-    var text: String
+    fun setText(text: String)
     fun show()
 }

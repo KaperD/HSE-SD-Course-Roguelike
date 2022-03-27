@@ -1,9 +1,9 @@
 package ru.hse.roguelike.model
 
-class Cell(
+data class Cell(
     val groundType: GroundType,
     val items: MutableList<Item>,
-    val creature: Creature?
+    var creature: Creature?
 )
 
 enum class GroundType {

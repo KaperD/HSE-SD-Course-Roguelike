@@ -6,7 +6,7 @@ import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.GroundType.*
 import ru.hse.roguelike.model.Hero
 import ru.hse.roguelike.ui.Color
-import ru.hse.roguelike.ui.GameWindow
+import ru.hse.roguelike.ui.window.GameWindow
 
 class LanternaMapView(
     private val window: GameWindow,
@@ -24,7 +24,7 @@ class LanternaMapView(
 
     init {
         for (y in 0 until image.height) {
-            image.set(mapWidth, y, ' ', background = Color.ANSI.Blue)
+            image.set(mapWidth, y, ' ', background = Color.ANSI.White)
         }
     }
 
@@ -48,9 +48,9 @@ class LanternaMapView(
             appendLine("Cell info:")
             appendLine("Cell type = ${cell.groundType.name}")
             appendLine("Items count = ${cell.items.size}")
-            if (cell.creature != null) {
+            cell.creature?.let { creature ->
                 appendLine("Creature info:")
-                appendLine(cell.creature.info())
+                appendLine(creature.info())
             }
         }
         infoImage.setText(0, 0, text)
@@ -78,10 +78,10 @@ class LanternaMapView(
     }
 
     private fun GroundType.representation(): Pair<Char, Color> = when (this) {
-        Land -> '.' to Color.ANSI.Cyan
+        Land -> '.' to Color.ANSI.Black
         Water -> '~' to Color.ANSI.Blue
         Fire -> '$' to Color.ANSI.Red
-        Stone -> '*' to Color.ANSI.BlackBright
+        Stone -> '*' to Color.ANSI.Magenta
         LevelEnd -> '!' to Color.ANSI.Green
     }
 }

@@ -1,4 +1,4 @@
-package ru.hse.roguelike.ui
+package ru.hse.roguelike.ui.window
 
 import com.googlecode.lanterna.TerminalPosition
 import com.googlecode.lanterna.TerminalSize
@@ -6,6 +6,8 @@ import com.googlecode.lanterna.TextCharacter
 import com.googlecode.lanterna.TextColor
 import com.googlecode.lanterna.graphics.BasicTextImage
 import com.googlecode.lanterna.terminal.Terminal
+import ru.hse.roguelike.ui.Color
+import ru.hse.roguelike.ui.Image
 
 class LanternaGameWindow(
     private val terminal: Terminal,
