@@ -6,6 +6,12 @@ import ru.hse.roguelike.property.ColorProperties.borderColor
 import ru.hse.roguelike.property.ColorProperties.defaultColor
 import ru.hse.roguelike.property.ColorProperties.highlightColor
 import ru.hse.roguelike.property.ColorProperties.titleColor
+import ru.hse.roguelike.property.StringProperties
+import ru.hse.roguelike.property.StringProperties.health
+import ru.hse.roguelike.property.StringProperties.heroStats
+import ru.hse.roguelike.property.StringProperties.itemInfo
+import ru.hse.roguelike.property.StringProperties.itemsCount
+import ru.hse.roguelike.property.StringProperties.used
 import ru.hse.roguelike.ui.Color
 import ru.hse.roguelike.ui.Drawable
 import ru.hse.roguelike.ui.window.GameWindow
@@ -48,9 +54,9 @@ class LanternaInventoryView(
 
     override fun setHeroStats(hero: Hero) {
         heroStatsImage.drawText {
-            appendTitle("Hero stats:")
-            appendLine("HP = ${hero.health}/${hero.maximumHealth}")
-            appendLine("Items count = ${hero.items.size}")
+            appendTitle("$heroStats:")
+            appendLine("$health = ${hero.health}/${hero.maximumHealth}")
+            appendLine("$itemsCount = ${hero.items.size}")
         }
     }
 
@@ -65,7 +71,7 @@ class LanternaInventoryView(
 
     private fun drawItems() {
         itemsImage.clear()
-        itemsImage.setLine(0, 0, "Items:", foreground = titleColor)
+        itemsImage.setLine(0, 0, "${StringProperties.items}:", foreground = titleColor)
         for ((i, item) in items.withIndex()) {
             if (i == chosenPosition) {
                 drawSelectedItem(item, i)
@@ -79,7 +85,7 @@ class LanternaInventoryView(
     }
 
     private fun drawItem(item: Item, position: Int, background: Color = defaultColor) {
-        val line = if (item.isUsed) "${item.name} (used)" else item.name
+        val line = if (item.isUsed) "${item.name} ($used)" else item.name
         itemsImage.setLine(0, position + 1, line, background = background)
     }
 
@@ -90,7 +96,7 @@ class LanternaInventoryView(
 
     private fun drawItemInfo(item: Item) {
         infoImage.drawText {
-            appendTitle("Item info:")
+            appendTitle("$itemInfo:")
             appendText(item.description)
         }
     }

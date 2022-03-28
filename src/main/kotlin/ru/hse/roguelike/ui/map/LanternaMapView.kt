@@ -14,6 +14,15 @@ import ru.hse.roguelike.property.ColorProperties.landColor
 import ru.hse.roguelike.property.ColorProperties.levelEndColor
 import ru.hse.roguelike.property.ColorProperties.stoneColor
 import ru.hse.roguelike.property.ColorProperties.waterColor
+import ru.hse.roguelike.property.StringProperties
+import ru.hse.roguelike.property.StringProperties.cellInfo
+import ru.hse.roguelike.property.StringProperties.cellType
+import ru.hse.roguelike.property.StringProperties.creatureInfo
+import ru.hse.roguelike.property.StringProperties.health
+import ru.hse.roguelike.property.StringProperties.hero
+import ru.hse.roguelike.property.StringProperties.heroStats
+import ru.hse.roguelike.property.StringProperties.itemsCount
+import ru.hse.roguelike.property.StringProperties.type
 import ru.hse.roguelike.property.ViewProperties.fireSymbol
 import ru.hse.roguelike.property.ViewProperties.heroSymbol
 import ru.hse.roguelike.property.ViewProperties.itemSymbol
@@ -51,18 +60,18 @@ class LanternaMapView(
 
     override fun setHeroStats(hero: Hero) {
         infoImage.drawText {
-            appendTitle("Hero stats:")
-            appendLine("HP = ${hero.health}")
+            appendTitle("$heroStats:")
+            appendLine("$health = ${hero.health}")
         }
     }
 
     override fun setCellInfo(cell: Cell) {
         infoImage.drawText {
-            appendTitle("Cell info:")
-            appendLine("Cell type = ${cell.groundType.name}")
-            appendLine("Items count = ${cell.items.size}")
+            appendTitle("$cellInfo:")
+            appendLine("$cellType = ${cell.groundType.name}")
+            appendLine("$itemsCount = ${cell.items.size}")
             cell.creature?.let { creature ->
-                appendTitle("Creature info:")
+                appendTitle("$creatureInfo:")
                 appendText(creature.info())
             }
         }
@@ -74,8 +83,8 @@ class LanternaMapView(
 
     private fun Creature.info(): String = when (this) {
         is Hero -> """
-            Type = hero
-            HP = $health
+            $type = $hero
+            ${StringProperties.health} = $health
         """.trimIndent()
         else -> throw IllegalStateException("Unknown creature type")
     }

@@ -30,13 +30,14 @@ class StatePropertiesImpl(propertiesFileName: String = "/state.properties") : St
         val properties: Properties = Properties().apply {
             load(StateProperties::class.java.getResourceAsStream(propertiesFileName))
         }
-        openMap = properties.getProperty("open.map").toInputType()
-        openMapFreeMode = properties.getProperty("open.map_free_mode").toInputType()
-        openInventory = properties.getProperty("open.inventory").toInputType()
-        openHelp = properties.getProperty("open.help").toInputType()
+        fun String.loadInputType() = properties.getProperty(this).toInputType()
+        openMap = "open.map".loadInputType()
+        openMapFreeMode = "open.map_free_mode".loadInputType()
+        openInventory = "open.inventory".loadInputType()
+        openHelp = "open.help".loadInputType()
 
-        inventoryItemUp = properties.getProperty("inventory.item.up").toInputType()
-        inventoryItemDown = properties.getProperty("inventory.item.down").toInputType()
-        inventoryItemAction = properties.getProperty("inventory.item.action").toInputType()
+        inventoryItemUp = "inventory.item.up".loadInputType()
+        inventoryItemDown = "inventory.item.down".loadInputType()
+        inventoryItemAction = "inventory.item.action".loadInputType()
     }
 }

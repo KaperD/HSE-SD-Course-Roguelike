@@ -19,9 +19,10 @@ class SizePropertiesImpl(propertiesFileName: String = "/size.properties") : Size
         val properties = Properties().apply {
             load(SizeProperties::class.java.getResourceAsStream(propertiesFileName))
         }
-        mapWidth = properties.getProperty("map.width").toInt()
-        mapHeight = properties.getProperty("map.height").toInt()
-        imageWidth = properties.getProperty("image.width").toInt()
-        imageHeight = properties.getProperty("image.height").toInt()
+        fun String.loadInt(): Int = properties.getProperty(this).toInt()
+        mapWidth = "map.width".loadInt()
+        mapHeight = "map.height".loadInt()
+        imageWidth = "image.width".loadInt()
+        imageHeight = "image.height".loadInt()
     }
 }

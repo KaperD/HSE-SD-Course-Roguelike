@@ -8,6 +8,7 @@ import com.googlecode.lanterna.graphics.BasicTextImage
 import com.googlecode.lanterna.terminal.Terminal
 import ru.hse.roguelike.property.ColorProperties.borderColor
 import ru.hse.roguelike.property.ColorProperties.defaultColor
+import ru.hse.roguelike.property.StringProperties.makeWindowBigger
 import ru.hse.roguelike.ui.Image
 
 class LanternaGameWindow(
@@ -25,7 +26,7 @@ class LanternaGameWindow(
     )
     private var textGraphics = terminal.newTextGraphics()
     private val currentImage = createImage()
-    private val resizeMessageImage = createImage().also { it.setLine(0, 0, "Make terminal bigger, please") }
+    private val resizeMessageImage = createImage().also { it.setLine(0, 0, makeWindowBigger) }
     private var currentSize = terminal.terminalSize
 
     init {

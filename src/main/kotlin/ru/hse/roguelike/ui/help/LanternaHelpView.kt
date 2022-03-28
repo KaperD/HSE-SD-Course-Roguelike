@@ -1,10 +1,11 @@
 package ru.hse.roguelike.ui.help
 
+import ru.hse.roguelike.property.StringProperties.helpMessage
 import ru.hse.roguelike.ui.window.GameWindow
 
 class LanternaHelpView(
     private val window: GameWindow,
-    text: String
+    text: String = helpMessage
 ) : HelpView {
     private val image = window.createImage()
 

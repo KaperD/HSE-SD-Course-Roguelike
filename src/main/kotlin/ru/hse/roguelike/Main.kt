@@ -7,6 +7,7 @@ import ru.hse.roguelike.model.*
 import ru.hse.roguelike.model.item.DisposableItem
 import ru.hse.roguelike.model.item.ItemType
 import ru.hse.roguelike.model.item.ReusableItem
+import ru.hse.roguelike.property.SizeProperties
 import ru.hse.roguelike.property.SizePropertiesImpl
 import ru.hse.roguelike.property.StatePropertiesImpl
 import ru.hse.roguelike.property.ViewProperties.fireSymbol
@@ -19,9 +20,15 @@ import ru.hse.roguelike.ui.inventory.LanternaInventoryView
 import ru.hse.roguelike.ui.map.LanternaMapView
 import ru.hse.roguelike.ui.map.MapView
 import ru.hse.roguelike.ui.window.LanternaGameWindow
+import java.util.*
 import javax.swing.JFrame
 
 fun main() {
+    val properties = Properties().apply {
+        load(SizeProperties::class.java.getResourceAsStream("/string.properties"))
+    }
+    println(properties.getProperty("help.message"))
+
     val sizeProperties = SizePropertiesImpl()
     val mapWidth = sizeProperties.mapWidth
     val mapHeight = sizeProperties.mapHeight
