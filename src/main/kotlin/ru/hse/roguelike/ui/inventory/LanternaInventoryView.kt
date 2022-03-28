@@ -2,6 +2,10 @@ package ru.hse.roguelike.ui.inventory
 
 import ru.hse.roguelike.model.Hero
 import ru.hse.roguelike.model.item.Item
+import ru.hse.roguelike.property.ColorProperties.borderColor
+import ru.hse.roguelike.property.ColorProperties.defaultColor
+import ru.hse.roguelike.property.ColorProperties.highlightColor
+import ru.hse.roguelike.property.ColorProperties.titleColor
 import ru.hse.roguelike.ui.Color
 import ru.hse.roguelike.ui.Drawable
 import ru.hse.roguelike.ui.window.GameWindow
@@ -10,7 +14,7 @@ import ru.hse.roguelike.utils.drawText
 class LanternaInventoryView(
     private val window: GameWindow
 ) : InventoryView {
-    private val image = window.createImage().apply { fill(' ', background = Color.ANSI.BorderColor) }
+    private val image = window.createImage().apply { fill(' ', background = borderColor) }
     private val itemsImage: Drawable
     private val heroStatsImage: Drawable
     private val infoImage: Drawable
@@ -61,7 +65,7 @@ class LanternaInventoryView(
 
     private fun drawItems() {
         itemsImage.clear()
-        itemsImage.setLine(0, 0, "Items:", foreground = Color.ANSI.TitleColor)
+        itemsImage.setLine(0, 0, "Items:", foreground = titleColor)
         for ((i, item) in items.withIndex()) {
             if (i == chosenPosition) {
                 drawSelectedItem(item, i)
@@ -74,13 +78,13 @@ class LanternaInventoryView(
         }
     }
 
-    private fun drawItem(item: Item, position: Int, background: Color = Color.ANSI.Default) {
+    private fun drawItem(item: Item, position: Int, background: Color = defaultColor) {
         val line = if (item.isUsed) "${item.name} (used)" else item.name
         itemsImage.setLine(0, position + 1, line, background = background)
     }
 
     private fun drawSelectedItem(item: Item, position: Int) {
-        drawItem(item, position, Color.ANSI.YellowBright)
+        drawItem(item, position, highlightColor)
         drawItemInfo(item)
     }
 

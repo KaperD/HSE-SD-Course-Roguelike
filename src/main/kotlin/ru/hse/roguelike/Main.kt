@@ -3,17 +3,17 @@ package ru.hse.roguelike
 import com.googlecode.lanterna.input.KeyType
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFrame
-import ru.hse.roguelike.model.Cell
-import ru.hse.roguelike.model.GameField
-import ru.hse.roguelike.model.GameModel
-import ru.hse.roguelike.model.GroundType
-import ru.hse.roguelike.model.Hero
-import ru.hse.roguelike.model.Position
+import ru.hse.roguelike.model.*
 import ru.hse.roguelike.model.item.DisposableItem
 import ru.hse.roguelike.model.item.ItemType
 import ru.hse.roguelike.model.item.ReusableItem
-import ru.hse.roguelike.property.SizeProperties
-import ru.hse.roguelike.property.StateProperties
+import ru.hse.roguelike.property.SizePropertiesImpl
+import ru.hse.roguelike.property.StatePropertiesImpl
+import ru.hse.roguelike.property.ViewProperties.fireSymbol
+import ru.hse.roguelike.property.ViewProperties.landSymbol
+import ru.hse.roguelike.property.ViewProperties.levelEndSymbol
+import ru.hse.roguelike.property.ViewProperties.stoneSymbol
+import ru.hse.roguelike.property.ViewProperties.waterSymbol
 import ru.hse.roguelike.state.InventoryState
 import ru.hse.roguelike.ui.inventory.LanternaInventoryView
 import ru.hse.roguelike.ui.map.LanternaMapView
@@ -22,7 +22,7 @@ import ru.hse.roguelike.ui.window.LanternaGameWindow
 import javax.swing.JFrame
 
 fun main() {
-    val sizeProperties = SizeProperties()
+    val sizeProperties = SizePropertiesImpl()
     val mapWidth = sizeProperties.mapWidth
     val mapHeight = sizeProperties.mapHeight
     val imageWidth = sizeProperties.imageWidth
@@ -53,7 +53,7 @@ fun main() {
                 )
             )
         )
-        val stateProperties = StateProperties()
+        val stateProperties = StatePropertiesImpl()
         val inventoryState = InventoryState(mapOf(), gameSound, inventoryView, stateProperties, gameModel)
 
         inventoryState.activate()
@@ -110,10 +110,10 @@ fun setup(mapView: MapView) {
 }
 
 fun Char.groundType(): GroundType = when (this) {
-    '.' -> GroundType.Land
-    '~' -> GroundType.Water
-    '@' -> GroundType.Fire
-    '*' -> GroundType.Stone
-    '!' -> GroundType.LevelEnd
+    landSymbol -> GroundType.Land
+    waterSymbol -> GroundType.Water
+    fireSymbol -> GroundType.Fire
+    stoneSymbol -> GroundType.Stone
+    levelEndSymbol -> GroundType.LevelEnd
     else -> throw IllegalStateException("Unknown char")
 }

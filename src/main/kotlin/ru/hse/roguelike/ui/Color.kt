@@ -26,13 +26,12 @@ interface Color {
         BlueBright(TextColor.ANSI.BLUE_BRIGHT),
         MagentaBright(TextColor.ANSI.MAGENTA_BRIGHT),
         CyanBright(TextColor.ANSI.CYAN_BRIGHT),
-        WhiteBright(TextColor.ANSI.WHITE_BRIGHT),
-        Default(TextColor.ANSI.WHITE_BRIGHT),
-        BorderColor(TextColor.ANSI.WHITE),
-        TitleColor(TextColor.ANSI.BLUE);
+        WhiteBright(TextColor.ANSI.WHITE_BRIGHT);
 
         override val red: Int = textColor.red
         override val green: Int = textColor.green
         override val blue: Int = textColor.blue
     }
 }
+
+fun String.toColor(): Color = Color.ANSI.valueOf(this)

@@ -6,7 +6,8 @@ import com.googlecode.lanterna.TextCharacter
 import com.googlecode.lanterna.TextColor
 import com.googlecode.lanterna.graphics.BasicTextImage
 import com.googlecode.lanterna.terminal.Terminal
-import ru.hse.roguelike.ui.Color
+import ru.hse.roguelike.property.ColorProperties.borderColor
+import ru.hse.roguelike.property.ColorProperties.defaultColor
 import ru.hse.roguelike.ui.Image
 
 class LanternaGameWindow(
@@ -19,7 +20,7 @@ class LanternaGameWindow(
     private val backgroundImage = Image(
         BasicTextImage(
             TerminalSize(width, height),
-            TextCharacter.fromCharacter(' ', TextColor.ANSI.DEFAULT, Color.ANSI.White.textColor).first()
+            TextCharacter.fromCharacter(' ', TextColor.ANSI.DEFAULT, borderColor.textColor).first()
         )
     )
     private var textGraphics = terminal.newTextGraphics()
@@ -47,7 +48,7 @@ class LanternaGameWindow(
     override fun createImage(): Image = Image(
         BasicTextImage(
             TerminalSize(imageWidth, imageHeight),
-            TextCharacter.fromCharacter(' ', TextColor.ANSI.DEFAULT, Color.ANSI.Default.textColor).first()
+            TextCharacter.fromCharacter(' ', TextColor.ANSI.DEFAULT, defaultColor.textColor).first()
         )
     )
 

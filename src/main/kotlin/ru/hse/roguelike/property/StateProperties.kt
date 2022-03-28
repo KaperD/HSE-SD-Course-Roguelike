@@ -5,7 +5,7 @@ import ru.hse.roguelike.state.toInputType
 import java.util.*
 
 
-class StateProperties(propertiesFileName: String = "/application.properties") {
+interface StateProperties {
     val openMap: InputType
     val openMapFreeMode: InputType
     val openInventory: InputType
@@ -14,6 +14,17 @@ class StateProperties(propertiesFileName: String = "/application.properties") {
     val inventoryItemUp: InputType
     val inventoryItemDown: InputType
     val inventoryItemAction: InputType
+}
+
+class StatePropertiesImpl(propertiesFileName: String = "/state.properties") : StateProperties {
+    override val openMap: InputType
+    override val openMapFreeMode: InputType
+    override val openInventory: InputType
+    override val openHelp: InputType
+
+    override val inventoryItemUp: InputType
+    override val inventoryItemDown: InputType
+    override val inventoryItemAction: InputType
 
     init {
         val properties: Properties = Properties().apply {
