@@ -2,7 +2,6 @@ package ru.hse.roguelike.model.item
 
 import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.property.StringProperties
-import java.lang.System.lineSeparator
 import kotlin.math.min
 
 class ReusableItem(

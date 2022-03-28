@@ -14,6 +14,14 @@ import ru.hse.roguelike.ui.inventory.LanternaInventoryView
 import ru.hse.roguelike.ui.window.LanternaGameWindow
 import javax.swing.JFrame
 
+const val initHealth = 100
+const val initX = 0
+const val initY = 0
+const val bonus1 = 3
+const val bonus2 = 4
+const val bonus3 = 0
+const val bonus4 = 3
+
 fun main() {
     val sizeProperties = SizePropertiesImpl()
     val mapWidth = sizeProperties.mapWidth
@@ -31,14 +39,14 @@ fun main() {
         val gameSound = GameSound(terminal)
         val inventoryView = LanternaInventoryView(window)
         val hero = Hero(
-            3,
-            9,
-            Position(0, 0),
+            initHealth,
+            initHealth,
+            Position(initX, initY),
             mutableListOf(
-                ReusableItem("item1", "description1", ItemType.Body, 3),
-                ReusableItem("item2", "description2", ItemType.Body, 4),
-                ReusableItem("item3", "description3", ItemType.Weapon, 0),
-                DisposableItem("item4", "description4") { health += 3 }
+                ReusableItem("item1", "description1", ItemType.Body, bonus1),
+                ReusableItem("item2", "description2", ItemType.Body, bonus2),
+                ReusableItem("item3", "description3", ItemType.Weapon, bonus3),
+                DisposableItem("item4", "description4") { health += bonus4 }
             )
         )
         val inventoryState = InventoryState(mapOf(), gameSound, inventoryView, hero)

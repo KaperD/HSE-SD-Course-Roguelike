@@ -22,3 +22,7 @@ formatting:
         active: false
     MaximumLineLength:
         maxLineLength: 120
+
+naming:
+    TopLevelPropertyNaming:
+        active: false
