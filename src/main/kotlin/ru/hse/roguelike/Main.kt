@@ -11,6 +11,7 @@ import ru.hse.roguelike.model.item.ReusableItem
 import ru.hse.roguelike.property.SizePropertiesImpl
 import ru.hse.roguelike.property.StateProperties.openHelp
 import ru.hse.roguelike.property.StateProperties.openInventory
+import ru.hse.roguelike.sound.LanternaGameSound
 import ru.hse.roguelike.state.HelpState
 import ru.hse.roguelike.state.InventoryState
 import ru.hse.roguelike.ui.help.LanternaHelpView
@@ -40,7 +41,7 @@ fun main() {
         terminal.enterPrivateMode()
         val window = LanternaGameWindow(terminal, imageWidth, imageHeight)
 
-        val gameSound = GameSound(terminal)
+        val gameSound = LanternaGameSound(terminal)
         val inventoryView = LanternaInventoryView(window)
         val hero = Hero(
             initHealth,

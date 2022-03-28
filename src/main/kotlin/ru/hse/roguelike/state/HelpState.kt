@@ -1,7 +1,7 @@
 package ru.hse.roguelike.state
 
-import ru.hse.roguelike.GameSound
 import ru.hse.roguelike.input.InputType
+import ru.hse.roguelike.sound.GameSound
 import ru.hse.roguelike.ui.help.HelpView
 
 class HelpState(

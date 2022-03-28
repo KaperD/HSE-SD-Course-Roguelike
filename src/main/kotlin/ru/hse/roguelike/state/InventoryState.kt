@@ -1,9 +1,9 @@
 package ru.hse.roguelike.state
 
-import ru.hse.roguelike.GameSound
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.property.StateProperties
+import ru.hse.roguelike.sound.GameSound
 import ru.hse.roguelike.ui.inventory.InventoryView
 import kotlin.math.max
 import kotlin.math.min
