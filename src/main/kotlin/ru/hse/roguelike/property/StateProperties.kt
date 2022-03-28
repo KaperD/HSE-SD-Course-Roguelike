@@ -1,11 +1,10 @@
 package ru.hse.roguelike.property
 
-import ru.hse.roguelike.state.InputType
-import ru.hse.roguelike.state.toInputType
+import ru.hse.roguelike.input.InputType
+import ru.hse.roguelike.input.toInputType
 import java.util.*
 
-
-interface StateProperties {
+object StateProperties {
     val openMap: InputType
     val openMapFreeMode: InputType
     val openInventory: InputType
@@ -14,21 +13,12 @@ interface StateProperties {
     val inventoryItemUp: InputType
     val inventoryItemDown: InputType
     val inventoryItemAction: InputType
-}
 
-class StatePropertiesImpl(propertiesFileName: String = "/state.properties") : StateProperties {
-    override val openMap: InputType
-    override val openMapFreeMode: InputType
-    override val openInventory: InputType
-    override val openHelp: InputType
-
-    override val inventoryItemUp: InputType
-    override val inventoryItemDown: InputType
-    override val inventoryItemAction: InputType
+    val exitGame: InputType
 
     init {
         val properties: Properties = Properties().apply {
-            load(StateProperties::class.java.getResourceAsStream(propertiesFileName))
+            load(InputType::class.java.getResourceAsStream("/state.properties"))
         }
         fun String.loadInputType() = properties.getProperty(this).toInputType()
         openMap = "open.map".loadInputType()
@@ -39,5 +29,7 @@ class StatePropertiesImpl(propertiesFileName: String = "/state.properties") : St
         inventoryItemUp = "inventory.item.up".loadInputType()
         inventoryItemDown = "inventory.item.down".loadInputType()
         inventoryItemAction = "inventory.item.action".loadInputType()
+
+        exitGame = "exit.game".loadInputType()
     }
 }

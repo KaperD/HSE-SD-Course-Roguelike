@@ -1,7 +1,8 @@
 package ru.hse.roguelike.state
 
 import ru.hse.roguelike.GameSound
-import ru.hse.roguelike.model.GameModel
+import ru.hse.roguelike.input.InputType
+import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.property.StateProperties
 import ru.hse.roguelike.ui.inventory.InventoryView
 import kotlin.math.max
@@ -11,18 +12,16 @@ class InventoryState(
     private val states: Map<InputType, State>,
     private val gameSound: GameSound,
     private val inventoryView: InventoryView,
-    stateProperties: StateProperties,
-    gameModel: GameModel,
+    private val hero: Hero,
 ) : State {
     private var chosenPosition = 0
-    private val items = gameModel.hero.items
-    private val hero = gameModel.hero
+    private val items = hero.items
     private val actionByInputType = mutableMapOf<InputType, () -> State>()
 
     init {
-        actionByInputType[stateProperties.inventoryItemUp] = this::moveItemUp
-        actionByInputType[stateProperties.inventoryItemDown] = this::moveItemDown
-        actionByInputType[stateProperties.inventoryItemAction] = this::actionWithItem
+        actionByInputType[StateProperties.inventoryItemUp] = this::moveItemUp
+        actionByInputType[StateProperties.inventoryItemDown] = this::moveItemDown
+        actionByInputType[StateProperties.inventoryItemAction] = this::actionWithItem
     }
 
     override fun handleInput(type: InputType): State {
@@ -62,6 +61,8 @@ class InventoryState(
             item.apply(hero)
 
             chosenPosition = min(items.lastIndex, chosenPosition)
+        } else {
+            gameSound.beep()
         }
 
         inventoryView.setItems(items, chosenPosition)

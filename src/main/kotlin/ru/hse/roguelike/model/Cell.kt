@@ -1,5 +1,6 @@
 package ru.hse.roguelike.model
 
+import ru.hse.roguelike.model.creature.Creature
 import ru.hse.roguelike.model.item.Item
 
 data class Cell(

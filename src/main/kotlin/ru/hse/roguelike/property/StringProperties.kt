@@ -11,12 +11,18 @@ object StringProperties {
     val items: String
     val used: String
     val itemInfo: String
+    val itemType: String
     val cellInfo: String
     val cellType: String
     val creatureInfo: String
     val type: String
     val hero: String
     val makeWindowBigger: String
+    val head: String
+    val body: String
+    val legs: String
+    val hands: String
+    val weapon: String
 
     init {
         val properties: Properties = Properties().apply {
@@ -31,11 +37,17 @@ object StringProperties {
         items = "items".load()
         used = "used".load()
         itemInfo = "item.info".load()
+        itemType = "item.type".load()
         cellInfo = "cell.info".load()
         cellType = "cell.type".load()
         creatureInfo = "creature.info".load()
         type = "type".load()
         hero = "hero".load()
         makeWindowBigger = "make.window.bigger".load()
+        head = "head".load()
+        body = "body".load()
+        legs = "legs".load()
+        hands = "hands".load()
+        weapon = "weapon".load()
     }
 }

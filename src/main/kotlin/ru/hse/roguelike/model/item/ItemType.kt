@@ -1,9 +1,13 @@
 package ru.hse.roguelike.model.item
 
-enum class ItemType {
-    Head,
-    Body,
-    Legs,
-    Hands,
-    Weapon
+import ru.hse.roguelike.property.StringProperties
+
+enum class ItemType(private val displayName: String) {
+    Head(StringProperties.head),
+    Body(StringProperties.body),
+    Legs(StringProperties.legs),
+    Hands(StringProperties.hands),
+    Weapon(StringProperties.weapon);
+
+    override fun toString(): String = displayName
 }

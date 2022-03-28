@@ -1,5 +1,6 @@
-package ru.hse.roguelike.model
+package ru.hse.roguelike.model.creature
 
+import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.item.Item
 
 class Hero(

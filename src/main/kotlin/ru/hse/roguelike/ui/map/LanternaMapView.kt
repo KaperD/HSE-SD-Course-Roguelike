@@ -1,10 +1,10 @@
 package ru.hse.roguelike.ui.map
 
 import ru.hse.roguelike.model.Cell
-import ru.hse.roguelike.model.Creature
 import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.GroundType.*
-import ru.hse.roguelike.model.Hero
+import ru.hse.roguelike.model.creature.Creature
+import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.property.ColorProperties.borderColor
 import ru.hse.roguelike.property.ColorProperties.fireColor
 import ru.hse.roguelike.property.ColorProperties.heroColor

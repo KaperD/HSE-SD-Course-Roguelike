@@ -1,6 +1,6 @@
 package ru.hse.roguelike.ui.inventory
 
-import ru.hse.roguelike.model.Hero
+import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.model.item.Item
 import ru.hse.roguelike.property.ColorProperties.borderColor
 import ru.hse.roguelike.property.ColorProperties.defaultColor

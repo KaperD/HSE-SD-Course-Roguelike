@@ -1,6 +1,6 @@
 package ru.hse.roguelike.model.item
 
-import ru.hse.roguelike.model.Hero
+import ru.hse.roguelike.model.creature.Hero
 
 class DisposableItem(
     override val name: String,
