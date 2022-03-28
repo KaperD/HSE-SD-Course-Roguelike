@@ -1,0 +1,16 @@
+[
+    {
+        "type": "Reusable",
+        "name": "Reusable",
+        "description": "Reusable desc",
+        "itemType": "Weapon",
+        "maximumHealthChange": 10
+    },
+    {
+        "type": "Disposable",
+        "name": "Disposable",
+        "description": "Disposable desc",
+        "healthChange": 1,
+        "maximumHealthChange": 10
+    }
+]

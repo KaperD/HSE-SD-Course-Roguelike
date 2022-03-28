@@ -1,19 +1,18 @@
 package ru.hse.roguelike.model.item
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import ru.hse.roguelike.model.creature.Hero
-import ru.hse.roguelike.property.StringProperties
-import kotlin.math.min
 
-class ReusableItem(
+@Serializable
+@SerialName("Reusable")
+data class ReusableItem(
     override val name: String,
-    description: String,
-    val itemType: ItemType,
-    val bonusHealth: Int = 0
-) : Item {
-    override val description: String = """
-        $description
-        ${StringProperties.itemType} = $itemType
-    """.trimIndent()
+    override val description: String,
+    override val itemType: ItemType,
+    override val healthChange: Int = 0,
+    override val maximumHealthChange: Int = 0
+) : Item() {
     override var isUsed = false
 
     override fun canApply(hero: Hero): Boolean {
@@ -21,13 +20,12 @@ class ReusableItem(
     }
 
     override fun apply(hero: Hero) {
+        super.apply(hero)
         isUsed = true
-        hero.maximumHealth += bonusHealth
     }
 
     override fun cancel(hero: Hero) {
+        super.cancel(hero)
         isUsed = false
-        hero.maximumHealth -= bonusHealth
-        hero.health = min(hero.health, hero.maximumHealth)
     }
 }

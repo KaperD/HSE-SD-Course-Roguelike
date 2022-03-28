@@ -7,7 +7,8 @@ enum class ItemType(private val displayName: String) {
     Body(StringProperties.body),
     Legs(StringProperties.legs),
     Hands(StringProperties.hands),
-    Weapon(StringProperties.weapon);
+    Weapon(StringProperties.weapon),
+    Disposable(StringProperties.disposable);
 
     override fun toString(): String = displayName
 }

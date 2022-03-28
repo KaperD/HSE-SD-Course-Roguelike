@@ -8,31 +8,31 @@ import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.model.item.DisposableItem
 import ru.hse.roguelike.model.item.ItemType
 import ru.hse.roguelike.model.item.ReusableItem
-import ru.hse.roguelike.property.SizePropertiesImpl
+import ru.hse.roguelike.property.GamePropertiesImpl
 import ru.hse.roguelike.property.StateProperties.openHelp
 import ru.hse.roguelike.property.StateProperties.openInventory
+import ru.hse.roguelike.property.StateProperties.openMap
 import ru.hse.roguelike.sound.LanternaGameSound
+import ru.hse.roguelike.state.GameOverState
 import ru.hse.roguelike.state.HelpState
 import ru.hse.roguelike.state.InventoryState
-import ru.hse.roguelike.ui.help.LanternaHelpView
+import ru.hse.roguelike.ui.help.LanternaMessageView
 import ru.hse.roguelike.ui.inventory.LanternaInventoryView
 import ru.hse.roguelike.ui.window.LanternaGameWindow
 import javax.swing.JFrame
 
-const val initHealth = 100
 const val initX = 0
 const val initY = 0
 const val bonus1 = 3
 const val bonus2 = 4
-const val bonus3 = 0
-const val bonus4 = 3
+const val bonus3 = 2
 
 fun main() {
-    val sizeProperties = SizePropertiesImpl()
-    val mapWidth = sizeProperties.mapWidth
-    val mapHeight = sizeProperties.mapHeight
-    val imageWidth = sizeProperties.imageWidth
-    val imageHeight = sizeProperties.imageHeight
+    val gameProperties = GamePropertiesImpl()
+    val mapWidth = gameProperties.mapWidth
+    val mapHeight = gameProperties.mapHeight
+    val imageWidth = gameProperties.imageWidth
+    val imageHeight = gameProperties.imageHeight
     val factory = DefaultTerminalFactory()
     factory.createTerminal().use { terminal ->
         if (terminal is SwingTerminalFrame) {
@@ -44,22 +44,24 @@ fun main() {
         val gameSound = LanternaGameSound(terminal)
         val inventoryView = LanternaInventoryView(window)
         val hero = Hero(
-            initHealth,
-            initHealth,
+            gameProperties.initialHeroHealth,
+            gameProperties.initialHeroHealth,
             Position(initX, initY),
             mutableListOf(
-                ReusableItem("item1", "description1", ItemType.Body, bonus1),
+                ReusableItem("item1", "description1", ItemType.Body, maximumHealthChange = bonus1),
                 ReusableItem("item2", "description2", ItemType.Body, bonus2),
                 ReusableItem("item3", "description3", ItemType.Weapon, bonus3),
-                DisposableItem("item4", "description4") { health += bonus4 }
+                DisposableItem("item4", "description4", 2)
             )
         )
         val inventoryState = InventoryState(gameSound, inventoryView, hero)
-        val helpState = HelpState(gameSound, LanternaHelpView(window))
+        val helpState = HelpState(gameSound, LanternaMessageView(window))
+        val gameOverState = GameOverState(LanternaMessageView(window))
 
         val states = mapOf(
             openHelp to helpState,
-            openInventory to inventoryState
+            openInventory to inventoryState,
+            openMap to gameOverState
         )
 
         inventoryState.states = states

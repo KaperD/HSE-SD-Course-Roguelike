@@ -9,6 +9,7 @@ plugins {
     application
     id("io.gitlab.arturbosch.detekt") version "1.19.0"
     id("jacoco")
+    kotlin("plugin.serialization") version "1.6.10"
 }
 
 group = "ru.hse"
@@ -20,6 +21,7 @@ repositories {
 
 dependencies {
     implementation("com.googlecode.lanterna:lanterna:3.1.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     testImplementation(kotlin("test"))
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
 }

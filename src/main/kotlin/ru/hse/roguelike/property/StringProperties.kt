@@ -18,11 +18,15 @@ object StringProperties {
     val type: String
     val hero: String
     val makeWindowBigger: String
+
     val head: String
     val body: String
     val legs: String
     val hands: String
     val weapon: String
+    val disposable: String
+
+    val gameOver: String
 
     init {
         val properties: Properties = Properties().apply {
@@ -44,10 +48,14 @@ object StringProperties {
         type = "type".load()
         hero = "hero".load()
         makeWindowBigger = "make.window.bigger".load()
+
         head = "head".load()
         body = "body".load()
         legs = "legs".load()
         hands = "hands".load()
         weapon = "weapon".load()
+        disposable = "disposable".load()
+
+        gameOver = "game.over".load()
     }
 }
