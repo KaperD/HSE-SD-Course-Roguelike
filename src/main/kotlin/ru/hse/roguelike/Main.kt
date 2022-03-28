@@ -9,7 +9,11 @@ import ru.hse.roguelike.model.item.DisposableItem
 import ru.hse.roguelike.model.item.ItemType
 import ru.hse.roguelike.model.item.ReusableItem
 import ru.hse.roguelike.property.SizePropertiesImpl
+import ru.hse.roguelike.property.StateProperties.openHelp
+import ru.hse.roguelike.property.StateProperties.openInventory
+import ru.hse.roguelike.state.HelpState
 import ru.hse.roguelike.state.InventoryState
+import ru.hse.roguelike.ui.help.LanternaHelpView
 import ru.hse.roguelike.ui.inventory.LanternaInventoryView
 import ru.hse.roguelike.ui.window.LanternaGameWindow
 import javax.swing.JFrame
@@ -49,7 +53,16 @@ fun main() {
                 DisposableItem("item4", "description4") { health += bonus4 }
             )
         )
-        val inventoryState = InventoryState(mapOf(), gameSound, inventoryView, hero)
+        val inventoryState = InventoryState(gameSound, inventoryView, hero)
+        val helpState = HelpState(gameSound, LanternaHelpView(window))
+
+        val states = mapOf(
+            openHelp to helpState,
+            openInventory to inventoryState
+        )
+
+        inventoryState.states = states
+        helpState.states = states
 
         val gameInput = LanternaGameInput(terminal)
         val application = RoguelikeApplication(gameInput, inventoryState)

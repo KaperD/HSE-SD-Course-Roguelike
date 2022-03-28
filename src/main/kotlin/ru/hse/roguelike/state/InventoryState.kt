@@ -9,7 +9,6 @@ import kotlin.math.max
 import kotlin.math.min
 
 class InventoryState(
-    private val states: Map<InputType, State>,
     private val gameSound: GameSound,
     private val inventoryView: InventoryView,
     private val hero: Hero,
@@ -17,6 +16,8 @@ class InventoryState(
     private var chosenPosition = 0
     private val items = hero.items
     private val actionByInputType = mutableMapOf<InputType, () -> State>()
+
+    var states: Map<InputType, State> = mapOf()
 
     init {
         actionByInputType[StateProperties.inventoryItemUp] = this::moveItemUp
