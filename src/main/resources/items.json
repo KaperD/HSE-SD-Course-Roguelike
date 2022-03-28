@@ -1,14 +1,14 @@
 [
     {
         "type": "Reusable",
-        "name": "Reusable",
+        "name": "Blue jeans",
         "description": "Reusable desc",
         "itemType": "Weapon",
         "maximumHealthChange": 10
     },
     {
         "type": "Disposable",
-        "name": "Disposable",
+        "name": "Health potion",
         "description": "Disposable desc",
         "healthChange": 1,
         "maximumHealthChange": 10
