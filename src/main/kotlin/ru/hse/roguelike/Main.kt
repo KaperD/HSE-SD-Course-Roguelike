@@ -12,7 +12,7 @@ import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.item.DisposableItem
 import ru.hse.roguelike.model.item.ItemType
 import ru.hse.roguelike.model.item.ReusableItem
-import ru.hse.roguelike.property.Properties
+import ru.hse.roguelike.property.SizeProperties
 import ru.hse.roguelike.property.StateProperties
 import ru.hse.roguelike.state.InventoryState
 import ru.hse.roguelike.ui.inventory.LanternaInventoryView
@@ -22,10 +22,11 @@ import ru.hse.roguelike.ui.window.LanternaGameWindow
 import javax.swing.JFrame
 
 fun main() {
-    val mapWidth = Properties.mapWidth
-    val mapHeight = Properties.mapHeight
-    val imageWidth = Properties.imageWidth
-    val imageHeight = Properties.imageHeight
+    val sizeProperties = SizeProperties()
+    val mapWidth = sizeProperties.mapWidth
+    val mapHeight = sizeProperties.mapHeight
+    val imageWidth = sizeProperties.imageWidth
+    val imageHeight = sizeProperties.imageHeight
     val factory = DefaultTerminalFactory()
     factory.createTerminal().use { terminal ->
         if (terminal is SwingTerminalFrame) {
@@ -52,7 +53,8 @@ fun main() {
                 )
             )
         )
-        val inventoryState = InventoryState(mapOf(), gameSound, inventoryView, gameModel)
+        val stateProperties = StateProperties()
+        val inventoryState = InventoryState(mapOf(), gameSound, inventoryView, stateProperties, gameModel)
 
         inventoryState.activate()
 
@@ -66,12 +68,12 @@ fun main() {
                 KeyType.ArrowUp -> {
 //                    mapView.set(x, y, map[y][x])
 //                    y = max(0, y - 1)
-                    inventoryState.handleInput(StateProperties.inventoryItemUp)
+                    inventoryState.handleInput(stateProperties.inventoryItemUp)
                 }
                 KeyType.ArrowDown -> {
 //                    mapView.set(x, y, map[y][x])
 //                    y = min(mapHeight - 1, y + 1)
-                    inventoryState.handleInput(StateProperties.inventoryItemDown)
+                    inventoryState.handleInput(stateProperties.inventoryItemDown)
                 }
                 KeyType.ArrowLeft -> {
 //                    mapView.set(x, y, map[y][x])
@@ -82,7 +84,7 @@ fun main() {
 //                    x = min(mapWidth - 1, x + 1)
                 }
                 KeyType.Enter -> {
-                    inventoryState.handleInput(StateProperties.inventoryItemAction)
+                    inventoryState.handleInput(stateProperties.inventoryItemAction)
                 }
             }
         }

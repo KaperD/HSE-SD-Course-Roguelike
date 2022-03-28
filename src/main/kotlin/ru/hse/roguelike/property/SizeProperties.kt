@@ -1,9 +1,8 @@
 package ru.hse.roguelike.property
 
-import ru.hse.roguelike.model.Cell
-import java.util.Properties
+import java.util.*
 
-object Properties {
+class SizeProperties {
     val mapWidth: Int
     val mapHeight: Int
     val imageWidth: Int
@@ -11,7 +10,7 @@ object Properties {
 
     init {
         val properties = Properties().apply {
-            load(Cell::class.java.getResourceAsStream("/application.properties"))
+            load(SizeProperties::class.java.getResourceAsStream("/application.properties"))
         }
         mapWidth = properties.getProperty("map.width").toInt()
         mapHeight = properties.getProperty("map.height").toInt()

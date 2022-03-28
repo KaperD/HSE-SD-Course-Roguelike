@@ -8,8 +8,6 @@ enum class InputType {
     ArrowUp,
     ArrowDown,
     Enter;
-
-    companion object {
-        fun String.toInputType() = valueOf(this)
-    }
 }
+
+fun String.toInputType() = InputType.valueOf(this)
