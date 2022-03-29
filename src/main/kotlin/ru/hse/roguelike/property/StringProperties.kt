@@ -30,6 +30,12 @@ object StringProperties {
     val weapon: String
     val disposable: String
 
+    val land: String
+    val water: String
+    val fire: String
+    val stone: String
+    val levelEnd: String
+
     val gameOver: String
     val victory: String
 
@@ -64,6 +70,12 @@ object StringProperties {
         hands = "hands".load()
         weapon = "weapon".load()
         disposable = "disposable".load()
+
+        land = "land".load()
+        water = "water".load()
+        fire = "fire".load()
+        stone = "stone".load()
+        levelEnd = "level.end".load()
 
         gameOver = "game.over".load()
         victory = "victory".load()

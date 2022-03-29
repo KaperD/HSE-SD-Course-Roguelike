@@ -69,7 +69,7 @@ class LanternaMapView(
     override fun setCellInfo(cell: Cell) {
         infoImage.drawText {
             appendTitle("$cellInfo:")
-            appendLine("$cellType = ${cell.groundType.name}")
+            appendLine("$cellType = ${cell.groundType}")
             if (cell.items.size > 0) {
                 appendLine("$itemsCount = ${cell.items.size}")
             }
