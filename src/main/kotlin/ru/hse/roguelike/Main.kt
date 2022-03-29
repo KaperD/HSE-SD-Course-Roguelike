@@ -13,10 +13,12 @@ import ru.hse.roguelike.property.GamePropertiesImpl
 import ru.hse.roguelike.property.StateProperties.openHelp
 import ru.hse.roguelike.property.StateProperties.openInventory
 import ru.hse.roguelike.property.StateProperties.openMap
+import ru.hse.roguelike.property.StateProperties.openMapFreeMode
 import ru.hse.roguelike.sound.LanternaGameSound
 import ru.hse.roguelike.state.GameOverState
 import ru.hse.roguelike.state.HelpState
 import ru.hse.roguelike.state.InventoryState
+import ru.hse.roguelike.state.VictoryState
 import ru.hse.roguelike.ui.help.LanternaMessageView
 import ru.hse.roguelike.ui.inventory.LanternaInventoryView
 import ru.hse.roguelike.ui.window.LanternaGameWindow
@@ -54,11 +56,13 @@ fun main() {
         val inventoryState = InventoryState(gameSound, inventoryView, hero)
         val helpState = HelpState(gameSound, LanternaMessageView(window))
         val gameOverState = GameOverState(LanternaMessageView(window))
+        val victoryState = VictoryState(LanternaMessageView(window))
 
         val states = mapOf(
             openHelp to helpState,
             openInventory to inventoryState,
-            openMap to gameOverState
+            openMap to gameOverState,
+            openMapFreeMode to victoryState
         )
 
         inventoryState.states = states

@@ -31,6 +31,7 @@ object StringProperties {
     val disposable: String
 
     val gameOver: String
+    val victory: String
 
     init {
         val properties: Properties = Properties().apply {
@@ -65,5 +66,6 @@ object StringProperties {
         disposable = "disposable".load()
 
         gameOver = "game.over".load()
+        victory = "victory".load()
     }
 }
