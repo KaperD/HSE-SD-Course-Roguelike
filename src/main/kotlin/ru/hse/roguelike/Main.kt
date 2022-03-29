@@ -13,7 +13,6 @@ import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.GameModel
 import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.creature.Hero
-import ru.hse.roguelike.model.item.Item
 import ru.hse.roguelike.property.GamePropertiesImpl
 import ru.hse.roguelike.property.StateProperties.openHelp
 import ru.hse.roguelike.property.StateProperties.openInventory

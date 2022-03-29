@@ -1,6 +1,5 @@
 package ru.hse.roguelike.state
 
-
 import ru.hse.roguelike.factory.GameFieldFactory
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.model.GameModel
@@ -41,7 +40,7 @@ class MapState(
     }
 
     private fun tryMoveHeroTo(x: Int, y: Int): State {
-        if (canMoveHeroTo(x, y)) {
+        return if (canMoveHeroTo(x, y)) {
             moveHeroTo(x, y)
             val newCell = gameModel.field.get(x, y)
             if (newCell.items.isNotEmpty()) {
@@ -62,12 +61,14 @@ class MapState(
             }
             drawHeroStats()
             if (heroIsDead()) {
-                return gameOverState
+                gameOverState
+            } else {
+                this
             }
         } else {
             gameSound.beep()
+            this
         }
-        return this
     }
 
     private fun heroIsDead(): Boolean {
@@ -92,9 +93,9 @@ class MapState(
     }
 
     private fun canMoveHeroTo(x: Int, y: Int): Boolean {
-        return x in 0 until gameModel.field.width
-            && y in 0 until gameModel.field.height
-            && gameModel.field.get(x, y).groundType in passableGroundTypes
+        return x in 0 until gameModel.field.width &&
+            y in 0 until gameModel.field.height &&
+            gameModel.field.get(x, y).groundType in passableGroundTypes
     }
 
     private fun drawCell(x: Int, y: Int) {

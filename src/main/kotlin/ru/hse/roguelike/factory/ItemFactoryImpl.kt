@@ -15,10 +15,10 @@ class ItemFactoryImpl(itemsFileName: String = "/items.json") : ItemFactory {
     }
 
     override fun getById(itemId: String): Item {
-        return items.getOrElse(itemId) { throw IllegalStateException("Unknown item id") }
+        return items.getOrElse(itemId) { throw IllegalStateException("Unknown item id") }.clone()
     }
 
     override fun getRandom(): Item {
-        return items.values.random()
+        return items.values.random().clone()
     }
 }

@@ -25,4 +25,6 @@ sealed class Item {
         hero.health = max(1, hero.health - healthChange)
         hero.maximumHealth = max(1, hero.maximumHealth - maximumHealthChange)
     }
+
+    abstract fun clone(): Item
 }

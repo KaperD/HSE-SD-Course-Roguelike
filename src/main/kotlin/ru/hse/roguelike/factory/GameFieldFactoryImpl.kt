@@ -1,23 +1,25 @@
 package ru.hse.roguelike.factory
 
-import ru.hse.roguelike.model.*
+import ru.hse.roguelike.model.Cell
+import ru.hse.roguelike.model.GameField
+import ru.hse.roguelike.model.GroundType
+import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.property.ViewProperties.fireSymbol
 import ru.hse.roguelike.property.ViewProperties.landSymbol
 import ru.hse.roguelike.property.ViewProperties.levelEndSymbol
 import ru.hse.roguelike.property.ViewProperties.stoneSymbol
 import ru.hse.roguelike.property.ViewProperties.waterSymbol
-import java.nio.file.Path
-import kotlin.io.path.readText
 
 class GameFieldFactoryImpl(
     private val fieldWidth: Int,
     private val fieldHeight: Int,
     private val itemFactory: ItemFactory,
-    private val levelsFolder: Path = Path.of(GameFieldFactoryImpl::class.java.getResource("/levels")!!.toURI())
+    private val levelsFolder: String = "levels"
 ) : GameFieldFactory {
 
     override fun getByLevelName(name: String): Pair<GameField, Position> {
-        val linesIterator = levelsFolder.resolve("$name.txt").readText().lines().iterator()
+        val linesIterator =
+            GameFieldFactoryImpl::class.java.getResource("/$levelsFolder/$name.txt")!!.readText().lines().iterator()
 
         val gameField = GameField(readField(linesIterator))
         linesIterator.next()
@@ -33,7 +35,7 @@ class GameFieldFactoryImpl(
 
     private fun readField(linesIterator: Iterator<String>): List<List<Cell>> {
         val field: MutableList<MutableList<Cell>> = mutableListOf()
-        for (i in 0 until fieldHeight) {
+        repeat(fieldHeight) {
             val line = linesIterator.next()
             require(line.length == fieldWidth) { "Field with and raw length in file mismatch" }
             field.add(line.map { Cell(it.groundType(), mutableListOf(), null) }.toMutableList())

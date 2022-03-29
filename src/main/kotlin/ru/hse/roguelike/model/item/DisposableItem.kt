@@ -30,4 +30,6 @@ data class DisposableItem(
     override fun cancel(hero: Hero) {
         throw IllegalStateException("Can't cancel disposable item")
     }
+
+    override fun clone(): Item = this.copy()
 }

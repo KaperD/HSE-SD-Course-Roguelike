@@ -33,4 +33,6 @@ data class ReusableItem(
         super.cancel(hero)
         isUsed = false
     }
+
+    override fun clone(): Item = this.copy()
 }

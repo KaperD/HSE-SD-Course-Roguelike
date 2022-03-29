@@ -73,10 +73,6 @@ class LanternaInventoryView(
     }
 
     private fun drawItems() {
-        if (items.isEmpty()) {
-            itemsImage.clear()
-            return
-        }
         itemsImage.drawText {
             appendTitle("${StringProperties.items}:")
             for ((i, item) in items.withIndex()) {
@@ -85,6 +81,11 @@ class LanternaInventoryView(
                 } else {
                     drawItem(item, this)
                 }
+            }
+        }
+        if (items.isEmpty()) {
+            infoImage.drawText {
+                appendTitle("$itemInfo:")
             }
         }
     }
