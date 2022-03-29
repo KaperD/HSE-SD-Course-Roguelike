@@ -5,16 +5,19 @@ import ru.hse.roguelike.model.item.Item
 import ru.hse.roguelike.property.ColorProperties.borderColor
 import ru.hse.roguelike.property.ColorProperties.defaultColor
 import ru.hse.roguelike.property.ColorProperties.highlightColor
-import ru.hse.roguelike.property.ColorProperties.titleColor
 import ru.hse.roguelike.property.StringProperties
+import ru.hse.roguelike.property.StringProperties.bonusHealth
+import ru.hse.roguelike.property.StringProperties.bonusMaximumHealth
 import ru.hse.roguelike.property.StringProperties.health
 import ru.hse.roguelike.property.StringProperties.heroStats
 import ru.hse.roguelike.property.StringProperties.itemInfo
+import ru.hse.roguelike.property.StringProperties.itemType
 import ru.hse.roguelike.property.StringProperties.itemsCount
 import ru.hse.roguelike.property.StringProperties.used
 import ru.hse.roguelike.ui.Color
 import ru.hse.roguelike.ui.Drawable
 import ru.hse.roguelike.ui.window.GameWindow
+import ru.hse.roguelike.utils.DrawContext
 import ru.hse.roguelike.utils.drawText
 
 class LanternaInventoryView(
@@ -70,33 +73,43 @@ class LanternaInventoryView(
     }
 
     private fun drawItems() {
-        itemsImage.clear()
-        itemsImage.setLine(0, 0, "${StringProperties.items}:", foreground = titleColor)
-        for ((i, item) in items.withIndex()) {
-            if (i == chosenPosition) {
-                drawSelectedItem(item, i)
-            } else {
-                drawItem(item, i)
+        if (items.isEmpty()) {
+            itemsImage.clear()
+            return
+        }
+        itemsImage.drawText {
+            appendTitle("${StringProperties.items}:")
+            for ((i, item) in items.withIndex()) {
+                if (i == chosenPosition) {
+                    drawSelectedItem(item, this)
+                } else {
+                    drawItem(item, this)
+                }
             }
         }
-        if (items.isEmpty()) {
-            infoImage.clear()
-        }
     }
 
-    private fun drawItem(item: Item, position: Int, background: Color = defaultColor) {
+    private fun drawItem(item: Item, drawContext: DrawContext, background: Color = defaultColor) {
         val line = if (item.isUsed) "${item.name} ($used)" else item.name
-        itemsImage.setLine(0, position + 1, line, background = background)
+        drawContext.appendLine(line, background = background)
     }
 
-    private fun drawSelectedItem(item: Item, position: Int) {
-        drawItem(item, position, highlightColor)
+    private fun drawSelectedItem(item: Item, drawContext: DrawContext) {
+        drawItem(item, drawContext, highlightColor)
         drawItemInfo(item)
     }
 
     private fun drawItemInfo(item: Item) {
         infoImage.drawText {
             appendTitle("$itemInfo:")
+            appendLine("$itemType = ${item.itemType}")
+            if (item.healthChange != 0) {
+                appendLine("$bonusHealth = ${item.healthChange}")
+            }
+            if (item.maximumHealthChange != 0) {
+                appendLine("$bonusMaximumHealth = ${item.maximumHealthChange}")
+            }
+            appendLine("")
             appendText(item.description)
         }
     }

@@ -1,16 +1,101 @@
 [
     {
         "type": "Reusable",
-        "name": "Blue jeans",
-        "description": "Reusable desc",
-        "itemType": "Weapon",
+        "id": "helm_of_iron_will",
+        "name": "Helm of Iron Will",
+        "description": "The helmet of a legendary warrior who fell in battle.",
+        "itemType": "Head",
+        "healthChange": 20,
+        "maximumHealthChange": 20
+    },
+    {
+        "type": "Reusable",
+        "id": "helm_of_the_dominator",
+        "name": "Helm of the Dominator",
+        "description": "The powerful headpiece of a dead necromancer.",
+        "itemType": "Head",
+        "healthChange": 10,
         "maximumHealthChange": 10
     },
     {
-        "type": "Disposable",
-        "name": "Health potion",
-        "description": "Disposable desc",
-        "healthChange": 1,
+        "type": "Reusable",
+        "id": "platemail",
+        "name": "Platemail",
+        "description": "Thick metal plates that protect the entire upper body. Avoid dropping on feet.",
+        "itemType": "Body",
+        "healthChange": 20,
+        "maximumHealthChange": 20
+    },
+    {
+        "type": "Reusable",
+        "id": "glimmer_cape",
+        "name": "Glimmer Cape",
+        "description": "The stolen cape of a master illusionist.",
+        "itemType": "Body",
+        "healthChange": 10,
         "maximumHealthChange": 10
+    },
+    {
+        "type": "Reusable",
+        "id": "guardian_greaves",
+        "name": "Guardian Greaves",
+        "description": "One of many holy instruments constructed to honor the Omniscience.",
+        "itemType": "Boots",
+        "maximumHealthChange": 40
+    },
+    {
+        "type": "Reusable",
+        "id": "boots_of_bearing",
+        "name": "Boots of Bearing",
+        "description": "Resplendent footwear fashioned for the ancient herald that first dared spread the glory of Stonehall beyond the original borders of its nascent claim.",
+        "itemType": "Boots",
+        "healthChange": 20,
+        "maximumHealthChange": 20
+    },
+    {
+        "type": "Reusable",
+        "id": "hand_of_midas",
+        "name": "Hand of Midas",
+        "description": "Preserved through unknown magical means, the Hand of Midas is a weapon of greed, sacrificing animals to line the owner's pockets.",
+        "itemType": "Hands",
+        "healthChange": 10,
+        "maximumHealthChange": 10
+    },
+    {
+        "type": "Reusable",
+        "id": "gloves_of_haste",
+        "name": "Gloves of Haste",
+        "description": "A pair of magical gloves that seems to render weapons weightless.",
+        "itemType": "Hands",
+        "healthChange": 20,
+        "maximumHealthChange": 20
+    },
+    {
+        "type": "Reusable",
+        "id": "claymore",
+        "name": "Claymore",
+        "description": "A sword that can cut through armor, it's a commonly chosen first weapon for budding swordsmen.",
+        "itemType": "Weapon"
+    },
+    {
+        "type": "Reusable",
+        "id": "javelin",
+        "name": "Javelin",
+        "description": "A rather typical spear that can sometimes pierce through an enemy's armor when used to attack.",
+        "itemType": "Weapon"
+    },
+    {
+        "type": "Disposable",
+        "id": "healing_salve",
+        "name": "Healing Salve",
+        "description": "A magical salve that can quickly mend even the deepest of wounds.",
+        "healthChange": 50
+    },
+    {
+        "type": "Disposable",
+        "id": "tango",
+        "name": "Tango",
+        "description": "Forage to survive on the battlefield.",
+        "healthChange": 20
     }
 ]

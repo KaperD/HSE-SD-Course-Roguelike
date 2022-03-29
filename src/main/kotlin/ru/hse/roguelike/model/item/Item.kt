@@ -6,6 +6,7 @@ import kotlin.math.max
 
 @Serializable
 sealed class Item {
+    abstract val id: String
     abstract val name: String
     abstract val description: String
     abstract val itemType: ItemType
@@ -21,7 +22,7 @@ sealed class Item {
     }
 
     open fun cancel(hero: Hero) {
-        hero.maximumHealth = max(1, hero.maximumHealth - maximumHealthChange)
         hero.health = max(1, hero.health - healthChange)
+        hero.maximumHealth = max(1, hero.maximumHealth - maximumHealthChange)
     }
 }

@@ -5,6 +5,9 @@ import java.util.*
 
 object StringProperties {
     val helpMessage: String
+
+    val makeWindowBigger: String
+
     val heroStats: String
     val health: String
     val itemsCount: String
@@ -17,11 +20,12 @@ object StringProperties {
     val creatureInfo: String
     val type: String
     val hero: String
-    val makeWindowBigger: String
+    val bonusHealth: String
+    val bonusMaximumHealth: String
 
     val head: String
     val body: String
-    val legs: String
+    val boots: String
     val hands: String
     val weapon: String
     val disposable: String
@@ -35,6 +39,9 @@ object StringProperties {
 
         fun String.load(): String = properties.getProperty(this)
         helpMessage = "help.message".load()
+
+        makeWindowBigger = "make.window.bigger".load()
+
         heroStats = "hero.stats".load()
         health = "health".load()
         itemsCount = "items.count".load()
@@ -47,11 +54,12 @@ object StringProperties {
         creatureInfo = "creature.info".load()
         type = "type".load()
         hero = "hero".load()
-        makeWindowBigger = "make.window.bigger".load()
+        bonusHealth = "bonus.health".load()
+        bonusMaximumHealth = "bonus.maximum.health".load()
 
         head = "head".load()
         body = "body".load()
-        legs = "legs".load()
+        boots = "boots".load()
         hands = "hands".load()
         weapon = "weapon".load()
         disposable = "disposable".load()

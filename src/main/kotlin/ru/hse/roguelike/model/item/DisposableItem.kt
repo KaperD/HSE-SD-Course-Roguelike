@@ -7,6 +7,7 @@ import ru.hse.roguelike.model.creature.Hero
 @Serializable
 @SerialName("Disposable")
 data class DisposableItem(
+    override val id: String,
     override val name: String,
     override val description: String,
     override val healthChange: Int = 0,

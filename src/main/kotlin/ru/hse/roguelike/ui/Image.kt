@@ -4,7 +4,6 @@ import com.googlecode.lanterna.TerminalPosition
 import com.googlecode.lanterna.TerminalSize
 import com.googlecode.lanterna.TextCharacter
 import com.googlecode.lanterna.graphics.TextImage
-import java.lang.Integer.min
 
 class Image(private val delegate: TextImage) :
     SubImage(
@@ -34,17 +33,44 @@ open class SubImage(
         )
     }
 
-    override fun setLine(x: Int, y: Int, line: String, foreground: Color, background: Color) {
+    override fun drawLine(x: Int, y: Int, line: String, foreground: Color, background: Color): Int {
         require(x in 0 until width)
         textGraphics.foregroundColor = foreground.textColor
         textGraphics.backgroundColor = background.textColor
-        textGraphics.putString(topLeftX + x, topLeftY + y, line.take(min(line.length, width - x)))
+        var curX = x
+        var curY = y
+        val words = line.split(whiteSpaceRegex)
+        val currentLineWords = mutableListOf<String>()
+        for (word in words) {
+            if (curX + word.length > width) {
+                textGraphics.putString(
+                    topLeftX + x,
+                    topLeftY + curY,
+                    currentLineWords.joinToString(separator = " ")
+                )
+                currentLineWords.clear()
+                curX = x
+                curY++
+            }
+            currentLineWords.add(word)
+            curX += word.length + 1
+        }
+        if (currentLineWords.isNotEmpty()) {
+            textGraphics.putString(
+                topLeftX + x,
+                topLeftY + curY,
+                currentLineWords.joinToString(separator = " ")
+            )
+        }
+        return curY - y + 1
     }
 
-    override fun setText(x: Int, y: Int, text: String, foreground: Color, background: Color) {
-        for ((i, line) in text.lines().withIndex()) {
-            setLine(x, y + i, line, foreground, background)
+    override fun drawText(x: Int, y: Int, text: String, foreground: Color, background: Color): Int {
+        var curY = y
+        for (line in text.lines()) {
+            curY += drawLine(x, curY, line, foreground, background)
         }
+        return curY - y
     }
 
     override fun subImage(topLeftX: Int, topLeftY: Int, width: Int, height: Int): Drawable {
@@ -61,5 +87,9 @@ open class SubImage(
 
     override fun clear() {
         fill(' ')
+    }
+
+    companion object {
+        val whiteSpaceRegex = "\\s".toRegex()
     }
 }

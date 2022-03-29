@@ -2,12 +2,13 @@ package ru.hse.roguelike
 
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFrame
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import ru.hse.roguelike.input.LanternaGameInput
+import ru.hse.roguelike.model.Cell
 import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.creature.Hero
-import ru.hse.roguelike.model.item.DisposableItem
-import ru.hse.roguelike.model.item.ItemType
-import ru.hse.roguelike.model.item.ReusableItem
+import ru.hse.roguelike.model.item.Item
 import ru.hse.roguelike.property.GamePropertiesImpl
 import ru.hse.roguelike.property.StateProperties.openHelp
 import ru.hse.roguelike.property.StateProperties.openInventory
@@ -23,11 +24,12 @@ import javax.swing.JFrame
 
 const val initX = 0
 const val initY = 0
-const val bonus1 = 3
-const val bonus2 = 4
-const val bonus3 = 2
 
 fun main() {
+    val items: MutableList<Item> = Json.decodeFromString(
+        Cell::class.java.getResourceAsStream("/items.json").reader().readText()
+    )
+
     val gameProperties = GamePropertiesImpl()
     val mapWidth = gameProperties.mapWidth
     val mapHeight = gameProperties.mapHeight
@@ -47,12 +49,7 @@ fun main() {
             gameProperties.initialHeroHealth,
             gameProperties.initialHeroHealth,
             Position(initX, initY),
-            mutableListOf(
-                ReusableItem("item1", "description1", ItemType.Body, maximumHealthChange = bonus1),
-                ReusableItem("item2", "description2", ItemType.Body, bonus2),
-                ReusableItem("item3", "description3", ItemType.Weapon, bonus3),
-                DisposableItem("item4", "description4", 2)
-            )
+            items
         )
         val inventoryState = InventoryState(gameSound, inventoryView, hero)
         val helpState = HelpState(gameSound, LanternaMessageView(window))
