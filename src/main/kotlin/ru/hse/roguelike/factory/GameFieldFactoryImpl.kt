@@ -28,7 +28,7 @@ class GameFieldFactoryImpl(
         }
         val gameField = GameField(field)
         for (i in fieldHeight + 1 until levelTextLines.size) {
-            val split = levelTextLines[i].split(whitespaceRegex, 3)
+            val split = levelTextLines[i].split(whitespaceRegex, splitSize)
             val x = split[0].toInt()
             val y = split[1].toInt()
             val itemId = split[2]
@@ -53,5 +53,6 @@ class GameFieldFactoryImpl(
 
     companion object {
         val whitespaceRegex = "\\s".toRegex()
+        const val splitSize = 3
     }
 }
