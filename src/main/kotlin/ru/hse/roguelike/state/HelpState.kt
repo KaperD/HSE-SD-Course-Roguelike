@@ -6,26 +6,16 @@ import ru.hse.roguelike.sound.GameSound
 import ru.hse.roguelike.ui.help.MessageView
 
 class HelpState(
-    private val gameSound: GameSound,
-    private val messageView: MessageView
-) : State {
-    var states: Map<InputType, State> = mapOf()
+    override val view: MessageView,
+    override val gameSound: GameSound,
+    override val states: Map<InputType, State>
+) : State() {
 
     init {
-        messageView.setText(StringProperties.helpMessage)
-    }
-
-    override fun handleInput(type: InputType): State {
-        val newState = states[type]
-        return if (newState != null) {
-            newState
-        } else {
-            gameSound.beep()
-            this
-        }
+        view.setText(StringProperties.helpMessage)
     }
 
     override fun activate() {
-        messageView.show()
+        view.show()
     }
 }

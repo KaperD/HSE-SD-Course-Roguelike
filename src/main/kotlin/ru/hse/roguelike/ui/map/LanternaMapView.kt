@@ -61,7 +61,8 @@ class LanternaMapView(
     override fun setHeroStats(hero: Hero) {
         infoImage.drawText {
             appendTitle("$heroStats:")
-            appendLine("$health = ${hero.health}")
+            appendLine("$health = ${hero.health}/${hero.maximumHealth}")
+            appendLine("$itemsCount = ${hero.items.size}")
         }
     }
 
@@ -69,7 +70,9 @@ class LanternaMapView(
         infoImage.drawText {
             appendTitle("$cellInfo:")
             appendLine("$cellType = ${cell.groundType.name}")
-            appendLine("$itemsCount = ${cell.items.size}")
+            if (cell.items.size > 0) {
+                appendLine("$itemsCount = ${cell.items.size}")
+            }
             cell.creature?.let { creature ->
                 appendTitle("$creatureInfo:")
                 appendText(creature.info())
@@ -84,7 +87,7 @@ class LanternaMapView(
     private fun Creature.info(): String = when (this) {
         is Hero -> """
             $type = $hero
-            ${StringProperties.health} = $health
+            ${StringProperties.health} = $health/$maximumHealth
         """.trimIndent()
         else -> throw IllegalStateException("Unknown creature type")
     }

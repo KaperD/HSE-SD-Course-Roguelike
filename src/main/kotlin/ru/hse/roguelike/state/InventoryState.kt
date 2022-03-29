@@ -9,15 +9,13 @@ import kotlin.math.max
 import kotlin.math.min
 
 class InventoryState(
-    private val gameSound: GameSound,
-    private val inventoryView: InventoryView,
     private val hero: Hero,
-) : State {
+    override val view: InventoryView,
+    override val gameSound: GameSound,
+    override val states: Map<InputType, State>
+) : State() {
     private var chosenPosition = 0
     private val items = hero.items
-    private val actionByInputType = mutableMapOf<InputType, () -> State>()
-
-    var states: Map<InputType, State> = mapOf()
 
     init {
         actionByInputType[StateProperties.inventoryItemUp] = this::moveItemUp
@@ -25,36 +23,26 @@ class InventoryState(
         actionByInputType[StateProperties.inventoryItemAction] = this::actionWithItem
     }
 
-    override fun handleInput(type: InputType): State {
-        val action = actionByInputType[type]
-        val newState = states[type]
-        return if (action != null) {
-            action().also {
-                inventoryView.show()
-            }
-        } else if (newState != null) {
-            newState
-        } else {
-            gameSound.beep()
-            this
-        }
+    override fun activate() {
+        chosenPosition = 0
+
+        view.setItems(items, chosenPosition)
+        view.setHeroStats(hero)
+
+        view.show()
     }
 
-    private fun moveItemUp(): State {
+    private fun moveItemUp() {
         chosenPosition = max(0, chosenPosition - 1)
-        inventoryView.setChosenItem(chosenPosition)
-
-        return this
+        view.setChosenItem(chosenPosition)
     }
 
-    private fun moveItemDown(): State {
+    private fun moveItemDown() {
         chosenPosition = min(items.lastIndex, chosenPosition + 1)
-        inventoryView.setChosenItem(chosenPosition)
-
-        return this
+        view.setChosenItem(chosenPosition)
     }
 
-    private fun actionWithItem(): State {
+    private fun actionWithItem() {
         val item = items[chosenPosition]
         if (item.isUsed) {
             item.cancel(hero)
@@ -66,18 +54,7 @@ class InventoryState(
             gameSound.beep()
         }
 
-        inventoryView.setItems(items, chosenPosition)
-        inventoryView.setHeroStats(hero)
-
-        return this
-    }
-
-    override fun activate() {
-        chosenPosition = 0
-
-        inventoryView.setItems(items, chosenPosition)
-        inventoryView.setHeroStats(hero)
-
-        inventoryView.show()
+        view.setItems(items, chosenPosition)
+        view.setHeroStats(hero)
     }
 }

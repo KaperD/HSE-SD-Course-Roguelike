@@ -1,8 +1,28 @@
 package ru.hse.roguelike.state
 
 import ru.hse.roguelike.input.InputType
+import ru.hse.roguelike.sound.GameSound
+import ru.hse.roguelike.ui.View
 
-interface State {
-    fun handleInput(type: InputType): State
-    fun activate()
+abstract class State {
+    protected abstract val view: View
+    protected abstract val gameSound: GameSound
+    protected abstract val states: Map<InputType, State>
+    protected val actionByInputType = mutableMapOf<InputType, () -> Unit>()
+
+    open fun handleInput(type: InputType): State {
+        val action = actionByInputType[type]
+        val newState = states[type]
+        return if (action != null) {
+            action()
+            view.show()
+            this
+        } else if (newState != null) {
+            newState
+        } else {
+            gameSound.beep()
+            this
+        }
+    }
+    abstract fun activate()
 }

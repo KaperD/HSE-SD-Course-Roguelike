@@ -1,6 +1,7 @@
 package ru.hse.roguelike.ui.help
 
-interface MessageView {
+import ru.hse.roguelike.ui.View
+
+interface MessageView : View {
     fun setText(text: String)
-    fun show()
 }

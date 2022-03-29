@@ -14,6 +14,11 @@ object StateProperties {
     val inventoryItemDown: InputType
     val inventoryItemAction: InputType
 
+    val freeModeCursorUp: InputType
+    val freeModeCursorDown: InputType
+    val freeModeCursorLeft: InputType
+    val freeModeCursorRight: InputType
+
     val exitGame: InputType
 
     init {
@@ -29,6 +34,11 @@ object StateProperties {
         inventoryItemUp = "inventory.item.up".loadInputType()
         inventoryItemDown = "inventory.item.down".loadInputType()
         inventoryItemAction = "inventory.item.action".loadInputType()
+
+        freeModeCursorUp = "free.mode.cursor.up".loadInputType()
+        freeModeCursorDown = "free.mode.cursor.down".loadInputType()
+        freeModeCursorLeft = "free.mode.cursor.left".loadInputType()
+        freeModeCursorRight = "free.mode.cursor.right".loadInputType()
 
         exitGame = "exit.game".loadInputType()
     }
