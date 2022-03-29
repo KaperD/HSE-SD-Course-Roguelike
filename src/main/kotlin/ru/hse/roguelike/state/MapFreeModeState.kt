@@ -16,56 +16,29 @@ class MapFreeModeState(
     private var curY = 0
 
     init {
-        actionByInputType[StateProperties.freeModeCursorUp] = this::moveCursorUp
-        actionByInputType[StateProperties.freeModeCursorDown] = this::moveCursorDown
-        actionByInputType[StateProperties.freeModeCursorLeft] = this::moveCursorLeft
-        actionByInputType[StateProperties.freeModeCursorRight] = this::moveCursorRight
+        actionByInputType[StateProperties.freeModeCursorUp] = { moveCursorTo(curX, curY - 1) }
+        actionByInputType[StateProperties.freeModeCursorDown] = { moveCursorTo(curX, curY + 1) }
+        actionByInputType[StateProperties.freeModeCursorLeft] = { moveCursorTo(curX - 1, curY) }
+        actionByInputType[StateProperties.freeModeCursorRight] = { moveCursorTo(curX + 1, curY) }
     }
 
     override fun activate() {
         drawWholeField()
-        highlight(gameModel.hero.position.x, gameModel.hero.position.y)
+        moveCursorTo(gameModel.hero.position.x, gameModel.hero.position.y)
         view.show()
     }
 
-    private fun moveCursorUp() {
-        if (curY > 0) {
-            highlight(curX, curY - 1)
+    private fun moveCursorTo(x: Int, y: Int): State {
+        if (x in 0 until gameModel.field.width && y in 0 until gameModel.field.height) {
+            view.set(curX, curY, gameModel.field.get(curX, curY))
+            curX = x
+            curY = y
+            view.setHighlighted(curX, curY, gameModel.field.get(curX, curY))
+            view.setCellInfo(gameModel.field.get(x, y))
         } else {
             gameSound.beep()
         }
-    }
-
-    private fun moveCursorDown() {
-        if (curY + 1 < gameModel.field.height) {
-            highlight(curX, curY + 1)
-        } else {
-            gameSound.beep()
-        }
-    }
-
-    private fun moveCursorLeft() {
-        if (curX > 0) {
-            highlight(curX - 1, curY)
-        } else {
-            gameSound.beep()
-        }
-    }
-
-    private fun moveCursorRight() {
-        if (curX + 1 < gameModel.field.width) {
-            highlight(curX + 1, curY)
-        } else {
-            gameSound.beep()
-        }
-    }
-
-    private fun highlight(x: Int, y: Int) {
-        view.set(curX, curY, gameModel.field.get(curX, curY))
-        curX = x
-        curY = y
-        view.setHighlighted(curX, curY, gameModel.field.get(curX, curY))
-        view.setCellInfo(gameModel.field.get(x, y))
+        return this
     }
 
     private fun drawWholeField() {

@@ -8,6 +8,7 @@ interface GameProperties {
     val imageWidth: Int
     val imageHeight: Int
     val initialHeroHealth: Int
+    val fireDamage: Int
 }
 
 class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : GameProperties {
@@ -16,6 +17,7 @@ class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : Game
     override val imageWidth: Int
     override val imageHeight: Int
     override val initialHeroHealth: Int
+    override val fireDamage: Int
 
     init {
         val properties = Properties().apply {
@@ -27,5 +29,6 @@ class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : Game
         imageWidth = "image.width".loadInt()
         imageHeight = "image.height".loadInt()
         initialHeroHealth = "initial.hero.health".loadInt()
+        fireDamage = "fire.damage".loadInt()
     }
 }

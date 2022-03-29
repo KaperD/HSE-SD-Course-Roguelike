@@ -3,7 +3,7 @@ package ru.hse.roguelike.model
 class GameField(
     private val field: List<List<Cell>>
 ) {
-    val width = field.first().size
+    val width = field.firstOrNull()?.size ?: 0
     val height = field.size
 
     fun get(x: Int, y: Int): Cell = field[y][x]

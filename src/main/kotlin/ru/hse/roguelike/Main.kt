@@ -9,7 +9,9 @@ import ru.hse.roguelike.factory.ItemFactoryImpl
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.input.LanternaGameInput
 import ru.hse.roguelike.model.Cell
+import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.GameModel
+import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.model.item.Item
 import ru.hse.roguelike.property.GamePropertiesImpl
@@ -26,10 +28,6 @@ import ru.hse.roguelike.ui.window.LanternaGameWindow
 import javax.swing.JFrame
 
 fun main() {
-    val items: MutableList<Item> = Json.decodeFromString(
-        Cell::class.java.getResourceAsStream("/items.json").reader().readText()
-    )
-
     val gameProperties = GamePropertiesImpl()
     val mapWidth = gameProperties.mapWidth
     val mapHeight = gameProperties.mapHeight
@@ -49,36 +47,49 @@ fun main() {
         val itemFactory = ItemFactoryImpl()
         val gameFieldFactory = GameFieldFactoryImpl(mapWidth, mapHeight, itemFactory)
 
-        val (field, heroPosition) = gameFieldFactory.getByLevel(1)
         val hero = Hero(
             gameProperties.initialHeroHealth,
             gameProperties.initialHeroHealth,
-            heroPosition,
-            items
+            Position(0, 0),
+            mutableListOf()
         )
-        field.get(heroPosition).creature = hero
 
-        val gameModel = GameModel(field, hero)
+        val gameModel = GameModel(GameField(emptyList()), hero)
 
         val states = mutableMapOf<InputType, State>()
 
         val inventoryState = InventoryState(hero, inventoryView, gameSound, states)
         val helpState = HelpState(LanternaMessageView(window), gameSound, states)
-        val gameOverState = GameOverState(LanternaMessageView(window), gameSound)
         val mapFreeModeState =
             MapFreeModeState(gameModel, LanternaMapView(window, mapWidth, mapHeight), gameSound, states)
+        val gameOverState = GameOverState(LanternaMessageView(window), gameSound)
+        val victoryState = VictoryState(LanternaMessageView(window), gameSound)
+        val levelsOrder: List<String> = Json.decodeFromString(
+            Cell::class.java.getResourceAsStream("/levels/levels_order.json")!!.reader().readText()
+        )
+        val mapState = MapState(
+            gameModel,
+            LanternaMapView(window, mapWidth, mapHeight),
+            gameSound,
+            states,
+            gameFieldFactory,
+            gameProperties,
+            gameOverState,
+            victoryState,
+            levelsOrder
+        )
 
         states.putAll(
             mapOf(
                 openHelp to helpState,
                 openInventory to inventoryState,
-                openMap to gameOverState,
+                openMap to mapState,
                 openMapFreeMode to mapFreeModeState
             )
         )
 
         val gameInput = LanternaGameInput(terminal)
-        val application = RoguelikeApplication(gameInput, inventoryState)
+        val application = RoguelikeApplication(gameInput, mapState)
         application.run()
     }
 }

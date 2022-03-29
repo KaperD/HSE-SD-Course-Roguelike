@@ -18,9 +18,18 @@ class InventoryState(
     private val items = hero.items
 
     init {
-        actionByInputType[StateProperties.inventoryItemUp] = this::moveItemUp
-        actionByInputType[StateProperties.inventoryItemDown] = this::moveItemDown
-        actionByInputType[StateProperties.inventoryItemAction] = this::actionWithItem
+        actionByInputType[StateProperties.inventoryItemUp] = {
+            moveItemUp()
+            this
+        }
+        actionByInputType[StateProperties.inventoryItemDown] = {
+            moveItemDown()
+            this
+        }
+        actionByInputType[StateProperties.inventoryItemAction] = {
+            actionWithItem()
+            this
+        }
     }
 
     override fun activate() {

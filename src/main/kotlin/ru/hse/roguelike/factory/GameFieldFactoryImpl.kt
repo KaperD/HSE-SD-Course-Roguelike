@@ -16,8 +16,8 @@ class GameFieldFactoryImpl(
     private val levelsFolder: Path = Path.of(GameFieldFactoryImpl::class.java.getResource("/levels")!!.toURI())
 ) : GameFieldFactory {
 
-    override fun getByLevel(level: Int): Pair<GameField, Position> {
-        val linesIterator = levelsFolder.resolve("level$level.txt").readText().lines().iterator()
+    override fun getByLevelName(name: String): Pair<GameField, Position> {
+        val linesIterator = levelsFolder.resolve("$name.txt").readText().lines().iterator()
 
         val gameField = GameField(readField(linesIterator))
         linesIterator.next()

@@ -7,7 +7,7 @@ interface GameFieldFactory {
     /**
      * @return game field and initial hero position
      */
-    fun getByLevel(level: Int): Pair<GameField, Position>
+    fun getByLevelName(name: String): Pair<GameField, Position>
 
     /**
      * @return game field and initial hero position

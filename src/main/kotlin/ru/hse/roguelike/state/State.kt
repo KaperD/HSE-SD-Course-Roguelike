@@ -8,15 +8,15 @@ abstract class State {
     protected abstract val view: View
     protected abstract val gameSound: GameSound
     protected abstract val states: Map<InputType, State>
-    protected val actionByInputType = mutableMapOf<InputType, () -> Unit>()
+    protected val actionByInputType = mutableMapOf<InputType, () -> State>()
 
     open fun handleInput(type: InputType): State {
         val action = actionByInputType[type]
         val newState = states[type]
         return if (action != null) {
-            action()
-            view.show()
-            this
+            action().also {
+                view.show()
+            }
         } else if (newState != null) {
             newState
         } else {
