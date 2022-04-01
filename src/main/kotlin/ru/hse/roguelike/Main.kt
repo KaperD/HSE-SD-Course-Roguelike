@@ -1,7 +1,7 @@
 package ru.hse.roguelike
 
+import com.googlecode.lanterna.TerminalSize
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory
-import com.googlecode.lanterna.terminal.swing.SwingTerminalFrame
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import ru.hse.roguelike.factory.GameFieldFactoryImpl
@@ -24,7 +24,6 @@ import ru.hse.roguelike.ui.help.LanternaMessageView
 import ru.hse.roguelike.ui.inventory.LanternaInventoryView
 import ru.hse.roguelike.ui.map.LanternaMapView
 import ru.hse.roguelike.ui.window.LanternaGameWindow
-import javax.swing.JFrame
 
 fun main() {
     val gameProperties = GamePropertiesImpl()
@@ -33,10 +32,8 @@ fun main() {
     val imageWidth = gameProperties.imageWidth
     val imageHeight = gameProperties.imageHeight
     val factory = DefaultTerminalFactory()
+    factory.setInitialTerminalSize(TerminalSize(imageWidth + 2, imageHeight + 2))
     factory.createTerminal().use { terminal ->
-        if (terminal is SwingTerminalFrame) {
-            terminal.extendedState = JFrame.MAXIMIZED_BOTH
-        }
         terminal.enterPrivateMode()
         val window = LanternaGameWindow(terminal, imageWidth, imageHeight)
 
