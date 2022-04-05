@@ -3,6 +3,7 @@ package ru.hse.roguelike.input
 import com.googlecode.lanterna.input.KeyStroke
 import com.googlecode.lanterna.input.KeyType
 import com.googlecode.lanterna.terminal.Terminal
+import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -18,5 +19,6 @@ internal class LanternaGameInputTest {
         val gameInput = LanternaGameInput(terminal)
         assertEquals(InputType.ArrowUp, gameInput.getInput())
         verify { terminal.readInput() }
+        confirmVerified(terminal)
     }
 }

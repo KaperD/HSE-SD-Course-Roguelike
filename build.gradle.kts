@@ -62,7 +62,7 @@ tasks.jacocoTestReport {
         files(
             classDirectories.files.map {
                 fileTree(it) {
-                    exclude("ru/hse/Main*")
+                    exclude("ru/hse/roguelike/Main*")
                 }
             }
         )
@@ -79,7 +79,7 @@ tasks.jacocoTestCoverageVerification {
         files(
             classDirectories.files.map {
                 fileTree(it) {
-                    exclude("ru/hse/Main*")
+                    exclude("ru/hse/roguelike/Main*")
                 }
             }
         )
