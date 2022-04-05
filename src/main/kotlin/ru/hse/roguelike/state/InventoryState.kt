@@ -42,16 +42,28 @@ class InventoryState(
     }
 
     private fun moveItemUp() {
-        chosenPosition = max(0, chosenPosition - 1)
+        if (chosenPosition  - 1 < 0) {
+            gameSound.beep()
+            return
+        }
+        chosenPosition -= 1
         view.setChosenItem(chosenPosition)
     }
 
     private fun moveItemDown() {
-        chosenPosition = min(items.lastIndex, chosenPosition + 1)
+        if (chosenPosition + 1 > items.lastIndex) {
+            gameSound.beep()
+            return
+        }
+        chosenPosition += 1
         view.setChosenItem(chosenPosition)
     }
 
     private fun actionWithItem() {
+        if (items.isEmpty()) {
+            gameSound.beep()
+            return
+        }
         val item = items[chosenPosition]
         if (item.isUsed) {
             item.cancel(hero)
@@ -61,6 +73,7 @@ class InventoryState(
             chosenPosition = min(items.lastIndex, chosenPosition)
         } else {
             gameSound.beep()
+            return
         }
 
         view.setItems(items, chosenPosition)
