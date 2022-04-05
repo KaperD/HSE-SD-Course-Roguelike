@@ -14,7 +14,7 @@ object ViewProperties {
 
     init {
         val properties: Properties = Properties().apply {
-            load(Color::class.java.getResourceAsStream("/view.properties"))
+            load(Color::class.java.getResourceAsStream("/view.properties")!!.reader())
         }
         fun String.loadSymbol(): Char = properties.getProperty(this)[0]
         landSymbol = "symbol.land".loadSymbol()

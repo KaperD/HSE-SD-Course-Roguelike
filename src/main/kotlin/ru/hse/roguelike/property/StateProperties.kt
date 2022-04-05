@@ -28,7 +28,7 @@ object StateProperties {
 
     init {
         val properties: Properties = Properties().apply {
-            load(InputType::class.java.getResourceAsStream("/state.properties"))
+            load(InputType::class.java.getResourceAsStream("/state.properties")!!.reader())
         }
         fun String.loadInputType() = properties.getProperty(this).toInputType()
         openMap = "open.map".loadInputType()

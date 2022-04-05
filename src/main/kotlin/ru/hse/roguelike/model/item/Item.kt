@@ -17,6 +17,7 @@ sealed class Item {
     open fun canApply(hero: Hero): Boolean = !isUsed
 
     open fun apply(hero: Hero) {
+        require(canApply(hero)) { "Can't apply item" }
         hero.maximumHealth = max(1, hero.maximumHealth + maximumHealthChange)
         hero.health = max(1, hero.health + healthChange)
     }

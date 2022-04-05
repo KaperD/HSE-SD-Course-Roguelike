@@ -1,8 +1,4 @@
-import groovy.time.TimeCategory
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.util.*
 
 plugins {
     kotlin("jvm") version "1.6.10"
@@ -23,6 +19,7 @@ dependencies {
     implementation("com.googlecode.lanterna:lanterna:3.1.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     testImplementation(kotlin("test"))
+    testImplementation("io.mockk:mockk:1.12.3")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
 }
 
@@ -57,7 +54,7 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
 }
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = "0.8.8"
 }
 
 tasks.jacocoTestReport {

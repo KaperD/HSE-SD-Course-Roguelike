@@ -16,11 +16,6 @@ data class DisposableItem(
     override val itemType: ItemType = ItemType.Disposable
     override var isUsed = false
 
-    override fun canApply(hero: Hero): Boolean {
-        require(!isUsed) { "Should not check disposed item" }
-        return true
-    }
-
     override fun apply(hero: Hero) {
         super.apply(hero)
         hero.items.remove(this)

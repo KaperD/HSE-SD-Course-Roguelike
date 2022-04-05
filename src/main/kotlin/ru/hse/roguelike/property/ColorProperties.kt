@@ -20,7 +20,7 @@ object ColorProperties {
 
     init {
         val properties: Properties = Properties().apply {
-            load(Color::class.java.getResourceAsStream("/color.properties"))
+            load(Color::class.java.getResourceAsStream("/color.properties")!!.reader())
         }
         fun String.loadColor(): Color = properties.getProperty(this).toColor()
         landColor = "color.land".loadColor()

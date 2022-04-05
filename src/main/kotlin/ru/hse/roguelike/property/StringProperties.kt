@@ -41,7 +41,7 @@ object StringProperties {
 
     init {
         val properties: Properties = Properties().apply {
-            load(Color::class.java.getResourceAsStream("/string.properties"))
+            load(Color::class.java.getResourceAsStream("/string.properties")!!.reader())
         }
 
         fun String.load(): String = properties.getProperty(this)

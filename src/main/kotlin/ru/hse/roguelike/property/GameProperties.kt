@@ -23,7 +23,7 @@ class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : Game
 
     init {
         val properties = Properties().apply {
-            load(GameProperties::class.java.getResourceAsStream(propertiesFileName))
+            load(GameProperties::class.java.getResourceAsStream(propertiesFileName)!!.reader())
         }
         fun String.loadInt(): Int = properties.getProperty(this).toInt()
         mapWidth = "map.width".loadInt()
