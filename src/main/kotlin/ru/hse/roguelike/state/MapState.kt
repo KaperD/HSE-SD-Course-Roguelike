@@ -19,9 +19,8 @@ class MapState(
     private val gameProperties: GameProperties,
     private val gameOverState: State,
     private val victoryState: State,
-    levelOrder: List<String>
 ) : State() {
-    private val levelIterator = levelOrder.iterator()
+    private val levelIterator = gameProperties.levelsOrder.iterator()
     private val hero = gameModel.hero
 
     init {

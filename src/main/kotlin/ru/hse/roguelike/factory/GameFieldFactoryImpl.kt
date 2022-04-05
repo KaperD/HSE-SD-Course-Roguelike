@@ -18,8 +18,11 @@ class GameFieldFactoryImpl(
 ) : GameFieldFactory {
 
     override fun getByLevelName(name: String): Pair<GameField, Position> {
-        val linesIterator =
-            GameFieldFactoryImpl::class.java.getResource("/$levelsFolder/$name.txt")!!.readText().lines().iterator()
+        val linesIterator = GameFieldFactoryImpl::class.java
+            .getResource("/$levelsFolder/$name.txt")
+            ?.readText()
+            ?.lines()
+            ?.iterator() ?: throw IllegalStateException("Unknown level $name")
 
         val gameField = GameField(readField(linesIterator))
         linesIterator.next()
@@ -60,6 +63,7 @@ class GameFieldFactoryImpl(
 
     private fun readHeroPosition(linesIterator: Iterator<String>): Position {
         while (true) {
+            require(linesIterator.hasNext()) { "Missing hero in level file" }
             val line = linesIterator.next()
             if (line.isNotBlank()) {
                 val split = line.split(whitespaceRegex, heroSplitSize)

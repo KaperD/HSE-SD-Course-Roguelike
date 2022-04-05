@@ -2,13 +2,10 @@ package ru.hse.roguelike
 
 import com.googlecode.lanterna.TerminalSize
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import ru.hse.roguelike.factory.GameFieldFactoryImpl
 import ru.hse.roguelike.factory.ItemFactoryImpl
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.input.LanternaGameInput
-import ru.hse.roguelike.model.Cell
 import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.GameModel
 import ru.hse.roguelike.model.Position
@@ -60,9 +57,6 @@ fun main() {
             MapFreeModeState(gameModel, LanternaMapView(window, mapWidth, mapHeight), gameSound, states)
         val gameOverState = GameOverState(LanternaMessageView(window), gameSound)
         val victoryState = VictoryState(LanternaMessageView(window), gameSound)
-        val levelsOrder: List<String> = Json.decodeFromString(
-            Cell::class.java.getResourceAsStream("/levels/levels_order.json")!!.reader().readText()
-        )
         val mapState = MapState(
             gameModel,
             LanternaMapView(window, mapWidth, mapHeight),
@@ -71,8 +65,7 @@ fun main() {
             gameFieldFactory,
             gameProperties,
             gameOverState,
-            victoryState,
-            levelsOrder
+            victoryState
         )
 
         states.putAll(

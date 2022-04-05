@@ -26,3 +26,6 @@ formatting:
 naming:
     TopLevelPropertyNaming:
         active: false
+
+complexity:
+    active: false
