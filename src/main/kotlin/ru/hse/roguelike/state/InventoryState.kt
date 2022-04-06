@@ -5,7 +5,6 @@ import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.property.StateProperties
 import ru.hse.roguelike.sound.GameSound
 import ru.hse.roguelike.ui.inventory.InventoryView
-import kotlin.math.max
 import kotlin.math.min
 
 class InventoryState(
@@ -42,7 +41,7 @@ class InventoryState(
     }
 
     private fun moveItemUp() {
-        if (chosenPosition  - 1 < 0) {
+        if (chosenPosition - 1 < 0) {
             gameSound.beep()
             return
         }
