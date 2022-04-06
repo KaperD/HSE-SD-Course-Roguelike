@@ -17,7 +17,7 @@ internal class HelpStateTest {
         val gameSound = mockk<GameSound>(relaxed = true)
         val anotherState = mockk<State>()
         val helpState = HelpState(messageView, gameSound, mapOf(InputType.I to anotherState))
-        verify { messageView.setText("Правила${System.lineSeparator()}игры") }
+        verify { messageView.setText("Правила\nигры") }
         confirmVerified(messageView)
 
         helpState.activate()

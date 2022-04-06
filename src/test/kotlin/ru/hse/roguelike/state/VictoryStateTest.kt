@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.sound.GameSound
 import ru.hse.roguelike.ui.help.MessageView
-import java.lang.System.lineSeparator
 import kotlin.test.assertEquals
 
 internal class VictoryStateTest {
@@ -17,7 +16,7 @@ internal class VictoryStateTest {
         val messageView = mockk<MessageView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val victoryState = VictoryState(messageView, gameSound)
-        verify { messageView.setText("Вы победили!${lineSeparator()}:)") }
+        verify { messageView.setText("Вы победили!\n:)") }
         confirmVerified(messageView)
 
         victoryState.activate()

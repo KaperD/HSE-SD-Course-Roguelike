@@ -18,7 +18,7 @@ internal class GameOverStateTest {
         val messageView = mockk<MessageView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val gameOverState = GameOverState(messageView, gameSound)
-        verify { messageView.setText("Вы проиграли..${System.lineSeparator()}:(") }
+        verify { messageView.setText("Вы проиграли..\n:(") }
         confirmVerified(messageView)
 
         gameOverState.activate()
