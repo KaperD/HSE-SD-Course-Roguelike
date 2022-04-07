@@ -11,6 +11,7 @@ import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.model.*
 import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.property.GameProperties
+import ru.hse.roguelike.property.GamePropertiesImpl
 import ru.hse.roguelike.property.StateProperties
 import ru.hse.roguelike.sound.GameSound
 import ru.hse.roguelike.ui.map.MapView
@@ -18,19 +19,6 @@ import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
 internal class MapStateTest {
-    private val a = GameField(
-        listOf(
-            listOf(Cell(GroundType.Land, mutableListOf(), null), Cell(GroundType.Water, mutableListOf(), null)),
-            listOf(Cell(GroundType.Fire, mutableListOf(), null), Cell(GroundType.LevelEnd, mutableListOf(), null))
-        )
-    )
-
-    private val b = GameField(
-        listOf(
-            listOf(Cell(GroundType.Land, mutableListOf(), null), Cell(GroundType.Stone, mutableListOf(), null)),
-            listOf(Cell(GroundType.Land, mutableListOf(), null), Cell(GroundType.LevelEnd, mutableListOf(), null))
-        )
-    )
 
     @Test
     fun `test map mode victory`() {
@@ -41,9 +29,7 @@ internal class MapStateTest {
         val gameSound = mockk<GameSound>(relaxed = true)
         val anotherState = mockk<State>()
         val gameFieldFactory = GameFieldFactoryImpl(2, 2, ItemFactoryImpl())
-        val gameProperties = mockk<GameProperties>()
-        every { gameProperties.fireDamage } returns 3
-        every { gameProperties.levelsOrder } returns listOf("a", "b")
+        val gameProperties = GamePropertiesImpl()
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
         val mapState = MapState(
