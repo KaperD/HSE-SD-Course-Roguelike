@@ -12,3 +12,17 @@ We use `Gradle` as build system
 
 ## Control
 Open it by pressing `h`
+
+## Screenshots
+
+### Map
+![Map](images/map_view_impl.png)
+
+### Map Free Mode
+![Map Free Mode](images/map_free_mode_view_impl.png)
+
+### Inventory
+![Inventory](images/inventory_view_impl.png)
+
+### Help
+![Help](images/help_view_impl.png)
