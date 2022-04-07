@@ -12,7 +12,7 @@ fun Drawable.drawText(action: DrawContext.() -> Unit) {
 }
 
 class DrawContext(private val drawable: Drawable) {
-    var curY = 0
+    private var curY = 0
 
     fun appendLine(line: String, foreground: Color = textColor, background: Color = defaultColor) {
         curY += drawable.setLine(0, curY, line, foreground, background)
