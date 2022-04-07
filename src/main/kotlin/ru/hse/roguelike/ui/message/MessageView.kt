@@ -1,4 +1,4 @@
-package ru.hse.roguelike.ui.help
+package ru.hse.roguelike.ui.message
 
 import ru.hse.roguelike.ui.View
 

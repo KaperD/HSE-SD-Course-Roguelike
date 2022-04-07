@@ -7,9 +7,8 @@ import org.junit.jupiter.api.Test
 
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.sound.GameSound
-import ru.hse.roguelike.ui.help.MessageView
+import ru.hse.roguelike.ui.message.MessageView
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 internal class GameOverStateTest {
 
