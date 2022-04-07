@@ -27,10 +27,10 @@ fun KeyStroke.toInputType(): InputType = when (this.keyType) {
     KeyType.Enter -> InputType.Enter
     KeyType.Escape -> InputType.Esc
     KeyType.Character -> when (this.character) {
-        'm' -> InputType.M
-        'f' -> InputType.F
-        'i' -> InputType.I
-        'h' -> InputType.H
+        'm', 'ь' -> InputType.M
+        'f', 'а' -> InputType.F
+        'i', 'ш' -> InputType.I
+        'h', 'р' -> InputType.H
         else -> InputType.Unknown
     }
     else -> InputType.Unknown

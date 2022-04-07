@@ -22,7 +22,7 @@ import ru.hse.roguelike.ui.map.LanternaMapView
 import ru.hse.roguelike.ui.message.LanternaMessageView
 import ru.hse.roguelike.ui.window.LanternaGameWindow
 
-fun main() {
+fun main(args: Array<String>) {
     val gameProperties = GamePropertiesImpl()
     val mapWidth = gameProperties.mapWidth
     val mapHeight = gameProperties.mapHeight
@@ -30,7 +30,8 @@ fun main() {
     val imageHeight = gameProperties.imageHeight
     val factory = DefaultTerminalFactory()
     factory.setInitialTerminalSize(TerminalSize(imageWidth + 2, imageHeight + 2))
-    factory.createTerminal().use { terminal ->
+    val gameTerminal = if (args.firstOrNull() == "--window") factory.createTerminalEmulator() else factory.createTerminal()
+    gameTerminal.use { terminal ->
         terminal.enterPrivateMode()
         val window = LanternaGameWindow(terminal, imageWidth, imageHeight)
 
