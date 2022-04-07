@@ -30,7 +30,11 @@ fun main(args: Array<String>) {
     val imageHeight = gameProperties.imageHeight
     val factory = DefaultTerminalFactory()
     factory.setInitialTerminalSize(TerminalSize(imageWidth + 2, imageHeight + 2))
-    val gameTerminal = if (args.firstOrNull() == "--window") factory.createTerminalEmulator() else factory.createTerminal()
+    val gameTerminal = if (args.firstOrNull() == "--window") {
+        factory.createTerminalEmulator()
+    } else {
+        factory.createTerminal()
+    }
     gameTerminal.use { terminal ->
         terminal.enterPrivateMode()
         val window = LanternaGameWindow(terminal, imageWidth, imageHeight)
