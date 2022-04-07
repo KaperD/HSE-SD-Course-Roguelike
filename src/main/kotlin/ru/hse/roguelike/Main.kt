@@ -17,9 +17,9 @@ import ru.hse.roguelike.property.StateProperties.openMap
 import ru.hse.roguelike.property.StateProperties.openMapFreeMode
 import ru.hse.roguelike.sound.LanternaGameSound
 import ru.hse.roguelike.state.*
-import ru.hse.roguelike.ui.message.LanternaMessageView
 import ru.hse.roguelike.ui.inventory.LanternaInventoryView
 import ru.hse.roguelike.ui.map.LanternaMapView
+import ru.hse.roguelike.ui.message.LanternaMessageView
 import ru.hse.roguelike.ui.window.LanternaGameWindow
 
 fun main() {

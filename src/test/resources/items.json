@@ -1,9 +1,0 @@
-[
-    {
-        "type": "Disposable",
-        "id": "healing_salve",
-        "name": "Healing Salve",
-        "description": "A magical salve that can quickly mend even the deepest of wounds.",
-        "healthChange": 50
-    }
-]
