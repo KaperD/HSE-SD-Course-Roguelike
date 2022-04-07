@@ -119,7 +119,7 @@ internal class SubImageTest {
         val delegate = BasicTextImage(columns, rows)
         val image: Drawable = Image(delegate).apply { fill(' ') }.subImage(1, 1, 6, 2)
 
-        image.setLine(0, 0, "")
+        assertEquals(1, image.setLine(0, 0, ""))
         assertEquals(
             TextCharacter.fromCharacter(
                 ' ',
@@ -129,7 +129,15 @@ internal class SubImageTest {
             delegate.getCharacterAt(1, 1)
         )
 
-        image.setLine(0, 0, "Hello", Color.ANSI.Black, Color.ANSI.White)
+        assertEquals(1, image.setLine(0, 0, "a b", Color.ANSI.Black, Color.ANSI.White))
+        for ((i, c) in "a b".withIndex()) {
+            assertEquals(
+                TextCharacter.fromCharacter(c, TextColor.ANSI.BLACK, TextColor.ANSI.WHITE)[0],
+                delegate.getCharacterAt(i + 1, 1)
+            )
+        }
+
+        assertEquals(1, image.setLine(0, 0, "Hello", Color.ANSI.Black, Color.ANSI.White))
         for ((i, c) in "Hello".withIndex()) {
             assertEquals(
                 TextCharacter.fromCharacter(c, TextColor.ANSI.BLACK, TextColor.ANSI.WHITE)[0],
@@ -137,7 +145,7 @@ internal class SubImageTest {
             )
         }
 
-        image.setLine(1, 1, "Hello World")
+        assertEquals(2, image.setLine(1, 1, "Hello World"))
         for ((i, c) in "Hello".withIndex()) {
             assertEquals(
                 TextCharacter.fromCharacter(
@@ -166,7 +174,7 @@ internal class SubImageTest {
         val rows = 3
         val delegate = BasicTextImage(columns, rows)
         val image: Drawable = Image(delegate).subImage(2, 0, 6, 3)
-        image.setText(0, 0, "Hello\nHello World", Color.ANSI.Black, Color.ANSI.White)
+        assertEquals(3, image.setText(0, 0, "Hello\nHello World", Color.ANSI.Black, Color.ANSI.White))
         for ((i, c) in "Hello".withIndex()) {
             assertEquals(
                 TextCharacter.fromCharacter(c, TextColor.ANSI.BLACK, TextColor.ANSI.WHITE)[0],
