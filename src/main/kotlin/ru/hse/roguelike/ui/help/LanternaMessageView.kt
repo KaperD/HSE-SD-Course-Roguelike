@@ -22,7 +22,7 @@ class LanternaMessageView(
         val maximumLengthOfLine = lines.maxOf { it.length }
         val x = (image.width - maximumLengthOfLine) / 2
         val y = (image.height - numberOfLines) / 2
-        image.drawText(x, y, text)
+        image.setText(x, y, text)
     }
 
     override fun show() {

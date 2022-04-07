@@ -26,15 +26,15 @@ open class SubImage(
 
     override fun set(x: Int, y: Int, symbol: Char, foreground: Color, background: Color) {
         require(x in 0 until width && y in 0 until height)
-        delegate.setCharacterAt(
+        textGraphics.setCharacter(
             topLeftX + x,
             topLeftY + y,
             TextCharacter.fromCharacter(symbol, foreground.textColor, background.textColor).first()
         )
     }
 
-    override fun drawLine(x: Int, y: Int, line: String, foreground: Color, background: Color): Int {
-        require(x in 0 until width)
+    override fun setLine(x: Int, y: Int, line: String, foreground: Color, background: Color): Int {
+        require(x in 0 until width && y in 0 until height)
         textGraphics.foregroundColor = foreground.textColor
         textGraphics.backgroundColor = background.textColor
         var curX = x
@@ -42,6 +42,7 @@ open class SubImage(
         val words = line.split(whiteSpaceRegex)
         val currentLineWords = mutableListOf<String>()
         for (word in words) {
+            require(word.length <= width - x) { "Word is longer than line width" }
             if (curX + word.length > width) {
                 textGraphics.putString(
                     topLeftX + x,
@@ -65,10 +66,10 @@ open class SubImage(
         return curY - y + 1
     }
 
-    override fun drawText(x: Int, y: Int, text: String, foreground: Color, background: Color): Int {
+    override fun setText(x: Int, y: Int, text: String, foreground: Color, background: Color): Int {
         var curY = y
         for (line in text.lines()) {
-            curY += drawLine(x, curY, line, foreground, background)
+            curY += setLine(x, curY, line, foreground, background)
         }
         return curY - y
     }

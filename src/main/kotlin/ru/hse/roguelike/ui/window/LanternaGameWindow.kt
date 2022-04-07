@@ -26,7 +26,7 @@ class LanternaGameWindow(
     )
     private var textGraphics = terminal.newTextGraphics()
     private val currentImage = createImage()
-    private val resizeMessageImage = createImage().also { it.drawLine(0, 0, makeWindowBigger) }
+    private val resizeMessageImage = createImage().also { it.setLine(0, 0, makeWindowBigger) }
     private var currentSize = terminal.terminalSize
 
     init {
