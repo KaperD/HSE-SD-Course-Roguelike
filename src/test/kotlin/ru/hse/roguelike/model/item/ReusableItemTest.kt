@@ -1,5 +1,8 @@
 package ru.hse.roguelike.model.item
 
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import ru.hse.roguelike.model.Position
@@ -71,5 +74,52 @@ internal class ReusableItemTest {
         assertThrows<IllegalArgumentException> {
             item2.apply(hero)
         }
+    }
+
+    @Test
+    fun `test reusable serialize`() {
+        val json = Json {prettyPrint = true}
+        val item = ReusableItem("id", "Test", "Test", ItemType.Body, 5)
+        assertEquals("""
+            {
+                "type": "Reusable",
+                "id": "id",
+                "name": "Test",
+                "description": "Test",
+                "itemType": "Body",
+                "healthChange": 5
+            }
+        """.trimIndent(), json.encodeToString(item as Item))
+        assertEquals("""
+            {
+                "id": "id",
+                "name": "Test",
+                "description": "Test",
+                "itemType": "Body",
+                "healthChange": 5
+            }
+        """.trimIndent(), json.encodeToString(item))
+
+        val item2 = json.decodeFromString<Item>("""
+            {
+                "type": "Reusable",
+                "id": "id",
+                "name": "Test",
+                "description": "Test",
+                "itemType": "Body",
+                "healthChange": 5
+            }
+        """.trimIndent())
+        val item3 = json.decodeFromString<ReusableItem>("""
+            {
+                "id": "id",
+                "name": "Test",
+                "description": "Test",
+                "itemType": "Body",
+                "healthChange": 5
+            }
+        """.trimIndent())
+        assertEquals(item, item2)
+        assertEquals(item, item3)
     }
 }
