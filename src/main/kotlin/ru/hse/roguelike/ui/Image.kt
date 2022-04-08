@@ -15,6 +15,14 @@ class Image(private val delegate: TextImage) :
     ),
     TextImage by delegate
 
+/**
+ * Реализация drawable с помощью библиотеки Lanterna.
+ * @param delegate Сущность из библиотеки Lanterna для отображения в терминале
+ * @param topLeftX Позиция по горизонтали верхнего левого угла данного Drawable в терминале
+ * @param topLeftY Позиция по вертикали верхнего левого угла данного Drawable в терминале
+ * @param width    Ширина данного Drawable
+ * @param height   Высота данного Drawable
+ */
 open class SubImage(
     private val delegate: TextImage,
     private val topLeftX: Int,

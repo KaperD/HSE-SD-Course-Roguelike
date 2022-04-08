@@ -3,6 +3,9 @@ package ru.hse.roguelike.input
 import com.googlecode.lanterna.input.KeyStroke
 import com.googlecode.lanterna.input.KeyType
 
+/**
+ * Тип input-а (действие на клавиатуре совершённое игроком)
+ */
 enum class InputType {
     M,
     F,
@@ -17,8 +20,14 @@ enum class InputType {
     Unknown;
 }
 
+/**
+ * Получение типа входа по его строковому значению
+ */
 fun String.toInputType() = InputType.valueOf(this)
 
+/**
+ * Преобразование библиотечного типа входа в основной
+ */
 fun KeyStroke.toInputType(): InputType = when (this.keyType) {
     KeyType.ArrowUp -> InputType.ArrowUp
     KeyType.ArrowDown -> InputType.ArrowDown

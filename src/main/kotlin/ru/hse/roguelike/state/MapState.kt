@@ -10,6 +10,11 @@ import ru.hse.roguelike.property.StateProperties
 import ru.hse.roguelike.sound.GameSound
 import ru.hse.roguelike.ui.map.MapView
 
+/**
+ * Состояние передвижения героя по карте.
+ * Содержит логику по проверке и передвижении героя, подборе предметов.
+ * Также показывает игроку текущие характеристики героя
+ */
 class MapState(
     private val gameModel: GameModel,
     override val view: MapView,

@@ -4,6 +4,10 @@ import ru.hse.roguelike.ui.Color
 import ru.hse.roguelike.ui.toColor
 import java.util.*
 
+/**
+ * Определение цветов для элементов игры.
+ * Данные загружаются из файла color.properties
+ */
 object ColorProperties {
     val landColor: Color
     val waterColor: Color

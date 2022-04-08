@@ -3,14 +3,20 @@ package ru.hse.roguelike.factory
 import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.Position
 
+/**
+ * Фабрика, отвечающая за создание игрового поля
+ */
 interface GameFieldFactory {
     /**
-     * @return game field and initial hero position
+     * Получение уровня по названию
+     * @param name название уровня
+     * @return     игровое поле и начальная позиция игрока
      */
     fun getByLevelName(name: String): Pair<GameField, Position>
 
     /**
-     * @return game field and initial hero position
+     * Генерирование уровня
+     * @return игровое поле и начальная позиция игрока
      */
     fun generate(): Pair<GameField, Position>
 }

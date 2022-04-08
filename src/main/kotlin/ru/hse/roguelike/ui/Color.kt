@@ -2,6 +2,9 @@ package ru.hse.roguelike.ui
 
 import com.googlecode.lanterna.TextColor
 
+/**
+ * Определение цветов для отображения игры
+ */
 interface Color {
     val red: Int
     val green: Int
@@ -34,4 +37,7 @@ interface Color {
     }
 }
 
+/**
+ * Получение цвета по строковому представлению
+ */
 fun String.toColor(): Color = Color.ANSI.valueOf(this)

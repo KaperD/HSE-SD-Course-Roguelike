@@ -20,6 +20,11 @@ import ru.hse.roguelike.ui.window.GameWindow
 import ru.hse.roguelike.utils.DrawContext
 import ru.hse.roguelike.utils.drawText
 
+/**
+ * Реализация отображения инвентаря
+ * с помощью библиотеки Lanterna
+ * @param window Окно для отображения данного view
+ */
 class LanternaInventoryView(
     private val window: GameWindow
 ) : InventoryView {

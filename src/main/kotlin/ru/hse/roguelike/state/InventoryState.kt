@@ -7,6 +7,10 @@ import ru.hse.roguelike.sound.GameSound
 import ru.hse.roguelike.ui.inventory.InventoryView
 import kotlin.math.min
 
+/**
+ * Состояние работы с инвентарем.
+ * Содержит логику просмотра предметов в инвентаре, использование и отмену использования предметов
+ */
 class InventoryState(
     private val hero: Hero,
     override val view: InventoryView,

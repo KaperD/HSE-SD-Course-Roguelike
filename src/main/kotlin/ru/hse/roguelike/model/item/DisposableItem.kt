@@ -4,6 +4,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.hse.roguelike.model.creature.Hero
 
+/**
+ * Одноразовый предмет.
+ * Применяется один раз, как-то воздействуя на героя.
+ * Не может быть отменён
+ */
 @Serializable
 @SerialName("Disposable")
 data class DisposableItem(
@@ -16,6 +21,10 @@ data class DisposableItem(
     override val itemType: ItemType = ItemType.Disposable
     override var isUsed = false
 
+    /**
+     * Применение предмета к герою с немедленным удалением предмета из инвентаря.
+     * @param hero герой, к которому нужно применить предмет
+     */
     override fun apply(hero: Hero) {
         super.apply(hero)
         hero.items.remove(this)

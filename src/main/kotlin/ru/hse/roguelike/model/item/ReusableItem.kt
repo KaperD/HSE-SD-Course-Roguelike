@@ -4,6 +4,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.hse.roguelike.model.creature.Hero
 
+/**
+ * Многоразовый предмет.
+ * Предмет можно применить с последующей отменой неограниченное количество раз.
+ */
 @Serializable
 @SerialName("Reusable")
 data class ReusableItem(

@@ -6,6 +6,10 @@ import ru.hse.roguelike.property.StateProperties
 import ru.hse.roguelike.sound.GameSound
 import ru.hse.roguelike.ui.map.MapView
 
+/**
+ * Состояние исследования карты без передвижения героя.
+ * Содержит логику по перемещению курсора и отображении того, что находится в клетке под курсором
+ */
 class MapFreeModeState(
     private val gameModel: GameModel,
     override val view: MapView,

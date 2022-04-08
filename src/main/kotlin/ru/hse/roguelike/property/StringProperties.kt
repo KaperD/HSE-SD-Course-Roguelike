@@ -3,6 +3,10 @@ package ru.hse.roguelike.property
 import ru.hse.roguelike.ui.Color
 import java.util.*
 
+/**
+ * Литералы необходимые для игры.
+ * Данные загружаются из файла string.properties
+ */
 object StringProperties {
     val helpMessage: String
 

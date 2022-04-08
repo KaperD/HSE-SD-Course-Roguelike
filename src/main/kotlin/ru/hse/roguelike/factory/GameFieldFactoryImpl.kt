@@ -10,6 +10,15 @@ import ru.hse.roguelike.property.ViewProperties.levelEndSymbol
 import ru.hse.roguelike.property.ViewProperties.stoneSymbol
 import ru.hse.roguelike.property.ViewProperties.waterSymbol
 
+/**
+ * Фабрика, умеющая:
+ * - загружать уровни по названию из директории
+ * - генерировать уровни
+ * @param fieldWidth   Ширина полей, которые будут создаваться
+ * @param fieldHeight  Высота полей, которые будут создаваться
+ * @param itemFactory  Фабрика для создания предметов
+ * @param levelsFolder Директория откуда загружать уровни
+ */
 class GameFieldFactoryImpl(
     private val fieldWidth: Int,
     private val fieldHeight: Int,
@@ -17,6 +26,12 @@ class GameFieldFactoryImpl(
     private val levelsFolder: String = "levels"
 ) : GameFieldFactory {
 
+    /**
+     * Получение уровня по названию.
+     * В директории с уровнями должен быть файл с именем name
+     * @param name название уровня
+     * @return     игровое поле и начальная позиция игрока
+     */
     override fun getByLevelName(name: String): Pair<GameField, Position> {
         val linesIterator = GameFieldFactoryImpl::class.java
             .getResource("/$levelsFolder/$name.txt")
@@ -32,6 +47,10 @@ class GameFieldFactoryImpl(
         return gameField to readHeroPosition(linesIterator)
     }
 
+    /**
+     * Генерирование уровня
+     * @return игровое поле и начальная позиция игрока
+     */
     override fun generate(): Pair<GameField, Position> {
         TODO("Not yet implemented")
     }

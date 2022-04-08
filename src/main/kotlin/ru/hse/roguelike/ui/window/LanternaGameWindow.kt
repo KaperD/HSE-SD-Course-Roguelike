@@ -12,6 +12,13 @@ import ru.hse.roguelike.property.ColorProperties.textColor
 import ru.hse.roguelike.property.StringProperties.makeWindowBigger
 import ru.hse.roguelike.ui.Image
 
+/**
+ * Реализация окна игры
+ * с помощью библиотеки Lanterna
+ * @param terminal    Терминал, в котором данное окно
+ * @param imageWidth  Ширина окна
+ * @param imageHeight Высота окна
+ */
 class LanternaGameWindow(
     private val terminal: Terminal,
     val imageWidth: Int,

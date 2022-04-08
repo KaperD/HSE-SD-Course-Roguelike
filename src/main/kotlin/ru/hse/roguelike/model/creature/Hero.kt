@@ -4,6 +4,10 @@ import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.item.Item
 import kotlin.math.min
 
+/**
+ * Главный персонаж, от лица которого игрок ведёт игру
+ * @property items текущий набор предметов имеющихся у героя
+ */
 class Hero(
     health: Int,
     maximumHealth: Int,

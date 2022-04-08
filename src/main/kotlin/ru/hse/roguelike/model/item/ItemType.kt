@@ -2,6 +2,9 @@ package ru.hse.roguelike.model.item
 
 import ru.hse.roguelike.property.StringProperties
 
+/**
+ * Тип предмета.
+ */
 enum class ItemType(private val displayName: String) {
     Head(StringProperties.head),
     Body(StringProperties.body),

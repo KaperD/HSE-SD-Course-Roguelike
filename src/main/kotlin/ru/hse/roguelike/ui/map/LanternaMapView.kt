@@ -34,6 +34,13 @@ import ru.hse.roguelike.ui.Color
 import ru.hse.roguelike.ui.window.GameWindow
 import ru.hse.roguelike.utils.drawText
 
+/**
+ * Реализация отображения карты
+ * с помощью библиотеки Lanterna
+ * @param window Окно для отображения данного view
+ * @param mapWidth  Ширина карты
+ * @param mapHeight Высота карты
+ */
 class LanternaMapView(
     private val window: GameWindow,
     mapWidth: Int,

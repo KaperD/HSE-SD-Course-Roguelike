@@ -4,6 +4,10 @@ import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.input.toInputType
 import java.util.*
 
+/**
+ * Определение состояний игры.
+ * Данные загружаются из файла state.properties
+ */
 object StateProperties {
     val openMap: InputType
     val openMapFreeMode: InputType

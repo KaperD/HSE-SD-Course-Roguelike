@@ -2,6 +2,12 @@ package ru.hse.roguelike.ui.message
 
 import ru.hse.roguelike.ui.window.GameWindow
 
+/**
+ * Реализация отображения сообщения посередине экрана
+ * с помощью библиотеки Lanterna
+ * @param window Окно для отображения данного view
+ * @param text   Исходный текст для отображения
+ */
 class LanternaMessageView(
     private val window: GameWindow,
     text: String = ""

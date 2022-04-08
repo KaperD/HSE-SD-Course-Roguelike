@@ -3,6 +3,10 @@ package ru.hse.roguelike.property
 import ru.hse.roguelike.ui.Color
 import java.util.*
 
+/**
+ * Определение символов, которыми отображаются элементы игры на поле.
+ * Данные загружаются из файла view.properties
+ */
 object ViewProperties {
     val landSymbol: Char
     val waterSymbol: Char

@@ -2,6 +2,9 @@ package ru.hse.roguelike.property
 
 import java.util.*
 
+/**
+ * Определение параметров игры
+ */
 interface GameProperties {
     val mapWidth: Int
     val mapHeight: Int
@@ -12,6 +15,10 @@ interface GameProperties {
     val levelsOrder: List<String>
 }
 
+/**
+ * Определение параметров игры.
+ * Данные загружаются из файла game.properties
+ */
 class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : GameProperties {
     override val mapWidth: Int
     override val mapHeight: Int
