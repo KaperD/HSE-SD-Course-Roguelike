@@ -33,7 +33,7 @@ abstract class State {
     /**
      * Обработка очередного ввода пользователя.
      * @param type тип ввода
-     * @return     следующее состояние
+     * @return следующее состояние
      */
     open fun handleInput(type: InputType): State {
         val action = actionByInputType[type]

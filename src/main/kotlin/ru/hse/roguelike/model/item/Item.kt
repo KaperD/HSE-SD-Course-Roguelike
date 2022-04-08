@@ -21,7 +21,7 @@ sealed class Item {
     /**
      * Проверяет возможность применить данный предмет к герою
      * @param hero герой, к которому хотим применить предмет
-     * @return     результат проверки
+     * @return результат проверки
      */
     open fun canApply(hero: Hero): Boolean = !isUsed
 

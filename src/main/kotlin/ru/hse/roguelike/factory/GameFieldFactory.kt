@@ -10,7 +10,7 @@ interface GameFieldFactory {
     /**
      * Получение уровня по названию
      * @param name название уровня
-     * @return     игровое поле и начальная позиция игрока
+     * @return игровое поле и начальная позиция игрока
      */
     fun getByLevelName(name: String): Pair<GameField, Position>
 

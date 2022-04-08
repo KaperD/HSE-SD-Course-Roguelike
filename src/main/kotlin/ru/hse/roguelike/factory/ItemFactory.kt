@@ -9,7 +9,7 @@ interface ItemFactory {
     /**
      * Получение предмета по id
      * @param itemId идентификатор предмета
-     * @return       предмет с идентификатором itemId
+     * @return предмет с идентификатором itemId
      */
     fun getById(itemId: String): Item
 

@@ -21,7 +21,7 @@ class ItemFactoryImpl(itemsFileName: String = "/items.json") : ItemFactory {
     /**
      * Получение предмета, описанного в файле, по id
      * @param itemId идентификатор предмета
-     * @return       предмет с идентификатором itemId
+     * @return предмет с идентификатором itemId
      */
     override fun getById(itemId: String): Item {
         return items.getOrElse(itemId) { throw IllegalStateException("Unknown item id") }.clone()

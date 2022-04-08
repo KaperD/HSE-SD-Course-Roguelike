@@ -30,7 +30,7 @@ class GameFieldFactoryImpl(
      * Получение уровня по названию.
      * В директории с уровнями должен быть файл с именем name
      * @param name название уровня
-     * @return     игровое поле и начальная позиция игрока
+     * @return игровое поле и начальная позиция игрока
      */
     override fun getByLevelName(name: String): Pair<GameField, Position> {
         val linesIterator = GameFieldFactoryImpl::class.java
