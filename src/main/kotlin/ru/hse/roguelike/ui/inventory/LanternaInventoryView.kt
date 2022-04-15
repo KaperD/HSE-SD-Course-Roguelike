@@ -6,6 +6,7 @@ import ru.hse.roguelike.property.ColorProperties.borderColor
 import ru.hse.roguelike.property.ColorProperties.defaultColor
 import ru.hse.roguelike.property.ColorProperties.highlightColor
 import ru.hse.roguelike.property.StringProperties
+import ru.hse.roguelike.property.StringProperties.bonusAttackDamage
 import ru.hse.roguelike.property.StringProperties.bonusHealth
 import ru.hse.roguelike.property.StringProperties.bonusMaximumHealth
 import ru.hse.roguelike.property.StringProperties.health
@@ -116,6 +117,9 @@ class LanternaInventoryView(
             }
             if (item.maximumHealthChange != 0) {
                 appendLine("$bonusMaximumHealth = ${item.maximumHealthChange}")
+            }
+            if (item.attackDamageChange != 0) {
+                appendLine("$bonusAttackDamage = ${item.attackDamageChange}")
             }
             appendLine("")
             appendText(item.description)
