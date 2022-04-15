@@ -106,7 +106,7 @@ internal class LanternaInventoryViewTest {
         val itemFactory = ItemFactoryImpl()
         val item1 = itemFactory.getById("javelin")
         val item2 = itemFactory.getById("tango")
-        item2.apply(Hero(10, 100, Position(0, 0), mutableListOf(item2)))
+        item2.apply(Hero(10, 100, 10, Position(0, 0), mutableListOf(item2)))
         inventoryView.setItems(listOf(item1, item2), 0)
         inventoryView.show()
         verify { window.show(baseImage) }
@@ -179,7 +179,7 @@ internal class LanternaInventoryViewTest {
         every { window.show(capture(image)) } answers { }
 
         val inventoryView = LanternaInventoryView(window)
-        val hero = Hero(90, 100, Position(0, 0), mutableListOf())
+        val hero = Hero(90, 100, 10, Position(0, 0), mutableListOf())
         inventoryView.setHeroStats(hero)
         inventoryView.show()
 

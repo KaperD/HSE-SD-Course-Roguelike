@@ -45,24 +45,43 @@ class MapState(
 
     private fun tryMoveHeroTo(x: Int, y: Int): State {
         return if (canMoveHeroTo(x, y)) {
-            moveHeroTo(x, y)
             val newCell = gameModel.field.get(x, y)
-            if (newCell.items.isNotEmpty()) {
-                hero.items.addAll(newCell.items)
-                newCell.items.clear()
-            }
-            when (newCell.groundType) {
-                GroundType.Fire -> hero.health -= gameProperties.fireDamage
-                GroundType.LevelEnd -> {
-                    if (levelIterator.hasNext()) {
-                        moveToNextLevel()
-                        drawWholeField()
-                    } else {
-                        return victoryState
-                    }
+            val newCellCreature = newCell.creature
+            if (newCellCreature != null) {
+                newCellCreature.health -= hero.attackDamage
+                hero.health -= newCellCreature.attackDamage
+                if (newCellCreature.health <= 0) {
+                    newCell.creature = null
+                    gameModel.mobs = gameModel.mobs.filter { it != newCellCreature }
                 }
-                else -> {}
+            } else {
+                moveHeroTo(x, y)
+                if (newCell.items.isNotEmpty()) {
+                    hero.items.addAll(newCell.items)
+                    newCell.items.clear()
+                }
+                when (newCell.groundType) {
+                    GroundType.Fire -> hero.health -= gameProperties.fireDamage
+                    GroundType.LevelEnd -> {
+                        if (levelIterator.hasNext()) {
+                            moveToNextLevel()
+                        } else {
+                            return victoryState
+                        }
+                    }
+                    else -> {}
+                }
             }
+            gameModel.mobs = gameModel.mobs.mapNotNull {
+                val newMobState = it.move(gameModel.field)
+                if (newMobState.health <= 0) {
+                    gameModel.field.get(newMobState.position).creature = null
+                    null
+                } else {
+                    newMobState
+                }
+            }
+            drawWholeField()
             drawHeroStats()
             if (heroIsDead()) {
                 gameOverState
@@ -88,22 +107,15 @@ class MapState(
     }
 
     private fun moveHeroTo(x: Int, y: Int) {
-        val (oldHeroX, oldHeroY) = hero.position
         gameModel.field.get(hero.position).creature = null
         hero.position = Position(x, y)
         gameModel.field.get(hero.position).creature = hero
-        drawCell(oldHeroX, oldHeroY)
-        drawCell(x, y)
     }
 
     private fun canMoveHeroTo(x: Int, y: Int): Boolean {
         return x in 0 until gameModel.field.width &&
             y in 0 until gameModel.field.height &&
-            gameModel.field.get(x, y).groundType in passableGroundTypes
-    }
-
-    private fun drawCell(x: Int, y: Int) {
-        view.set(x, y, gameModel.field.get(x, y))
+            gameModel.field.get(x, y).groundType.isPassable
     }
 
     private fun drawHeroStats() {
@@ -117,9 +129,5 @@ class MapState(
                 view.set(x, y, field.get(x, y))
             }
         }
-    }
-
-    companion object {
-        private val passableGroundTypes = setOf(GroundType.LevelEnd, GroundType.Land, GroundType.Fire)
     }
 }

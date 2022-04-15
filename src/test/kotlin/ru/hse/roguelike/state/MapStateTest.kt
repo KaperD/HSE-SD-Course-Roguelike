@@ -22,9 +22,9 @@ internal class MapStateTest {
 
     @Test
     fun `test map mode victory`() {
-        val hero = Hero(100, 100, Position(0, 0), mutableListOf())
+        val hero = Hero(100, 100, 10, Position(0, 0), mutableListOf())
         val initField = GameField(listOf())
-        val gameModel = GameModel(initField, hero)
+        val gameModel = GameModel(initField, mutableListOf(), hero)
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val anotherState = mockk<State>()
@@ -58,6 +58,8 @@ internal class MapStateTest {
         assertEquals(mapState, mapState.handleInput(StateProperties.moveDown))
         verify { mapView.set(0, 0, aField.get(0, 0)) }
         verify { mapView.set(0, 1, aField.get(0, 1)) }
+        verify { mapView.set(1, 0, aField.get(1, 0)) }
+        verify { mapView.set(1, 1, aField.get(1, 1)) }
         verify { mapView.setHeroStats(hero) }
         verify { mapView.show() }
         confirmVerified(mapView)
@@ -86,9 +88,9 @@ internal class MapStateTest {
 
     @Test
     fun `test map mode game over`() {
-        val hero = Hero(1, 100, Position(0, 0), mutableListOf())
+        val hero = Hero(1, 100, 10, Position(0, 0), mutableListOf())
         val initField = GameField(listOf())
-        val gameModel = GameModel(initField, hero)
+        val gameModel = GameModel(initField, mutableListOf(), hero)
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val anotherState = mockk<State>()
@@ -123,6 +125,8 @@ internal class MapStateTest {
         assertEquals(gameOverState, mapState.handleInput(StateProperties.moveDown))
         verify { mapView.set(0, 0, aField.get(0, 0)) }
         verify { mapView.set(0, 1, aField.get(0, 1)) }
+        verify { mapView.set(1, 0, aField.get(1, 0)) }
+        verify { mapView.set(1, 1, aField.get(1, 1)) }
         verify { mapView.setHeroStats(hero) }
         verify { mapView.show() }
         confirmVerified(mapView)
@@ -135,9 +139,9 @@ internal class MapStateTest {
         val fireDamage = 10
         val stepsOnFire = 9
 
-        val hero = Hero(initialHeroHealth, 100, Position(0, 0), mutableListOf())
+        val hero = Hero(initialHeroHealth, 100, 10, Position(0, 0), mutableListOf())
         val initField = GameField(listOf())
-        val gameModel = GameModel(initField, hero)
+        val gameModel = GameModel(initField, mutableListOf(), hero)
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val gameFieldFactory = GameFieldFactoryImpl(2, 2, ItemFactoryImpl())
@@ -171,9 +175,9 @@ internal class MapStateTest {
 
     @Test
     fun `test map mode borders`() {
-        val hero = Hero(100, 100, Position(0, 0), mutableListOf())
+        val hero = Hero(100, 100, 10, Position(0, 0), mutableListOf())
         val initField = GameField(listOf())
-        val gameModel = GameModel(initField, hero)
+        val gameModel = GameModel(initField, mutableListOf(), hero)
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val gameFieldFactory = GameFieldFactoryImpl(2, 2, ItemFactoryImpl())
@@ -253,9 +257,9 @@ internal class MapStateTest {
 
     @Test
     fun `test map mode take items`() {
-        val hero = Hero(100, 100, Position(0, 0), mutableListOf())
+        val hero = Hero(100, 100, 10, Position(0, 0), mutableListOf())
         val initField = GameField(listOf())
-        val gameModel = GameModel(initField, hero)
+        val gameModel = GameModel(initField, mutableListOf(), hero)
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val itemFactory = ItemFactoryImpl()

@@ -21,7 +21,7 @@ internal class InventoryStateTest {
 
     @Test
     fun `test inventory state empty inventory`() {
-        val hero = Hero(100, 100, Position(0, 0), mutableListOf())
+        val hero = Hero(100, 100, 10, Position(0, 0), mutableListOf())
         val inventoryView = mockk<InventoryView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val anotherState = mockk<State>()
@@ -66,7 +66,7 @@ internal class InventoryStateTest {
     fun `test inventory state not empty inventory`() {
         val item1 = ReusableItem("reusable", "reusable", "reusable", ItemType.Head)
         val item2 = DisposableItem("disposable", "disposable", "disposable")
-        val hero = Hero(100, 100, Position(0, 0), mutableListOf(item1, item2))
+        val hero = Hero(100, 100, 10, Position(0, 0), mutableListOf(item1, item2))
         val inventoryView = mockk<InventoryView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val inventoryState = InventoryState(hero, inventoryView, gameSound, mapOf())
@@ -116,7 +116,7 @@ internal class InventoryStateTest {
         val item2 = DisposableItem("disposable", "disposable", "disposable", 1)
         val item3 = ReusableItem("reusable3", "reusable3", "reusable3", ItemType.Head, 1)
         val item4 = ReusableItem("reusable4", "reusable4", "reusable4", ItemType.Body, 1)
-        val hero = Hero(100, 104, Position(0, 0), mutableListOf(item1, item2, item3, item4))
+        val hero = Hero(100, 104, 10, Position(0, 0), mutableListOf(item1, item2, item3, item4))
         val inventoryView = mockk<InventoryView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val inventoryState = InventoryState(hero, inventoryView, gameSound, mapOf())

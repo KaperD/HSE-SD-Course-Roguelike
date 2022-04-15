@@ -75,14 +75,16 @@
         "id": "claymore",
         "name": "Claymore",
         "description": "A sword that can cut through armor, it's a commonly chosen first weapon for budding swordsmen.",
-        "itemType": "Weapon"
+        "itemType": "Weapon",
+        "attackDamageChange": 20
     },
     {
         "type": "Reusable",
         "id": "javelin",
         "name": "Javelin",
         "description": "A rather typical spear that can sometimes pierce through an enemy's armor when used to attack.",
-        "itemType": "Weapon"
+        "itemType": "Weapon",
+        "attackDamageChange": 10
     },
     {
         "type": "Disposable",

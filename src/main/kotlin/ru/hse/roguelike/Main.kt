@@ -48,11 +48,12 @@ fun main(args: Array<String>) {
         val hero = Hero(
             gameProperties.initialHeroHealth,
             gameProperties.initialHeroHealth,
+            gameProperties.initialHeroAttackDamage,
             Position(0, 0),
             mutableListOf()
         )
 
-        val gameModel = GameModel(GameField(emptyList()), hero)
+        val gameModel = GameModel(GameField(emptyList()), mutableListOf(), hero)
 
         val states = mutableMapOf<InputType, State>()
 

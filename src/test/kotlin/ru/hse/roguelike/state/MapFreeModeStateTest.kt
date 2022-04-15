@@ -15,14 +15,14 @@ import kotlin.test.assertEquals
 internal class MapFreeModeStateTest {
     @Test
     fun `test map free mode`() {
-        val hero = Hero(100, 100, Position(0, 0), mutableListOf())
+        val hero = Hero(100, 100, 10, Position(0, 0), mutableListOf())
         val field = GameField(
             listOf(
                 listOf(Cell(GroundType.Land, mutableListOf(), hero), Cell(GroundType.Water, mutableListOf(), null)),
                 listOf(Cell(GroundType.Fire, mutableListOf(), null), Cell(GroundType.LevelEnd, mutableListOf(), null))
             )
         )
-        val gameModel = GameModel(field, hero)
+        val gameModel = GameModel(field, mutableListOf(), hero)
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val anotherState = mockk<State>()
@@ -76,14 +76,14 @@ internal class MapFreeModeStateTest {
 
     @Test
     fun `test map free mode borders`() {
-        val hero = Hero(100, 100, Position(0, 0), mutableListOf())
+        val hero = Hero(100, 100, 10, Position(0, 0), mutableListOf())
         val field = GameField(
             listOf(
                 listOf(Cell(GroundType.Land, mutableListOf(), hero), Cell(GroundType.Water, mutableListOf(), null)),
                 listOf(Cell(GroundType.Fire, mutableListOf(), null), Cell(GroundType.LevelEnd, mutableListOf(), null))
             )
         )
-        val gameModel = GameModel(field, hero)
+        val gameModel = GameModel(field, mutableListOf(), hero)
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val mapFreeModeState = MapFreeModeState(gameModel, mapView, gameSound, mapOf())

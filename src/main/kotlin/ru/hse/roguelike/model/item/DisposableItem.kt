@@ -16,7 +16,8 @@ data class DisposableItem(
     override val name: String,
     override val description: String,
     override val healthChange: Int = 0,
-    override val maximumHealthChange: Int = 0
+    override val maximumHealthChange: Int = 0,
+    override val attackDamageChange: Int = 0
 ) : Item() {
     override val itemType: ItemType = ItemType.Disposable
     override var isUsed = false
