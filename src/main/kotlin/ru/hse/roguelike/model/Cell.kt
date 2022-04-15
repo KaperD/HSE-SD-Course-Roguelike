@@ -19,12 +19,12 @@ data class Cell(
 /**
  * Тип клетки
  */
-enum class GroundType(val isPassable: Boolean, private val displayName: String) {
-    Land(true, StringProperties.land),
-    Water(false, StringProperties.water),
-    Fire(true, StringProperties.fire),
-    Stone(false, StringProperties.stone),
-    LevelEnd(true, StringProperties.levelEnd);
+enum class GroundType(val isPassable: Boolean, val canSeeThrough: Boolean, private val displayName: String) {
+    Land(true, true, StringProperties.land),
+    Water(false, true,StringProperties.water),
+    Fire(true, true, StringProperties.fire),
+    Stone(false, false, StringProperties.stone),
+    LevelEnd(true, true, StringProperties.levelEnd);
 
     override fun toString(): String = displayName
 }

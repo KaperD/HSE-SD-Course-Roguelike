@@ -2,6 +2,7 @@ package ru.hse.roguelike.model.creature
 
 import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.Position
+import ru.hse.roguelike.model.creature.strategy.MoveStrategy
 
 /**
  * Игровой моб. Может иметь различные стратегии перемещения
