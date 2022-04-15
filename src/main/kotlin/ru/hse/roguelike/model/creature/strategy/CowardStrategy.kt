@@ -20,10 +20,12 @@ class CowardStrategy(val vision: Int) : MoveStrategy {
                     continue
                 }
                 val nextPosition = Position(mob.position.x + x, mob.position.y + y)
-                val newDistance = getDistance(nextPosition, heroPosition)
-                if (newDistance > bestDistance) {
-                    bestDistance = newDistance
-                    optimalNextPosition = nextPosition
+                if (gameField.get(nextPosition).groundType.isPassable && gameField.get(nextPosition).creature == null) {
+                    val newDistance = getDistance(nextPosition, heroPosition)
+                    if (newDistance > bestDistance) {
+                        bestDistance = newDistance
+                        optimalNextPosition = nextPosition
+                    }
                 }
             }
         }
