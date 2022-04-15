@@ -12,5 +12,6 @@ class Hero(
     maximumHealth: Int,
     attackDamage: Int,
     position: Position,
-    val items: MutableList<Item>
+    val items: MutableList<Item>,
+    var experience: Int = 0
 ) : Creature(health, maximumHealth, attackDamage, position)

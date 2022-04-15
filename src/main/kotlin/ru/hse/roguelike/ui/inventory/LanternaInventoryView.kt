@@ -65,6 +65,7 @@ class LanternaInventoryView(
             appendTitle("$heroStats:")
             appendLine("$health = ${hero.health}/${hero.maximumHealth}")
             appendLine("$itemsCount = ${hero.items.size}")
+            appendLine("${StringProperties.experience} = ${hero.experience}")
         }
     }
 

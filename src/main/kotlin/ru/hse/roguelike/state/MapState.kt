@@ -51,6 +51,7 @@ class MapState(
                 newCellCreature.health -= hero.attackDamage
                 hero.health -= newCellCreature.attackDamage
                 if (newCellCreature.health <= 0) {
+                    increaseHeroExperienceBy(gameProperties.mobKillExperience)
                     newCell.creature = null
                     gameModel.mobs = gameModel.mobs.filter { it != newCellCreature }
                 }
@@ -75,6 +76,7 @@ class MapState(
             gameModel.mobs = gameModel.mobs.mapNotNull {
                 val newMobState = it.move(gameModel.field)
                 if (newMobState.health <= 0) {
+                    increaseHeroExperienceBy(gameProperties.mobKillExperience)
                     gameModel.field.get(newMobState.position).creature = null
                     null
                 } else {
@@ -92,6 +94,16 @@ class MapState(
             gameSound.beep()
             this
         }
+    }
+
+    private fun increaseHeroExperienceBy(amount: Int) {
+        val oldLevel = hero.experience / gameProperties.newLevelExperienceAmount
+        hero.experience += amount
+        val newLevel = hero.experience / gameProperties.newLevelExperienceAmount
+        val levelsChange = newLevel - oldLevel
+        hero.health += gameProperties.newLevelHealthChange * levelsChange
+        hero.maximumHealth += gameProperties.newLevelMaximumHealthChange * levelsChange
+        hero.attackDamage += gameProperties.newLevelAttackDamageChange * levelsChange
     }
 
     private fun heroIsDead(): Boolean {

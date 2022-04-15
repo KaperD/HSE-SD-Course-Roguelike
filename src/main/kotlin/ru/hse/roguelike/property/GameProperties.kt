@@ -12,6 +12,11 @@ interface GameProperties {
     val imageHeight: Int
     val initialHeroHealth: Int
     val initialHeroAttackDamage: Int
+    val mobKillExperience: Int
+    val newLevelExperienceAmount: Int
+    val newLevelHealthChange: Int
+    val newLevelMaximumHealthChange: Int
+    val newLevelAttackDamageChange: Int
     val fireDamage: Int
     val levelsOrder: List<String>
 }
@@ -27,6 +32,11 @@ class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : Game
     override val imageHeight: Int
     override val initialHeroHealth: Int
     override val initialHeroAttackDamage: Int
+    override val mobKillExperience: Int
+    override val newLevelExperienceAmount: Int
+    override val newLevelHealthChange: Int
+    override val newLevelMaximumHealthChange: Int
+    override val newLevelAttackDamageChange: Int
 
     override val fireDamage: Int
     override val levelsOrder: List<String>
@@ -42,6 +52,11 @@ class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : Game
         imageHeight = "image.height".loadInt()
         initialHeroHealth = "initial.hero.health".loadInt()
         initialHeroAttackDamage = "initial.hero.attack.damage".loadInt()
+        mobKillExperience = "mob.kill.experience".loadInt()
+        newLevelExperienceAmount = "new.level.experience.amount".loadInt()
+        newLevelHealthChange = "new.level.health.change".loadInt()
+        newLevelMaximumHealthChange = "new.level.maximum.health.change".loadInt()
+        newLevelAttackDamageChange = "new.level.attack.damage.change".loadInt()
         fireDamage = "fire.damage".loadInt()
         levelsOrder = properties.getProperty("levels.order").split(",")
     }

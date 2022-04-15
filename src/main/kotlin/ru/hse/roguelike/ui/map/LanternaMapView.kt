@@ -70,6 +70,7 @@ class LanternaMapView(
             appendTitle("$heroStats:")
             appendLine("$health = ${hero.health}/${hero.maximumHealth}")
             appendLine("$itemsCount = ${hero.items.size}")
+            appendLine("${StringProperties.experience} = ${hero.experience}")
         }
     }
 
@@ -95,6 +96,8 @@ class LanternaMapView(
         is Hero -> """
             $type = $hero
             ${StringProperties.health} = $health/$maximumHealth
+            $itemsCount = ${items.size}
+            ${StringProperties.experience} = $experience
         """.trimIndent()
         else -> throw IllegalStateException("Unknown creature type")
     }
