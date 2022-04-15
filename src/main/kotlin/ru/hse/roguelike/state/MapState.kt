@@ -97,13 +97,17 @@ class MapState(
     }
 
     private fun increaseHeroExperienceBy(amount: Int) {
-        val oldLevel = hero.experience / gameProperties.newLevelExperienceAmount
-        hero.experience += amount
-        val newLevel = hero.experience / gameProperties.newLevelExperienceAmount
-        val levelsChange = newLevel - oldLevel
-        hero.health += gameProperties.newLevelHealthChange * levelsChange
-        hero.maximumHealth += gameProperties.newLevelMaximumHealthChange * levelsChange
-        hero.attackDamage += gameProperties.newLevelAttackDamageChange * levelsChange
+        hero.experienceForNextLevel -= amount
+        if (hero.experienceForNextLevel <= 0) {
+            val extraExperience = -hero.experienceForNextLevel
+            val levelChange = 1 + extraExperience / gameProperties.newLevelExperienceAmount
+            val restExtraExperience = extraExperience % gameProperties.newLevelExperienceAmount
+            hero.experienceForNextLevel = gameProperties.newLevelExperienceAmount - restExtraExperience
+            hero.level += levelChange
+            hero.health += gameProperties.newLevelHealthChange * levelChange
+            hero.maximumHealth += gameProperties.newLevelMaximumHealthChange * levelChange
+            hero.attackDamage += gameProperties.newLevelAttackDamageChange * levelChange
+        }
     }
 
     private fun heroIsDead(): Boolean {

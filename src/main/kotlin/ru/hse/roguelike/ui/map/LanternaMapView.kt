@@ -70,7 +70,8 @@ class LanternaMapView(
             appendTitle("$heroStats:")
             appendLine("$health = ${hero.health}/${hero.maximumHealth}")
             appendLine("$itemsCount = ${hero.items.size}")
-            appendLine("${StringProperties.experience} = ${hero.experience}")
+            appendLine("${StringProperties.level} = ${hero.level}")
+            appendLine("${StringProperties.experienceForNextLevel} = ${hero.experienceForNextLevel}")
         }
     }
 
@@ -97,7 +98,7 @@ class LanternaMapView(
             $type = $hero
             ${StringProperties.health} = $health/$maximumHealth
             $itemsCount = ${items.size}
-            ${StringProperties.experience} = $experience
+            ${StringProperties.level} = $level
         """.trimIndent()
         else -> throw IllegalStateException("Unknown creature type")
     }

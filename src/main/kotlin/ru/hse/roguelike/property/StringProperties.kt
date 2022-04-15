@@ -26,7 +26,8 @@ object StringProperties {
     val hero: String
     val bonusHealth: String
     val bonusMaximumHealth: String
-    val experience: String
+    val level: String
+    val experienceForNextLevel: String
 
     val head: String
     val body: String
@@ -68,7 +69,8 @@ object StringProperties {
         hero = "hero".load()
         bonusHealth = "bonus.health".load()
         bonusMaximumHealth = "bonus.maximum.health".load()
-        experience = "experience".load()
+        level = "level".load()
+        experienceForNextLevel = "experience.for.next.level".load()
 
         head = "head".load()
         body = "body".load()
