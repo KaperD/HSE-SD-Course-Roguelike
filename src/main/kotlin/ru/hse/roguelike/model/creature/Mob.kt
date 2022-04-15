@@ -22,6 +22,9 @@ class Mob(
      */
     fun move(gameField: GameField): Mob {
         val newPosition = moveStrategy.move(gameField, this)
+        if (newPosition == position) {
+            return this
+        }
         val oldCell = gameField.get(position)
         val newCell = gameField.get(newPosition)
         val newCellCreature = newCell.creature
