@@ -67,7 +67,7 @@ class GameFieldFactoryImpl(
         val field: MutableList<MutableList<Cell>> = mutableListOf()
         while (true) {
             val line = linesIterator.next()
-            if (line.trim() == "==") {
+            if (line.trim().startsWith("==")) {
                 break
             }
             require(line.length == fieldWidth) { "Field width in file mismatch" }
@@ -80,7 +80,7 @@ class GameFieldFactoryImpl(
     private fun readItems(linesIterator: Iterator<String>, gameField: GameField) {
         while (true) {
             val line = linesIterator.next()
-            if (line.trim() == "==") {
+            if (line.trim().startsWith("==")) {
                 break
             }
             val split = line.split(whitespaceRegex, itemSplitSize)
@@ -96,7 +96,7 @@ class GameFieldFactoryImpl(
         val mobs = mutableListOf<Mob>()
         while (true) {
             val line = linesIterator.next()
-            if (line.trim() == "==") {
+            if (line.trim().startsWith("==")) {
                 break
             }
             val splitIterator = line.split(whitespaceRegex, mobsSplitSize).iterator()
