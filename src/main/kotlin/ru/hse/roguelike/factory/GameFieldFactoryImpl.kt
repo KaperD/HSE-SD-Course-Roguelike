@@ -99,16 +99,32 @@ class GameFieldFactoryImpl(
             if (line.trim() == "==") {
                 break
             }
-            val split = line.split(whitespaceRegex, mobsSplitSize)
-            val x = split[0].toInt()
-            val y = split[1].toInt()
-            val health = split[2].toInt()
-            val attackDamage = split[3].toInt()
-            val mobType = split[4]
-            val newMob = when (mobType) {
-                "coward" -> CowardMob(health, health, attackDamage, Position(x, y), split[5].toInt())
-                "aggressive" -> AggressiveMob(health, health, attackDamage, Position(x, y), split[5].toInt())
-                "passive" -> PassiveMob(health, health, attackDamage, Position(x, y))
+            val splitIterator = line.split(whitespaceRegex, mobsSplitSize).iterator()
+            val x = splitIterator.next().toInt()
+            val y = splitIterator.next().toInt()
+            val health = splitIterator.next().toInt()
+            val attackDamage = splitIterator.next().toInt()
+            val newMob = when (val mobType = splitIterator.next()) {
+                "coward" -> CowardMob(
+                    health,
+                    health,
+                    attackDamage,
+                    Position(x, y),
+                    splitIterator.next().toInt()
+                )
+                "aggressive" -> AggressiveMob(
+                    health,
+                    health,
+                    attackDamage,
+                    Position(x, y),
+                    splitIterator.next().toInt()
+                )
+                "passive" -> PassiveMob(
+                    health,
+                    health,
+                    attackDamage,
+                    Position(x, y)
+                )
                 else -> throw IllegalStateException("Unknown mob type $mobType")
             }
             mobs.add(newMob)

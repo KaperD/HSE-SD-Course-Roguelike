@@ -21,7 +21,7 @@ data class Cell(
  */
 enum class GroundType(val isPassable: Boolean, val canSeeThrough: Boolean, private val displayName: String) {
     Land(true, true, StringProperties.land),
-    Water(false, true,StringProperties.water),
+    Water(false, true, StringProperties.water),
     Fire(true, true, StringProperties.fire),
     Stone(false, false, StringProperties.stone),
     LevelEnd(true, true, StringProperties.levelEnd);

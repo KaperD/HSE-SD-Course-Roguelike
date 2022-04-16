@@ -21,7 +21,6 @@ class AggressiveStrategy(val vision: Int) : MoveStrategy {
         return bfsResult.bestNextPosition
     }
 
-
     private fun findBestNextPosition(gameField: GameField, mobPosition: Position): BFSResult? {
         mark = !mark
         val queue: Queue<Position> = LinkedList()

@@ -4,7 +4,6 @@ import ru.hse.roguelike.model.Cell
 import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.GroundType.*
 import ru.hse.roguelike.model.creature.*
-import ru.hse.roguelike.property.ColorProperties
 import ru.hse.roguelike.property.ColorProperties.aggressiveMobColor
 import ru.hse.roguelike.property.ColorProperties.borderColor
 import ru.hse.roguelike.property.ColorProperties.cowardMobColor
@@ -27,7 +26,6 @@ import ru.hse.roguelike.property.StringProperties.hero
 import ru.hse.roguelike.property.StringProperties.heroStats
 import ru.hse.roguelike.property.StringProperties.itemsCount
 import ru.hse.roguelike.property.StringProperties.type
-import ru.hse.roguelike.property.ViewProperties
 import ru.hse.roguelike.property.ViewProperties.aggressiveMobSymbol
 import ru.hse.roguelike.property.ViewProperties.cowardMobSymbol
 import ru.hse.roguelike.property.ViewProperties.fireSymbol
