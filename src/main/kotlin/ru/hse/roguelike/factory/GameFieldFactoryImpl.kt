@@ -6,6 +6,7 @@ import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.creature.AggressiveMob
 import ru.hse.roguelike.model.creature.CowardMob
+import ru.hse.roguelike.model.creature.Mob
 import ru.hse.roguelike.model.creature.PassiveMob
 import ru.hse.roguelike.property.ViewProperties.fireSymbol
 import ru.hse.roguelike.property.ViewProperties.landSymbol
@@ -35,7 +36,7 @@ class GameFieldFactoryImpl(
      * @param name название уровня
      * @return игровое поле и начальная позиция игрока
      */
-    override fun getByLevelName(name: String): Pair<GameField, Position> {
+    override fun getByLevelName(name: String): Triple<GameField, List<Mob>, Position> {
         val linesIterator = GameFieldFactoryImpl::class.java
             .getResource("/$levelsFolder/$name.txt")
             ?.readText()
@@ -46,16 +47,19 @@ class GameFieldFactoryImpl(
         linesIterator.next()
 
         readItems(linesIterator, gameField)
-        readMobs(linesIterator, gameField)
+        val mobs = readMobs(linesIterator)
+        mobs.forEach {
+            gameField.get(it.position).creature = it
+        }
 
-        return gameField to readHeroPosition(linesIterator)
+        return Triple(gameField, mobs, readHeroPosition(linesIterator))
     }
 
     /**
      * Генерирование уровня
      * @return игровое поле и начальная позиция игрока
      */
-    override fun generate(): Pair<GameField, Position> {
+    override fun generate(): Triple<GameField, List<Mob>, Position> {
         TODO("Not yet implemented")
     }
 
@@ -84,7 +88,8 @@ class GameFieldFactoryImpl(
         }
     }
 
-    private fun readMobs(linesIterator: Iterator<String>, gameField: GameField) {
+    private fun readMobs(linesIterator: Iterator<String>): List<Mob> {
+        val mobs = mutableListOf<Mob>()
         while (true) {
             val line = linesIterator.next()
             if (line.isBlank()) {
@@ -96,13 +101,15 @@ class GameFieldFactoryImpl(
             val health = split[2].toInt()
             val attackDamage = split[3].toInt()
             val mobType = split[4]
-            gameField.get(x, y).creature = when (mobType) {
+            val newMob = when (mobType) {
                 "coward" -> CowardMob(health, health, attackDamage, Position(x, y), split[5].toInt())
                 "aggressive" -> AggressiveMob(health, health, attackDamage, Position(x, y), split[5].toInt())
                 "passive" -> PassiveMob(health, health, attackDamage, Position(x, y))
                 else -> throw IllegalStateException("Unknown mob type $mobType")
             }
+            mobs.add(newMob)
         }
+        return mobs
     }
 
     private fun readHeroPosition(linesIterator: Iterator<String>): Position {

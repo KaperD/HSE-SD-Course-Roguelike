@@ -116,8 +116,9 @@ class MapState(
 
     private fun moveToNextLevel() {
         val levelName = levelIterator.next()
-        val (field, heroPosition) = gameFieldFactory.getByLevelName(levelName)
+        val (field, mobs, heroPosition) = gameFieldFactory.getByLevelName(levelName)
         gameModel.hero.position = heroPosition
+        gameModel.mobs = mobs
         field.get(heroPosition).creature = gameModel.hero
         gameModel.field = field
     }
