@@ -21,6 +21,9 @@ object ColorProperties {
     val defaultColor: Color
     val textColor: Color
     val highlightColor: Color
+    val cowardMobColor: Color
+    val aggressiveMobColor: Color
+    val passiveMobColor: Color
 
     init {
         val properties: Properties = Properties().apply {
@@ -39,5 +42,8 @@ object ColorProperties {
         defaultColor = "color.default".loadColor()
         textColor = "color.text".loadColor()
         highlightColor = "color.highlight".loadColor()
+        cowardMobColor = "color.coward.mod".loadColor()
+        aggressiveMobColor = "color.aggressive.mod".loadColor()
+        passiveMobColor = "color.passive.mod".loadColor()
     }
 }

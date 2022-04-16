@@ -7,7 +7,7 @@ import ru.hse.roguelike.model.creature.strategy.MoveStrategy
 /**
  * Игровой моб. Может иметь различные стратегии перемещения
  */
-open class Mob(
+open class Mob protected constructor(
     health: Int,
     maximumHealth: Int,
     attackDamage: Int,

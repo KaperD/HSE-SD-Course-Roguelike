@@ -4,6 +4,9 @@ import ru.hse.roguelike.model.Cell
 import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.Position
+import ru.hse.roguelike.model.creature.AggressiveMob
+import ru.hse.roguelike.model.creature.CowardMob
+import ru.hse.roguelike.model.creature.PassiveMob
 import ru.hse.roguelike.property.ViewProperties.fireSymbol
 import ru.hse.roguelike.property.ViewProperties.landSymbol
 import ru.hse.roguelike.property.ViewProperties.levelEndSymbol
@@ -43,6 +46,7 @@ class GameFieldFactoryImpl(
         linesIterator.next()
 
         readItems(linesIterator, gameField)
+        readMobs(linesIterator, gameField)
 
         return gameField to readHeroPosition(linesIterator)
     }
@@ -80,6 +84,27 @@ class GameFieldFactoryImpl(
         }
     }
 
+    private fun readMobs(linesIterator: Iterator<String>, gameField: GameField) {
+        while (true) {
+            val line = linesIterator.next()
+            if (line.isBlank()) {
+                break
+            }
+            val split = line.split(whitespaceRegex, mobsSplitSize)
+            val x = split[0].toInt()
+            val y = split[1].toInt()
+            val health = split[2].toInt()
+            val attackDamage = split[3].toInt()
+            val mobType = split[4]
+            gameField.get(x, y).creature = when (mobType) {
+                "coward" -> CowardMob(health, health, attackDamage, Position(x, y), split[5].toInt())
+                "aggressive" -> AggressiveMob(health, health, attackDamage, Position(x, y), split[5].toInt())
+                "passive" -> PassiveMob(health, health, attackDamage, Position(x, y))
+                else -> throw IllegalStateException("Unknown mob type $mobType")
+            }
+        }
+    }
+
     private fun readHeroPosition(linesIterator: Iterator<String>): Position {
         while (true) {
             require(linesIterator.hasNext()) { "Missing hero in level file" }
@@ -105,6 +130,7 @@ class GameFieldFactoryImpl(
     companion object {
         val whitespaceRegex = "\\s".toRegex()
         const val itemSplitSize = 3
+        const val mobsSplitSize = 6
         const val heroSplitSize = 2
     }
 }

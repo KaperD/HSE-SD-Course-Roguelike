@@ -6,6 +6,7 @@ import ru.hse.roguelike.property.ColorProperties.borderColor
 import ru.hse.roguelike.property.ColorProperties.defaultColor
 import ru.hse.roguelike.property.ColorProperties.highlightColor
 import ru.hse.roguelike.property.StringProperties
+import ru.hse.roguelike.property.StringProperties.attackDamage
 import ru.hse.roguelike.property.StringProperties.bonusAttackDamage
 import ru.hse.roguelike.property.StringProperties.bonusHealth
 import ru.hse.roguelike.property.StringProperties.bonusMaximumHealth
@@ -65,6 +66,7 @@ class LanternaInventoryView(
         heroStatsImage.drawText {
             appendTitle("$heroStats:")
             appendLine("$health = ${hero.health}/${hero.maximumHealth}")
+            appendLine("$attackDamage = ${hero.attackDamage}")
             appendLine("$itemsCount = ${hero.items.size}")
             appendLine("${StringProperties.level} = ${hero.level}")
             appendLine("${StringProperties.experienceForNextLevel} = ${hero.experienceForNextLevel}")

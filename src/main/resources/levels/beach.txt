@@ -32,4 +32,8 @@
 43 12 healing_salve
 1 1 ?
 
+4 22 100 10 coward 6
+10 22 100 10 aggressive 6
+13 22 100 10 passive
+
 0 0

@@ -24,11 +24,15 @@ object StringProperties {
     val creatureInfo: String
     val type: String
     val hero: String
+    val coward: String
+    val aggressive: String
+    val passive: String
     val bonusHealth: String
     val bonusMaximumHealth: String
     val bonusAttackDamage: String
     val level: String
     val experienceForNextLevel: String
+    val attackDamage: String
 
     val head: String
     val body: String
@@ -68,11 +72,15 @@ object StringProperties {
         creatureInfo = "creature.info".load()
         type = "type".load()
         hero = "hero".load()
+        coward = "coward".load()
+        aggressive = "aggressive".load()
+        passive = "passive".load()
         bonusHealth = "bonus.health".load()
         bonusMaximumHealth = "bonus.maximum.health".load()
         bonusAttackDamage = "bonus.attack.damage".load()
         level = "level".load()
         experienceForNextLevel = "experience.for.next.level".load()
+        attackDamage = "attack.damage".load()
 
         head = "head".load()
         body = "body".load()

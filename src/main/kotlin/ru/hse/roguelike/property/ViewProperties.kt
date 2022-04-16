@@ -15,6 +15,9 @@ object ViewProperties {
     val levelEndSymbol: Char
     val heroSymbol: Char
     val itemSymbol: Char
+    val cowardMobSymbol: Char
+    val aggressiveMobSymbol: Char
+    val passiveMobSymbol: Char
 
     init {
         val properties: Properties = Properties().apply {
@@ -28,5 +31,8 @@ object ViewProperties {
         levelEndSymbol = "symbol.level.end".loadSymbol()
         heroSymbol = "symbol.hero".loadSymbol()
         itemSymbol = "symbol.item".loadSymbol()
+        cowardMobSymbol = "symbol.coward.mob".loadSymbol()
+        aggressiveMobSymbol = "symbol.aggressive.mob".loadSymbol()
+        passiveMobSymbol = "symbol.passive.mob".loadSymbol()
     }
 }
