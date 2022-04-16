@@ -20,7 +20,11 @@ class CowardStrategy(val vision: Int) : MoveStrategy {
                     continue
                 }
                 val nextPosition = Position(mob.position.x + x, mob.position.y + y)
-                if (gameField.get(nextPosition).groundType.isPassable && gameField.get(nextPosition).creature == null) {
+                if (!checkBounds(gameField, nextPosition)) {
+                    continue
+                }
+                val nextCell = gameField.get(nextPosition)
+                if (nextCell.groundType.isPassable && nextCell.creature == null) {
                     val newDistance = getDistance(nextPosition, heroPosition)
                     if (newDistance > bestDistance) {
                         bestDistance = newDistance
@@ -51,5 +55,9 @@ class CowardStrategy(val vision: Int) : MoveStrategy {
             x += 1
         }
         return null
+    }
+
+    private fun checkBounds(gameField: GameField, position: Position): Boolean {
+        return 0 <= position.x && position.x < gameField.width && 0 <= position.y && position.y < gameField.height
     }
 }
