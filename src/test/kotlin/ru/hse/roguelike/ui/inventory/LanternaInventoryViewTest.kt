@@ -92,7 +92,7 @@ internal class LanternaInventoryViewTest {
 
     @Test
     fun `test set chosen item`() {
-        val width = 51
+        val width = 101
         val height = 51
         val baseImage = Image(BasicTextImage(width, height))
         val image = slot<Image>()
@@ -153,7 +153,7 @@ internal class LanternaInventoryViewTest {
                     ColorProperties.titleColor.textColor,
                     ColorProperties.defaultColor.textColor
                 )[0],
-                image.captured.getCharacterAt(26 + i, 26)
+                image.captured.getCharacterAt(51 + i, 26)
             )
         }
         for ((i, c) in "${StringProperties.itemType} = ${item2.itemType}".withIndex()) {
@@ -163,7 +163,7 @@ internal class LanternaInventoryViewTest {
                     ColorProperties.textColor.textColor,
                     ColorProperties.defaultColor.textColor
                 )[0],
-                image.captured.getCharacterAt(26 + i, 27)
+                image.captured.getCharacterAt(51 + i, 27)
             )
         }
     }

@@ -314,7 +314,7 @@ internal class LanternaMapViewTest {
                     image.captured.getCharacterAt(5 + i, 1)
                 )
             }
-            for ((i, c) in "${StringProperties.itemsCount} = ${hero.items.size}".withIndex()) {
+            for ((i, c) in "${StringProperties.attackDamage} = ${hero.attackDamage}".withIndex()) {
                 assertEquals(
                     TextCharacter.fromCharacter(
                         c,
@@ -322,6 +322,16 @@ internal class LanternaMapViewTest {
                         ColorProperties.defaultColor.textColor
                     )[0],
                     image.captured.getCharacterAt(5 + i, 2)
+                )
+            }
+            for ((i, c) in "${StringProperties.itemsCount} = ${hero.items.size}".withIndex()) {
+                assertEquals(
+                    TextCharacter.fromCharacter(
+                        c,
+                        ColorProperties.textColor.textColor,
+                        ColorProperties.defaultColor.textColor
+                    )[0],
+                    image.captured.getCharacterAt(5 + i, 3)
                 )
             }
         }

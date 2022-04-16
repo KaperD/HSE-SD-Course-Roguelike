@@ -44,9 +44,9 @@ class GameFieldFactoryImpl(
             ?.iterator() ?: throw IllegalStateException("Unknown level $name")
 
         val gameField = GameField(readField(linesIterator))
-        linesIterator.next()
 
         readItems(linesIterator, gameField)
+
         val mobs = readMobs(linesIterator)
         mobs.forEach {
             gameField.get(it.position).creature = it
@@ -65,18 +65,22 @@ class GameFieldFactoryImpl(
 
     private fun readField(linesIterator: Iterator<String>): List<List<Cell>> {
         val field: MutableList<MutableList<Cell>> = mutableListOf()
-        repeat(fieldHeight) {
+        while (true) {
             val line = linesIterator.next()
-            require(line.length == fieldWidth) { "Field with and raw length in file mismatch" }
+            if (line.trim() == "==") {
+                break
+            }
+            require(line.length == fieldWidth) { "Field width in file mismatch" }
             field.add(line.map { Cell(it.groundType(), mutableListOf(), null) }.toMutableList())
         }
+        require(field.size == fieldHeight) { "Field height in file mismatch" }
         return field
     }
 
     private fun readItems(linesIterator: Iterator<String>, gameField: GameField) {
         while (true) {
             val line = linesIterator.next()
-            if (line.isBlank()) {
+            if (line.trim() == "==") {
                 break
             }
             val split = line.split(whitespaceRegex, itemSplitSize)
@@ -92,7 +96,7 @@ class GameFieldFactoryImpl(
         val mobs = mutableListOf<Mob>()
         while (true) {
             val line = linesIterator.next()
-            if (line.isBlank()) {
+            if (line.trim() == "==") {
                 break
             }
             val split = line.split(whitespaceRegex, mobsSplitSize)

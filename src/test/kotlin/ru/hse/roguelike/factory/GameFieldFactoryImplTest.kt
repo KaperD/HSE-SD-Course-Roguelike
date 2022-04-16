@@ -15,7 +15,7 @@ internal class GameFieldFactoryImplTest {
         val width = 3
         val height = 2
         val factory = GameFieldFactoryImpl(width, height, ItemFactoryImpl())
-        val (field, heroPosition) = factory.getByLevelName("test")
+        val (field, mobs, heroPosition) = factory.getByLevelName("test")
 
         assertEquals(width, field.width)
         assertEquals(height, field.height)
