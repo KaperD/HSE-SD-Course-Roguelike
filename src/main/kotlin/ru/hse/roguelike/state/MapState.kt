@@ -57,8 +57,10 @@ class MapState(
                     newCell.creature = null
                     gameModel.mobs = gameModel.mobs.filter { it != newCellCreature }
                 }
-                val confusedCreature = RandomMobDecorator(newCellCreature, gameProperties.confusionTime)
-                gameModel.mobs = gameModel.mobs.map { if (it == newCellCreature) confusedCreature else it }
+                if (gameProperties.confusionTime > 0) {
+                    val confusedCreature = RandomMobDecorator(newCellCreature, gameProperties.confusionTime)
+                    gameModel.mobs = gameModel.mobs.map { if (it == newCellCreature) confusedCreature else it }
+                }
             } else {
                 moveHeroTo(x, y)
                 if (newCell.items.isNotEmpty()) {

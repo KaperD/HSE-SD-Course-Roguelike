@@ -22,15 +22,8 @@ open class BaseMob protected constructor(
         }
 
     override var maximumHealth: Int = maximumHealth
-        set(value) {
-            require(value > 0) { "Maximum health must be positive" }
-            field = value
-            health = min(health, value)
-        }
+        set(_) = throw UnsupportedOperationException()
 
     override var attackDamage: Int = attackDamage
-        set(value) {
-            require(value >= 0) { "Attack must be non negative" }
-            field = value
-        }
+        set(_) = throw UnsupportedOperationException()
 }

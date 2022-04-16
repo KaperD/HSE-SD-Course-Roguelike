@@ -22,6 +22,7 @@ import ru.hse.roguelike.ui.map.MapView
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
+import kotlin.test.assertNotEquals
 
 internal class MapStateTest {
 
@@ -313,7 +314,7 @@ internal class MapStateTest {
         val gameFieldFactory = GameFieldFactoryImpl(4, 3, itemFactory)
         val gameProperties = mockk<GameProperties>(relaxed = true)
         every { gameProperties.levelsOrder } returns listOf("with_mobs")
-        every { gameProperties.confusionTime } returns 4
+        every { gameProperties.confusionTime } returns 0
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
         val mapState = MapState(
@@ -342,7 +343,7 @@ internal class MapStateTest {
         mapState.handleInput(StateProperties.moveDown)
         assertEquals(Position(0, 0), hero.position)
         assertEquals(Position(2, 0), aggressive.position)
-        assertEquals(Position(0, 2), coward.position)
+        assertEquals(Position(1, 1), coward.position)
         assertEquals(Position(2, 2), passive.position)
     }
 
@@ -357,7 +358,7 @@ internal class MapStateTest {
         val gameFieldFactory = GameFieldFactoryImpl(5, 3, itemFactory)
         val gameProperties = mockk<GameProperties>(relaxed = true)
         every { gameProperties.levelsOrder } returns listOf("attack")
-        every { gameProperties.confusionTime } returns 2
+        every { gameProperties.confusionTime } returns 0
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
         val mapState = MapState(
@@ -387,6 +388,44 @@ internal class MapStateTest {
         assertEquals(1, gameModel.mobs.size)
 
         mapState.handleInput(StateProperties.moveRight)
-        assertIs<RandomMobDecorator>(gameModel.mobs[0])
+        assertEquals(hero.maximumHealth - coward.attackDamage - passive.attackDamage - 2 * aggressive.attackDamage, hero.health)
+        assertEquals(aggressive.maximumHealth - 2 * hero.attackDamage, aggressive.health)
+    }
+
+    @Test
+    fun `test map mode confused`() {
+        val hero = Hero(1000, 1000, 0, Position(0, 0), mutableListOf())
+        val initField = GameField(listOf())
+        val gameModel = GameModel(initField, mutableListOf(), hero)
+        val mapView = mockk<MapView>(relaxed = true)
+        val gameSound = mockk<GameSound>(relaxed = true)
+        val itemFactory = ItemFactoryImpl()
+        val gameFieldFactory = GameFieldFactoryImpl(5, 3, itemFactory)
+        val gameProperties = mockk<GameProperties>(relaxed = true)
+        every { gameProperties.levelsOrder } returns listOf("attack")
+        every { gameProperties.confusionTime } returns 2
+        val gameOverState = mockk<State>()
+        val victoryState = mockk<State>()
+        val mapState = MapState(
+            gameModel,
+            mapView,
+            gameSound,
+            mapOf(),
+            gameFieldFactory,
+            gameProperties,
+            gameOverState,
+            victoryState
+        )
+
+        mapState.activate()
+        val passive = gameModel.mobs[2] as PassiveMob
+        assertEquals(Position(1, 2), passive.position)
+
+        mapState.handleInput(StateProperties.moveDown)
+        assertNotEquals(Position(1, 2), passive.position)
+        assertIs<RandomMobDecorator>(gameModel.mobs[2])
+
+        mapState.handleInput(StateProperties.moveDown)
+        assertIs<PassiveMob>(gameModel.mobs[2])
     }
 }
