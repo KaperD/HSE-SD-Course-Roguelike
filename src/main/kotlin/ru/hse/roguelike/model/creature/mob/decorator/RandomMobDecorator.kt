@@ -9,7 +9,7 @@ class RandomMobDecorator(baseMob: Mob, private var timeLimit: Int) : MobDecorato
     private val oldMoveStrategy: MoveStrategy = baseMob.moveStrategy
 
     init {
-        assert(timeLimit > 0)
+        require(timeLimit > 0) { "Time limit must be positive: $timeLimit" }
         baseMob.moveStrategy = RandomStrategy()
     }
 
