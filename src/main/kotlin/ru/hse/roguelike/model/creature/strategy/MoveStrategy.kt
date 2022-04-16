@@ -59,23 +59,25 @@ interface MoveStrategy {
     }
 
     fun getAvailableNextPositions(gameField: GameField, position: Position): List<Position> {
-        val result = mutableListOf<Position>()
-        for (x in -1..1) {
-            for (y in -1..1) {
-                val nextPosition = Position(position.x + x, position.y + y)
-                if (x.absoluteValue == y.absoluteValue || !checkGameFieldBounds(gameField, nextPosition)) {
-                    continue
-                }
-                val nextCell = gameField.get(nextPosition)
-                if (nextCell.groundType.isPassable && (nextCell.creature == null || nextCell.creature is Hero)) {
-                    result.add(nextPosition)
-                }
-            }
-        }
-        return result
+        val potentialPositions = listOf(
+            position.copy(x = position.x + 1),
+            position.copy(x = position.x - 1),
+            position.copy(y = position.y + 1),
+            position.copy(y = position.y - 1)
+        )
+        return potentialPositions.filter { isPositionAvailable(gameField, it) }
     }
 
-    fun checkGameFieldBounds(gameField: GameField, position: Position): Boolean {
+    private fun isPositionAvailable(gameField: GameField, position: Position): Boolean {
+        return if (!checkGameFieldBounds(gameField, position)) {
+            false
+        } else {
+            val cell = gameField.get(position)
+            cell.groundType.isPassable && (cell.creature == null || cell.creature is Hero)
+        }
+    }
+
+    private fun checkGameFieldBounds(gameField: GameField, position: Position): Boolean {
         return 0 <= position.x && position.x < gameField.width && 0 <= position.y && position.y < gameField.height
     }
 }
