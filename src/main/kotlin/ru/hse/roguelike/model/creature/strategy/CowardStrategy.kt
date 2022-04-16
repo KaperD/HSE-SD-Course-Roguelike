@@ -9,11 +9,12 @@ import kotlin.math.absoluteValue
 class CowardStrategy(val vision: Int) : MoveStrategy {
     override fun move(gameField: GameField, mob: Mob): Position {
         val heroPosition = findHero(gameField, mob.position) ?: return mob.position
-        if (!canSeeHero(gameField, heroPosition, mob.position)) {
-            return mob.position
+        return if (!canSeeHero(gameField, heroPosition, mob.position)) {
+            mob.position
+        } else {
+            getAvailableNextPositions(gameField, mob.position)
+                .maxByOrNull { getDistance(it, mob.position) } ?: mob.position
         }
-        return getAvailableNextPositions(gameField, mob.position)
-            .maxByOrNull { getDistance(it, mob.position) } ?: mob.position
     }
 
     private fun getDistance(mobPosition: Position, heroPosition: Position): Int {

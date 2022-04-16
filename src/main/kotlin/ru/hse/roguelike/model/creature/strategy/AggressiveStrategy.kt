@@ -15,10 +15,11 @@ class AggressiveStrategy(val vision: Int) : MoveStrategy {
 
     override fun move(gameField: GameField, mob: Mob): Position {
         val bfsResult = findBestNextPosition(gameField, mob.position) ?: return mob.position
-        if (!canSeeHero(gameField, bfsResult.heroPosition, mob.position)) {
-            return mob.position
+        return if (!canSeeHero(gameField, bfsResult.heroPosition, mob.position)) {
+            mob.position
+        } else {
+            bfsResult.bestNextPosition
         }
-        return bfsResult.bestNextPosition
     }
 
     private fun findBestNextPosition(gameField: GameField, mobPosition: Position): BFSResult? {
@@ -35,11 +36,12 @@ class AggressiveStrategy(val vision: Int) : MoveStrategy {
                 ) {
                     val nextCell = gameField.get(nextPosition)
                     if (nextCell.creature is Hero) {
-                        if (getPrev(curPosition, mobPosition) == null) {
-                            return BFSResult(nextPosition, nextPosition)
+                        return if (getPrev(curPosition, mobPosition) == null) {
+                            BFSResult(nextPosition, nextPosition)
+                        } else {
+                            val bestNextPosition = recoverBestNextPosition(curPosition, mobPosition)
+                            BFSResult(bestNextPosition, nextPosition)
                         }
-                        val bestNextPosition = recoverBestNextPosition(curPosition, mobPosition)
-                        return BFSResult(bestNextPosition, nextPosition)
                     }
                     if (nextCell.groundType.isPassable && nextCell.creature == null) {
                         markAsUsed(nextPosition, mobPosition)

@@ -62,11 +62,8 @@ interface MoveStrategy {
         val result = mutableListOf<Position>()
         for (x in -1..1) {
             for (y in -1..1) {
-                if (x.absoluteValue == y.absoluteValue) {
-                    continue
-                }
                 val nextPosition = Position(position.x + x, position.y + y)
-                if (!checkGameFieldBounds(gameField, nextPosition)) {
+                if (x.absoluteValue == y.absoluteValue || !checkGameFieldBounds(gameField, nextPosition)) {
                     continue
                 }
                 val nextCell = gameField.get(nextPosition)
