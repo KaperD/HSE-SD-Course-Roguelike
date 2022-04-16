@@ -1,4 +1,4 @@
-package ru.hse.roguelike.model.creature
+package ru.hse.roguelike.model.creature.mob
 
 import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.creature.strategy.CowardStrategy
@@ -9,4 +9,4 @@ class CowardMob(
     attackDamage: Int,
     position: Position,
     vision: Int
-) : Mob(health, maximumHealth, attackDamage, position, CowardStrategy(vision))
+) : BaseMob(health, maximumHealth, attackDamage, position, CowardStrategy(vision))

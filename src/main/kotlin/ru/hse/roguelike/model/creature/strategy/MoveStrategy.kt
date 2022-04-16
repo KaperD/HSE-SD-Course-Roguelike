@@ -3,7 +3,7 @@ package ru.hse.roguelike.model.creature.strategy
 import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.creature.Hero
-import ru.hse.roguelike.model.creature.Mob
+import ru.hse.roguelike.model.creature.mob.Mob
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 import kotlin.math.sign

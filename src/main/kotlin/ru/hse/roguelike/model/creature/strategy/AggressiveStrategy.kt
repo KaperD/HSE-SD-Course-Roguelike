@@ -3,7 +3,7 @@ package ru.hse.roguelike.model.creature.strategy
 import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.creature.Hero
-import ru.hse.roguelike.model.creature.Mob
+import ru.hse.roguelike.model.creature.mob.Mob
 import java.util.*
 
 class AggressiveStrategy(val vision: Int) : MoveStrategy {

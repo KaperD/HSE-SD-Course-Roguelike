@@ -1,7 +1,7 @@
 package ru.hse.roguelike.model
 
 import ru.hse.roguelike.model.creature.Hero
-import ru.hse.roguelike.model.creature.Mob
+import ru.hse.roguelike.model.creature.mob.Mob
 
 /**
  * Модель игры, описывающаяся текущим состоянием игрового поля и героем

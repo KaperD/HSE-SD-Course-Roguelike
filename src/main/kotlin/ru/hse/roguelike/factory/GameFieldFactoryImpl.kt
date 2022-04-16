@@ -4,10 +4,10 @@ import ru.hse.roguelike.model.Cell
 import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.Position
-import ru.hse.roguelike.model.creature.AggressiveMob
-import ru.hse.roguelike.model.creature.CowardMob
-import ru.hse.roguelike.model.creature.Mob
-import ru.hse.roguelike.model.creature.PassiveMob
+import ru.hse.roguelike.model.creature.mob.AggressiveMob
+import ru.hse.roguelike.model.creature.mob.CowardMob
+import ru.hse.roguelike.model.creature.mob.Mob
+import ru.hse.roguelike.model.creature.mob.PassiveMob
 import ru.hse.roguelike.property.ViewProperties.fireSymbol
 import ru.hse.roguelike.property.ViewProperties.landSymbol
 import ru.hse.roguelike.property.ViewProperties.levelEndSymbol

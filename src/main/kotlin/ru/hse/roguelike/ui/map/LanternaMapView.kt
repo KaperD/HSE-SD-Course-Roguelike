@@ -4,6 +4,10 @@ import ru.hse.roguelike.model.Cell
 import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.GroundType.*
 import ru.hse.roguelike.model.creature.*
+import ru.hse.roguelike.model.creature.mob.AggressiveMob
+import ru.hse.roguelike.model.creature.mob.CowardMob
+import ru.hse.roguelike.model.creature.mob.Mob
+import ru.hse.roguelike.model.creature.mob.PassiveMob
 import ru.hse.roguelike.property.ColorProperties.aggressiveMobColor
 import ru.hse.roguelike.property.ColorProperties.borderColor
 import ru.hse.roguelike.property.ColorProperties.cowardMobColor
