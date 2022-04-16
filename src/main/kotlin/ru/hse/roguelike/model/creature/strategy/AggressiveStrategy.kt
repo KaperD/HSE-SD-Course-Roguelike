@@ -6,6 +6,13 @@ import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.model.creature.mob.Mob
 import java.util.*
 
+/**
+ * Агрессивная стратегия:
+ * Если моб видит героя, то пытается приблизиться к нему
+ * Моб видит героя, если герой находится в зоне видимости и обзор ничем не закрыт
+ *
+ * @param vision Расстояние, на которое видит моб. Измеряется в клетках
+ */
 class AggressiveStrategy(val vision: Int) : MoveStrategy {
     private val used: MutableList<MutableList<Boolean>> =
         MutableList(2 * vision + 1) { MutableList(2 * vision + 1) { false } }

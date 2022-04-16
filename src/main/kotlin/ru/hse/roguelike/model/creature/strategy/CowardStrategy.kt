@@ -6,6 +6,15 @@ import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.model.creature.mob.Mob
 import kotlin.math.absoluteValue
 
+/**
+ * Трусливая стратегия:
+ * моб выбирает следующую позицию так, чтобы
+ * максимизировать "манхэттенское расстояние" до героя.
+ * Моб делает какие-либо шаги только если он видит героя
+ * (герой находится в зоне видимости и обзор ничем не закрыт)
+ *
+ * @param vision Расстояние, на которое видит моб. Измеряется в клетках
+ */
 class CowardStrategy(val vision: Int) : MoveStrategy {
     override fun move(gameField: GameField, mob: Mob): Position {
         val heroPosition = findHero(gameField, mob.position) ?: return mob.position
