@@ -16,6 +16,8 @@ style:
         active: false # MaximumLineLength klint wrapper rule is used instead
     UnnecessaryAbstractClass:
         excludes: [ '**/test*/**' ]
+    MagicNumber:
+        ignoreLocalVariableDeclaration: true
 
 formatting:
     NoWildcardImports:

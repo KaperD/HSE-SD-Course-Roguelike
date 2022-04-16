@@ -53,7 +53,8 @@ interface MoveStrategy {
             val potentialBlockPosition =
                 Position(mobPosition.x + directionX * x, mobPosition.y + (y / floatBase).roundToInt())
             if (checkGameFieldBounds(gameField, potentialBlockPosition) &&
-                !gameField.get(potentialBlockPosition).groundType.canSeeThrough) {
+                !gameField.get(potentialBlockPosition).groundType.canSeeThrough
+            ) {
                 return false
             }
         }

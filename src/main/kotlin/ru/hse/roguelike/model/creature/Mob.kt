@@ -13,7 +13,7 @@ open class Mob protected constructor(
     attackDamage: Int,
     position: Position,
     var moveStrategy: MoveStrategy
-) : Creature(health, maximumHealth, attackDamage, position) {
+) : BaseCreature(health, maximumHealth, attackDamage, position) {
 
     /**
      * Делает 1 ход
