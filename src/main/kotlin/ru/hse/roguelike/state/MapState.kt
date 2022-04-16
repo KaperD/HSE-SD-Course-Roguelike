@@ -5,6 +5,8 @@ import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.model.GameModel
 import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.Position
+import ru.hse.roguelike.model.creature.mob.Mob
+import ru.hse.roguelike.model.creature.mob.decorator.RandomMobDecorator
 import ru.hse.roguelike.property.GameProperties
 import ru.hse.roguelike.property.StateProperties
 import ru.hse.roguelike.sound.GameSound
@@ -47,7 +49,7 @@ class MapState(
         return if (canMoveHeroTo(x, y)) {
             val newCell = gameModel.field.get(x, y)
             val newCellCreature = newCell.creature
-            if (newCellCreature != null) {
+            if (newCellCreature is Mob) {
                 newCellCreature.health -= hero.attackDamage
                 hero.health -= newCellCreature.attackDamage
                 if (newCellCreature.health <= 0) {
@@ -55,6 +57,8 @@ class MapState(
                     newCell.creature = null
                     gameModel.mobs = gameModel.mobs.filter { it != newCellCreature }
                 }
+                val confusedCreature = RandomMobDecorator(newCellCreature, gameProperties.confusionTime)
+                gameModel.mobs = gameModel.mobs.map { if (it == newCellCreature) confusedCreature else it }
             } else {
                 moveHeroTo(x, y)
                 if (newCell.items.isNotEmpty()) {
@@ -80,6 +84,7 @@ class MapState(
                     gameModel.field.get(newMobState.position).creature = null
                     null
                 } else {
+                    gameModel.field.get(newMobState.position).creature = newMobState
                     newMobState
                 }
             }

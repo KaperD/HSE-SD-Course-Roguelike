@@ -4,10 +4,7 @@ import ru.hse.roguelike.model.Cell
 import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.GroundType.*
 import ru.hse.roguelike.model.creature.*
-import ru.hse.roguelike.model.creature.mob.AggressiveMob
-import ru.hse.roguelike.model.creature.mob.CowardMob
-import ru.hse.roguelike.model.creature.mob.Mob
-import ru.hse.roguelike.model.creature.mob.PassiveMob
+import ru.hse.roguelike.model.creature.mob.*
 import ru.hse.roguelike.property.ColorProperties.aggressiveMobColor
 import ru.hse.roguelike.property.ColorProperties.borderColor
 import ru.hse.roguelike.property.ColorProperties.cowardMobColor
@@ -128,11 +125,13 @@ class LanternaMapView(
     }
 
     private fun Cell.representation(): Pair<Char, Color> = when {
-        creature != null -> when (creature) {
+        creature != null -> when (val creature = creature) {
             is Hero -> heroSymbol to heroColor
-            is CowardMob -> cowardMobSymbol to cowardMobColor
-            is AggressiveMob -> aggressiveMobSymbol to aggressiveMobColor
-            is PassiveMob -> passiveMobSymbol to passiveMobColor
+            is Mob -> when (creature.mobType) {
+                MobType.Coward -> cowardMobSymbol to cowardMobColor
+                MobType.Aggressive -> aggressiveMobSymbol to aggressiveMobColor
+                MobType.Passive -> passiveMobSymbol to passiveMobColor
+            }
             else -> throw IllegalStateException("Unknown creature type")
         }
         items.isNotEmpty() -> itemSymbol to itemColor

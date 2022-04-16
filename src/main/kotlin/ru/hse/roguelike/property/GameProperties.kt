@@ -19,6 +19,7 @@ interface GameProperties {
     val newLevelAttackDamageChange: Int
     val fireDamage: Int
     val levelsOrder: List<String>
+    val confusionTime: Int
 }
 
 /**
@@ -40,6 +41,7 @@ class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : Game
 
     override val fireDamage: Int
     override val levelsOrder: List<String>
+    override val confusionTime: Int
 
     init {
         val properties = Properties().apply {
@@ -59,5 +61,6 @@ class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : Game
         newLevelAttackDamageChange = "new.level.attack.damage.change".loadInt()
         fireDamage = "fire.damage".loadInt()
         levelsOrder = properties.getProperty("levels.order").split(",")
+        confusionTime = "confusion.time".loadInt()
     }
 }

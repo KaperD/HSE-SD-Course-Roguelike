@@ -8,4 +8,4 @@ class PassiveMob(
     maximumHealth: Int,
     attackDamage: Int,
     position: Position
-) : BaseMob(health, maximumHealth, attackDamage, position, PassiveStrategy())
+) : BaseMob(health, maximumHealth, attackDamage, position, PassiveStrategy(), MobType.Passive)
