@@ -2,6 +2,7 @@ package ru.hse.roguelike.model.creature.strategy
 
 import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.Position
+import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.model.creature.Mob
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
@@ -55,5 +56,29 @@ interface MoveStrategy {
             }
         }
         return true
+    }
+
+    fun getAvailableNextPositions(gameField: GameField, position: Position): List<Position> {
+        val result = mutableListOf<Position>()
+        for (x in -1..1) {
+            for (y in -1..1) {
+                if (x.absoluteValue == y.absoluteValue) {
+                    continue
+                }
+                val nextPosition = Position(position.x + x, position.y + y)
+                if (!checkGameFieldBounds(gameField, nextPosition)) {
+                    continue
+                }
+                val nextCell = gameField.get(nextPosition)
+                if (nextCell.groundType.isPassable && (nextCell.creature == null || nextCell.creature is Hero)) {
+                    result.add(nextPosition)
+                }
+            }
+        }
+        return result
+    }
+
+    fun checkGameFieldBounds(gameField: GameField, position: Position): Boolean {
+        return 0 <= position.x && position.x < gameField.width && 0 <= position.y && position.y < gameField.height
     }
 }
