@@ -21,38 +21,40 @@ interface MoveStrategy {
     fun move(gameField: GameField, mob: Mob): Position
 
     fun canSeeHero(gameField: GameField, heroPosition: Position, mobPosition: Position): Boolean {
+        return if (heroPosition.x == mobPosition.x) {
+            canSeeHeroOnSameColumn(gameField, mobPosition, heroPosition)
+        } else {
+            canSeeHeroOnOtherColumn(gameField, mobPosition, heroPosition)
+        }
+    }
+
+    private fun canSeeHeroOnSameColumn(gameField: GameField, mobPosition: Position, heroPosition: Position): Boolean {
+        val heroRelativePosition = Position(heroPosition.x - mobPosition.x, heroPosition.y - mobPosition.y)
+        val directionY = heroRelativePosition.y.sign
+        for (y in 1 until heroRelativePosition.y.absoluteValue) {
+            val potentialBlockPosition = Position(
+                mobPosition.x,
+                mobPosition.y + directionY * y
+            )
+            if (!gameField.get(potentialBlockPosition).groundType.canSeeThrough) {
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun canSeeHeroOnOtherColumn(gameField: GameField, mobPosition: Position, heroPosition: Position): Boolean {
         val heroRelativePosition = Position(heroPosition.x - mobPosition.x, heroPosition.y - mobPosition.y)
         fun line(x: Int): Float = heroRelativePosition.y.toFloat() / heroRelativePosition.x * x
-        if (heroRelativePosition.x == 0) {
-            val directionY = heroRelativePosition.y.sign
-            for (y in 1 until heroRelativePosition.y.absoluteValue) {
-                val potentialBlockPosition = Position(
-                    mobPosition.x,
-                    mobPosition.y + directionY * y
-                )
-                if (!gameField.get(potentialBlockPosition).groundType.canSeeThrough) {
-                    return false
-                }
-            }
-            return true
-        }
         val directionX = heroRelativePosition.x.sign
+        val floatBase = 10.0
         for (x in 1 until heroRelativePosition.x.absoluteValue) {
-            val y = (line(directionX * x) * 10.0).roundToInt()
-            if (y.absoluteValue % 10 == 5) {
-                val potentialBlockPosition1 = Position(mobPosition.x + directionX * x, mobPosition.y + y.div(10))
-                val potentialBlockPosition2 = potentialBlockPosition1.copy(y = potentialBlockPosition1.y + y.sign)
-                if (!gameField.get(potentialBlockPosition1).groundType.canSeeThrough ||
-                    !gameField.get(potentialBlockPosition2).groundType.canSeeThrough
-                ) {
-                    return false
-                }
-            } else {
-                val potentialBlockPosition =
-                    Position(mobPosition.x + directionX * x, mobPosition.y + (y / 10.0).roundToInt())
-                if (!gameField.get(potentialBlockPosition).groundType.canSeeThrough) {
-                    return false
-                }
+            val y = (line(directionX * x) * floatBase).roundToInt()
+            val potentialBlockPosition =
+                Position(mobPosition.x + directionX * x, mobPosition.y + (y / floatBase).roundToInt())
+            if (checkGameFieldBounds(gameField, potentialBlockPosition) &&
+                !gameField.get(potentialBlockPosition).groundType.canSeeThrough) {
+                return false
             }
         }
         return true

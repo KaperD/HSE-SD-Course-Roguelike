@@ -8,10 +8,9 @@ import java.util.*
 
 class AggressiveStrategy(val vision: Int) : MoveStrategy {
     private val used: MutableList<MutableList<Boolean>> =
-        MutableList(2 * vision + 1) { MutableList(2 * vision + 1) { mark } }
+        MutableList(2 * vision + 1) { MutableList(2 * vision + 1) { false } }
     private val prev: MutableList<MutableList<Position?>> =
         MutableList(2 * vision + 1) { MutableList(2 * vision + 1) { null } }
-    private var mark = false
 
     override fun move(gameField: GameField, mob: Mob): Position {
         val bfsResult = findBestNextPosition(gameField, mob.position) ?: return mob.position
@@ -23,7 +22,8 @@ class AggressiveStrategy(val vision: Int) : MoveStrategy {
     }
 
     private fun findBestNextPosition(gameField: GameField, mobPosition: Position): BFSResult? {
-        mark = !mark
+        used.forEach { it.fill(false) }
+        prev.forEach { it.fill(null) }
         val queue: Queue<Position> = LinkedList()
         queue.offer(mobPosition)
         setPrev(mobPosition, mobPosition, null)
@@ -32,7 +32,7 @@ class AggressiveStrategy(val vision: Int) : MoveStrategy {
             val curPosition = queue.poll()
             for (nextPosition in getAvailableNextPositions(gameField, curPosition)) {
                 if (checkVisionBounds(gameField, mobPosition, nextPosition) &&
-                    getMark(nextPosition, mobPosition) != mark
+                    !getMark(nextPosition, mobPosition)
                 ) {
                     val nextCell = gameField.get(nextPosition)
                     if (nextCell.creature is Hero) {
@@ -71,7 +71,7 @@ class AggressiveStrategy(val vision: Int) : MoveStrategy {
     }
 
     private fun markAsUsed(position: Position, mobPosition: Position) {
-        used[position.x - mobPosition.x + vision][position.y - mobPosition.y + vision] = mark
+        used[position.x - mobPosition.x + vision][position.y - mobPosition.y + vision] = true
     }
 
     private fun setPrev(position: Position, mobPosition: Position, prevPosition: Position?) {

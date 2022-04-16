@@ -12,9 +12,17 @@ class CowardStrategy(val vision: Int) : MoveStrategy {
         return if (!canSeeHero(gameField, heroPosition, mob.position)) {
             mob.position
         } else {
-            getAvailableNextPositions(gameField, mob.position)
-                .maxByOrNull { getDistance(it, mob.position) } ?: mob.position
+            chooseBestNextPosition(gameField, mob.position, heroPosition)
         }
+    }
+
+    private fun chooseBestNextPosition(gameField: GameField, mobPosition: Position, heroPosition: Position): Position {
+        val bestNextPosition = getAvailableNextPositions(gameField, mobPosition)
+            .maxByOrNull { getDistance(it, mobPosition) } ?: mobPosition
+        if (getDistance(bestNextPosition, heroPosition) < getDistance(mobPosition, heroPosition)) {
+            return mobPosition
+        }
+        return bestNextPosition
     }
 
     private fun getDistance(mobPosition: Position, heroPosition: Position): Int {
