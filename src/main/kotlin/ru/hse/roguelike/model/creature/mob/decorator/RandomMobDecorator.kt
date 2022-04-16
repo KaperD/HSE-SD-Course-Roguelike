@@ -5,7 +5,7 @@ import ru.hse.roguelike.model.creature.mob.Mob
 import ru.hse.roguelike.model.creature.strategy.MoveStrategy
 import ru.hse.roguelike.model.creature.strategy.RandomStrategy
 
-class RandomMobDecorator(baseMob: Mob, private var timeLimit: Int) : MobDecorator(baseMob) {
+class RandomMobDecorator(val baseMob: Mob, private var timeLimit: Int) : MobDecorator(baseMob) {
     private val oldMoveStrategy: MoveStrategy = baseMob.moveStrategy
 
     init {

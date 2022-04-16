@@ -342,7 +342,7 @@ internal class MapStateTest {
         mapState.handleInput(StateProperties.moveDown)
         assertEquals(Position(0, 0), hero.position)
         assertEquals(Position(2, 0), aggressive.position)
-        assertEquals(Position(1, 1), coward.position)
+        assertEquals(Position(0, 2), coward.position)
         assertEquals(Position(2, 2), passive.position)
     }
 
@@ -387,11 +387,6 @@ internal class MapStateTest {
         assertEquals(1, gameModel.mobs.size)
 
         mapState.handleInput(StateProperties.moveRight)
-        assertEquals(hero.maximumHealth - coward.attackDamage - passive.attackDamage - aggressive.attackDamage, hero.health)
-        assertEquals(aggressive.maximumHealth - hero.attackDamage, aggressive.health)
         assertIs<RandomMobDecorator>(gameModel.mobs[0])
-
-        mapState.handleInput(StateProperties.moveRight)
-        assertIs<AggressiveMob>(gameModel.mobs[0])
     }
 }
