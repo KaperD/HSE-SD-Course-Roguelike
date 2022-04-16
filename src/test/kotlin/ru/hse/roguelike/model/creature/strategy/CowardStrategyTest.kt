@@ -70,6 +70,17 @@ internal class CowardStrategyTest {
         assertEquals(Position(2, 2), strategyResult)
     }
 
+    @Test
+    fun `test mob in a corner and hero on the same column`() {
+        val gameField = GameField(createEmptyGameField(10))
+        val cowardStrategy = CowardStrategy(6)
+        val mob = CowardMob(100, 100, 1, Position(0, 0), 6)
+        val hero = Hero(100, 100, 1, Position(0, 5), mutableListOf())
+        gameField.get(mob.position).creature = mob
+        gameField.get(hero.position).creature = hero
+        assertEquals(Position(1, 0), cowardStrategy.move(gameField, mob))
+    }
+
     private fun createEmptyGameField(n: Int): MutableList<MutableList<Cell>> {
         return MutableList(n) { MutableList(n) { Cell(GroundType.Land, mutableListOf(), null) } }
     }
