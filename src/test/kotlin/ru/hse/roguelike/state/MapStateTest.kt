@@ -19,10 +19,7 @@ import ru.hse.roguelike.property.GamePropertiesImpl
 import ru.hse.roguelike.property.StateProperties
 import ru.hse.roguelike.sound.GameSound
 import ru.hse.roguelike.ui.map.MapView
-import kotlin.test.assertContentEquals
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.assertNotEquals
+import kotlin.test.*
 
 internal class MapStateTest {
 
@@ -394,15 +391,15 @@ internal class MapStateTest {
 
     @Test
     fun `test map mode confused`() {
-        val hero = Hero(1000, 1000, 0, Position(0, 0), mutableListOf())
+        val hero = Hero(1000, 1000, 0, Position(1, 1), mutableListOf())
         val initField = GameField(listOf())
         val gameModel = GameModel(initField, mutableListOf(), hero)
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val itemFactory = ItemFactoryImpl()
-        val gameFieldFactory = GameFieldFactoryImpl(5, 3, itemFactory)
+        val gameFieldFactory = GameFieldFactoryImpl(3, 3, itemFactory)
         val gameProperties = mockk<GameProperties>(relaxed = true)
-        every { gameProperties.levelsOrder } returns listOf("attack")
+        every { gameProperties.levelsOrder } returns listOf("confuse")
         every { gameProperties.confusionTime } returns 2
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
@@ -418,14 +415,17 @@ internal class MapStateTest {
         )
 
         mapState.activate()
-        val passive = gameModel.mobs[2] as PassiveMob
+        val passive = gameModel.mobs[0] as PassiveMob
         assertEquals(Position(1, 2), passive.position)
 
         mapState.handleInput(StateProperties.moveDown)
-        assertNotEquals(Position(1, 2), passive.position)
-        assertIs<RandomMobDecorator>(gameModel.mobs[2])
+        val position1 = passive.position
+        assertIs<RandomMobDecorator>(gameModel.mobs[0])
 
-        mapState.handleInput(StateProperties.moveDown)
-        assertIs<PassiveMob>(gameModel.mobs[2])
+        mapState.handleInput(StateProperties.moveUp)
+        val position2 = passive.position
+        assertIs<PassiveMob>(gameModel.mobs[0])
+
+        assertTrue(position1 != Position(1, 2) || position2 != Position(1, 2))
     }
 }
