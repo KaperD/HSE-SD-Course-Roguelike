@@ -342,7 +342,7 @@ internal class MapStateTest {
         mapState.handleInput(StateProperties.moveDown)
         assertEquals(Position(0, 0), hero.position)
         assertEquals(Position(2, 0), aggressive.position)
-        assertEquals(Position(0, 2), coward.position)
+        assertEquals(Position(1, 1), coward.position)
         assertEquals(Position(2, 2), passive.position)
     }
 
