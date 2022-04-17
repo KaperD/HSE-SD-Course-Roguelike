@@ -10,6 +10,7 @@ import java.util.*
  */
 object ColorProperties {
     val landColor: Color
+    val grassColor: Color
     val waterColor: Color
     val fireColor: Color
     val stoneColor: Color
@@ -31,6 +32,7 @@ object ColorProperties {
         }
         fun String.loadColor(): Color = properties.getProperty(this).toColor()
         landColor = "color.land".loadColor()
+        grassColor = "color.grass".loadColor()
         waterColor = "color.water".loadColor()
         fireColor = "color.fire".loadColor()
         stoneColor = "color.stone".loadColor()

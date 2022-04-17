@@ -9,6 +9,7 @@ import java.util.*
  */
 object ViewProperties {
     val landSymbol: Char
+    val grassSymbol: Char
     val waterSymbol: Char
     val fireSymbol: Char
     val stoneSymbol: Char
@@ -25,6 +26,7 @@ object ViewProperties {
         }
         fun String.loadSymbol(): Char = properties.getProperty(this)[0]
         landSymbol = "symbol.land".loadSymbol()
+        grassSymbol = "symbol.grass".loadSymbol()
         waterSymbol = "symbol.water".loadSymbol()
         fireSymbol = "symbol.fire".loadSymbol()
         stoneSymbol = "symbol.stone".loadSymbol()

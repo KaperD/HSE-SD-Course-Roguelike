@@ -5,10 +5,12 @@ import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.GroundType.*
 import ru.hse.roguelike.model.creature.*
 import ru.hse.roguelike.model.creature.mob.*
+import ru.hse.roguelike.property.ColorProperties
 import ru.hse.roguelike.property.ColorProperties.aggressiveMobColor
 import ru.hse.roguelike.property.ColorProperties.borderColor
 import ru.hse.roguelike.property.ColorProperties.cowardMobColor
 import ru.hse.roguelike.property.ColorProperties.fireColor
+import ru.hse.roguelike.property.ColorProperties.grassColor
 import ru.hse.roguelike.property.ColorProperties.heroColor
 import ru.hse.roguelike.property.ColorProperties.highlightColor
 import ru.hse.roguelike.property.ColorProperties.itemColor
@@ -27,9 +29,11 @@ import ru.hse.roguelike.property.StringProperties.hero
 import ru.hse.roguelike.property.StringProperties.heroStats
 import ru.hse.roguelike.property.StringProperties.itemsCount
 import ru.hse.roguelike.property.StringProperties.type
+import ru.hse.roguelike.property.ViewProperties
 import ru.hse.roguelike.property.ViewProperties.aggressiveMobSymbol
 import ru.hse.roguelike.property.ViewProperties.cowardMobSymbol
 import ru.hse.roguelike.property.ViewProperties.fireSymbol
+import ru.hse.roguelike.property.ViewProperties.grassSymbol
 import ru.hse.roguelike.property.ViewProperties.heroSymbol
 import ru.hse.roguelike.property.ViewProperties.itemSymbol
 import ru.hse.roguelike.property.ViewProperties.landSymbol
@@ -139,6 +143,7 @@ class LanternaMapView(
 
     private fun GroundType.representation(): Pair<Char, Color> = when (this) {
         Land -> landSymbol to landColor
+        Grass -> grassSymbol to grassColor
         Water -> waterSymbol to waterColor
         Fire -> fireSymbol to fireColor
         Stone -> stoneSymbol to stoneColor

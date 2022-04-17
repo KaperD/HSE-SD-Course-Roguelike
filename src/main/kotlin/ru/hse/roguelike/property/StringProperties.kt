@@ -42,6 +42,7 @@ object StringProperties {
     val disposable: String
 
     val land: String
+    val grass: String
     val water: String
     val fire: String
     val stone: String
@@ -90,6 +91,7 @@ object StringProperties {
         disposable = "disposable".load()
 
         land = "land".load()
+        grass = "grass".load()
         water = "water".load()
         fire = "fire".load()
         stone = "stone".load()
