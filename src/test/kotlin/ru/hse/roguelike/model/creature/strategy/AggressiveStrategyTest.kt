@@ -15,7 +15,7 @@ internal class AggressiveStrategyTest {
     fun `test step towards hero`() {
         val gameField = GameField(createEmptyGameField(5))
         val aggressiveStrategy = AggressiveStrategy(10)
-        val mob = AggressiveMob(100, 100, 1, Position(1, 1), 10)
+        val mob = AggressiveMob(100, 100, 1, Position(1, 1), 10, "")
         val hero = Hero(100, 100, 1, Position(4, 3), mutableListOf())
         gameField.get(mob.position).creature = mob
         gameField.get(hero.position).creature = hero
@@ -29,7 +29,7 @@ internal class AggressiveStrategyTest {
     fun `test hero is too far`() {
         val gameField = GameField(createEmptyGameField(6))
         val aggressiveStrategy = AggressiveStrategy(1)
-        val mob = AggressiveMob(100, 100, 1, Position(1, 2), 1)
+        val mob = AggressiveMob(100, 100, 1, Position(1, 2), 1, "")
         val hero = Hero(100, 100, 1, Position(3, 2), mutableListOf())
         gameField.get(mob.position).creature = mob
         gameField.get(hero.position).creature = hero
@@ -40,7 +40,7 @@ internal class AggressiveStrategyTest {
     fun `test cannot see hero`() {
         val gameFieldList = createEmptyGameField(7)
         val aggressiveStrategy = AggressiveStrategy(10)
-        val mob = AggressiveMob(100, 100, 1, Position(0, 0), 10)
+        val mob = AggressiveMob(100, 100, 1, Position(0, 0), 10, "")
         val hero = Hero(100, 100, 1, Position(6, 0), mutableListOf())
         gameFieldList[1][0] = Cell(GroundType.Stone, mutableListOf(), null)
         gameFieldList[0][1] = Cell(GroundType.Stone, mutableListOf(), null)
@@ -55,7 +55,7 @@ internal class AggressiveStrategyTest {
     fun `test cannot reach hero`() {
         val gameFieldList = createEmptyGameField(4)
         val aggressiveStrategy = AggressiveStrategy(2)
-        val mob = AggressiveMob(100, 100, 1, Position(3, 3), 2)
+        val mob = AggressiveMob(100, 100, 1, Position(3, 3), 2, "")
         val hero = Hero(100, 100, 1, Position(2, 2), mutableListOf())
         gameFieldList[3][2] = Cell(GroundType.Water, mutableListOf(), null)
         gameFieldList[2][3] = Cell(GroundType.Water, mutableListOf(), null)
@@ -69,7 +69,7 @@ internal class AggressiveStrategyTest {
     fun `test mob on map 1x1`() {
         val gameField = GameField(createEmptyGameField(1))
         val aggressiveStrategy = AggressiveStrategy(10)
-        val mob = AggressiveMob(100, 100, 1, Position(0, 0), 10)
+        val mob = AggressiveMob(100, 100, 1, Position(0, 0), 10, "")
         gameField.get(mob.position).creature = mob
         assertEquals(Position(0, 0), aggressiveStrategy.move(gameField, mob))
     }

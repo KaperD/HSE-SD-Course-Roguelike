@@ -13,7 +13,8 @@ open class BaseMob protected constructor(
     attackDamage: Int,
     override var position: Position,
     override var moveStrategy: MoveStrategy,
-    override val mobType: MobType
+    override val mobType: MobType,
+    override val description: String
 ) : Mob {
 
     override var health: Int = health

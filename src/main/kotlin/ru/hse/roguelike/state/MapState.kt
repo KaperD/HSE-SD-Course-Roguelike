@@ -1,7 +1,9 @@
 package ru.hse.roguelike.state
 
-import ru.hse.roguelike.factory.GameFieldFactory
+import ru.hse.roguelike.factory.item.ItemFactory
+import ru.hse.roguelike.factory.mob.FantasyMobFactory
 import ru.hse.roguelike.input.InputType
+import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.GameModel
 import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.Position
@@ -22,7 +24,7 @@ class MapState(
     override val view: MapView,
     override val gameSound: GameSound,
     override val states: Map<InputType, State>,
-    private val gameFieldFactory: GameFieldFactory,
+    private val itemFactory: ItemFactory,
     private val gameProperties: GameProperties,
     private val gameOverState: State,
     private val victoryState: State,
@@ -123,7 +125,25 @@ class MapState(
 
     private fun moveToNextLevel() {
         val levelName = levelIterator.next()
-        val (field, mobs, heroPosition) = gameFieldFactory.generate()
+        val (field, mobs, heroPosition) = if (levelName == "?") {
+            GameField.builder()
+                .generateRandom()
+                .withWidth(gameProperties.mapWidth)
+                .withHeight(gameProperties.mapHeight)
+                .withItemFactory(itemFactory)
+                .withMobFactory(FantasyMobFactory())
+                .withNumberOfMobs(gameProperties.numberOfMobsOnRandomMap)
+                .withNumberOfItems(gameProperties.numberOfItemsOnRandomMap)
+                .build()
+        } else {
+            GameField.builder()
+                .loadFromFile(levelName)
+                .withWidth(gameProperties.mapWidth)
+                .withHeight(gameProperties.mapHeight)
+                .withItemFactory(itemFactory)
+                .withMobFactory(FantasyMobFactory())
+                .build()
+        }
         gameModel.hero.position = heroPosition
         gameModel.mobs = mobs
         field.get(heroPosition).creature = gameModel.hero

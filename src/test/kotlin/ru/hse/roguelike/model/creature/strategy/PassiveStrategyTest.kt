@@ -15,7 +15,7 @@ internal class PassiveStrategyTest {
         val height = 5
         val gameField = GameField(List(height) { List(width) { Cell(GroundType.Land, mutableListOf(), null) } })
         val strategy = PassiveStrategy()
-        val mob = PassiveMob(100, 100, 0, Position(2, 2))
+        val mob = PassiveMob(100, 100, 0, Position(2, 2), "")
         gameField.get(2, 2).creature = mob
         assertEquals(Position(2, 2), strategy.move(gameField, mob))
         assertEquals(mob, gameField.get(2, 2).creature)

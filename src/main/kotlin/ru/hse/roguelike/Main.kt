@@ -2,8 +2,7 @@ package ru.hse.roguelike
 
 import com.googlecode.lanterna.TerminalSize
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory
-import ru.hse.roguelike.factory.GameFieldFactoryImpl
-import ru.hse.roguelike.factory.ItemFactoryImpl
+import ru.hse.roguelike.factory.item.ItemFactoryImpl
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.input.LanternaGameInput
 import ru.hse.roguelike.model.GameField
@@ -43,7 +42,6 @@ fun main(args: Array<String>) {
         val inventoryView = LanternaInventoryView(window)
 
         val itemFactory = ItemFactoryImpl()
-        val gameFieldFactory = GameFieldFactoryImpl(mapWidth, mapHeight, itemFactory)
 
         val hero = Hero(
             gameProperties.initialHeroHealth,
@@ -68,7 +66,7 @@ fun main(args: Array<String>) {
             LanternaMapView(window, mapWidth, mapHeight),
             gameSound,
             states,
-            gameFieldFactory,
+            itemFactory,
             gameProperties,
             gameOverState,
             victoryState

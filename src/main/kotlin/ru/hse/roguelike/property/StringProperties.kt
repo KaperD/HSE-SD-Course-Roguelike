@@ -33,6 +33,7 @@ object StringProperties {
     val level: String
     val experienceForNextLevel: String
     val attackDamage: String
+    val description: String
 
     val head: String
     val body: String
@@ -47,6 +48,14 @@ object StringProperties {
     val fire: String
     val stone: String
     val levelEnd: String
+
+    val dragonDescription: String
+    val skeletonDescription: String
+    val magicianDescription: String
+
+    val poisonousMoldDescription: String
+    val frogDescription: String
+    val crocodileDescription: String
 
     val gameOver: String
     val victory: String
@@ -82,6 +91,7 @@ object StringProperties {
         level = "level".load()
         experienceForNextLevel = "experience.for.next.level".load()
         attackDamage = "attack.damage".load()
+        description = "description".load()
 
         head = "head".load()
         body = "body".load()
@@ -96,6 +106,14 @@ object StringProperties {
         fire = "fire".load()
         stone = "stone".load()
         levelEnd = "level.end".load()
+
+        dragonDescription = "dragon.description".load()
+        skeletonDescription = "skeleton.description".load()
+        magicianDescription = "magician.description".load()
+
+        poisonousMoldDescription = "poisonous.mold.description".load()
+        frogDescription = "frog.description".load()
+        crocodileDescription = "crocodile.description".load()
 
         gameOver = "game.over".load()
         victory = "victory".load()

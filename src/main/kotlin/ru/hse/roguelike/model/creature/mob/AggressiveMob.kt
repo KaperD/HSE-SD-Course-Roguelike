@@ -8,5 +8,6 @@ class AggressiveMob(
     maximumHealth: Int,
     attackDamage: Int,
     position: Position,
-    vision: Int
-) : BaseMob(health, maximumHealth, attackDamage, position, AggressiveStrategy(vision), MobType.Aggressive)
+    vision: Int,
+    description: String
+) : BaseMob(health, maximumHealth, attackDamage, position, AggressiveStrategy(vision), MobType.Aggressive, description)

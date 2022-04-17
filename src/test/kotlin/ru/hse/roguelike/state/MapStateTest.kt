@@ -5,8 +5,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import ru.hse.roguelike.factory.GameFieldFactoryImpl
-import ru.hse.roguelike.factory.ItemFactoryImpl
+import ru.hse.roguelike.factory.item.ItemFactoryImpl
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.model.*
 import ru.hse.roguelike.model.creature.Hero
@@ -31,7 +30,7 @@ internal class MapStateTest {
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val anotherState = mockk<State>()
-        val gameFieldFactory = GameFieldFactoryImpl(2, 2, ItemFactoryImpl())
+        val itemFactory = ItemFactoryImpl()
         val gameProperties = GamePropertiesImpl()
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
@@ -40,7 +39,7 @@ internal class MapStateTest {
             mapView,
             gameSound,
             mapOf(InputType.I to anotherState),
-            gameFieldFactory,
+            itemFactory,
             gameProperties,
             gameOverState,
             victoryState
@@ -97,10 +96,12 @@ internal class MapStateTest {
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val anotherState = mockk<State>()
-        val gameFieldFactory = GameFieldFactoryImpl(2, 2, ItemFactoryImpl())
+        val itemFactory = ItemFactoryImpl()
         val gameProperties = mockk<GameProperties>()
         every { gameProperties.fireDamage } returns 1
         every { gameProperties.levelsOrder } returns listOf("a")
+        every { gameProperties.mapWidth } returns 2
+        every { gameProperties.mapHeight } returns 2
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
         val mapState = MapState(
@@ -108,7 +109,7 @@ internal class MapStateTest {
             mapView,
             gameSound,
             mapOf(InputType.I to anotherState),
-            gameFieldFactory,
+            itemFactory,
             gameProperties,
             gameOverState,
             victoryState
@@ -147,10 +148,12 @@ internal class MapStateTest {
         val gameModel = GameModel(initField, mutableListOf(), hero)
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
-        val gameFieldFactory = GameFieldFactoryImpl(2, 2, ItemFactoryImpl())
+        val itemFactory = ItemFactoryImpl()
         val gameProperties = mockk<GameProperties>()
         every { gameProperties.fireDamage } returns fireDamage
         every { gameProperties.levelsOrder } returns listOf("a")
+        every { gameProperties.mapWidth } returns 2
+        every { gameProperties.mapHeight } returns 2
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
         val mapState = MapState(
@@ -158,7 +161,7 @@ internal class MapStateTest {
             mapView,
             gameSound,
             mapOf(),
-            gameFieldFactory,
+            itemFactory,
             gameProperties,
             gameOverState,
             victoryState
@@ -183,9 +186,11 @@ internal class MapStateTest {
         val gameModel = GameModel(initField, mutableListOf(), hero)
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
-        val gameFieldFactory = GameFieldFactoryImpl(2, 2, ItemFactoryImpl())
+        val itemFactory = ItemFactoryImpl()
         val gameProperties = mockk<GameProperties>(relaxed = true)
         every { gameProperties.levelsOrder } returns listOf("empty_land")
+        every { gameProperties.mapWidth } returns 2
+        every { gameProperties.mapHeight } returns 2
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
         val mapState = MapState(
@@ -193,7 +198,7 @@ internal class MapStateTest {
             mapView,
             gameSound,
             mapOf(),
-            gameFieldFactory,
+            itemFactory,
             gameProperties,
             gameOverState,
             victoryState
@@ -266,9 +271,10 @@ internal class MapStateTest {
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val itemFactory = ItemFactoryImpl()
-        val gameFieldFactory = GameFieldFactoryImpl(2, 2, itemFactory)
         val gameProperties = mockk<GameProperties>(relaxed = true)
         every { gameProperties.levelsOrder } returns listOf("a")
+        every { gameProperties.mapWidth } returns 2
+        every { gameProperties.mapHeight } returns 2
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
         val mapState = MapState(
@@ -276,7 +282,7 @@ internal class MapStateTest {
             mapView,
             gameSound,
             mapOf(),
-            gameFieldFactory,
+            itemFactory,
             gameProperties,
             gameOverState,
             victoryState
@@ -308,10 +314,11 @@ internal class MapStateTest {
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val itemFactory = ItemFactoryImpl()
-        val gameFieldFactory = GameFieldFactoryImpl(4, 3, itemFactory)
         val gameProperties = mockk<GameProperties>(relaxed = true)
         every { gameProperties.levelsOrder } returns listOf("with_mobs")
         every { gameProperties.confusionTime } returns 0
+        every { gameProperties.mapWidth } returns 4
+        every { gameProperties.mapHeight } returns 3
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
         val mapState = MapState(
@@ -319,7 +326,7 @@ internal class MapStateTest {
             mapView,
             gameSound,
             mapOf(),
-            gameFieldFactory,
+            itemFactory,
             gameProperties,
             gameOverState,
             victoryState
@@ -346,16 +353,17 @@ internal class MapStateTest {
 
     @Test
     fun `test map mode attack`() {
-        val hero = Hero(1000, 1000, 10, Position(0, 0), mutableListOf())
+        val hero = Hero(1000, 1000, 1000, Position(0, 0), mutableListOf())
         val initField = GameField(listOf())
         val gameModel = GameModel(initField, mutableListOf(), hero)
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val itemFactory = ItemFactoryImpl()
-        val gameFieldFactory = GameFieldFactoryImpl(5, 3, itemFactory)
         val gameProperties = mockk<GameProperties>(relaxed = true)
         every { gameProperties.levelsOrder } returns listOf("attack")
         every { gameProperties.confusionTime } returns 0
+        every { gameProperties.mapWidth } returns 5
+        every { gameProperties.mapHeight } returns 3
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
         val mapState = MapState(
@@ -363,7 +371,7 @@ internal class MapStateTest {
             mapView,
             gameSound,
             mapOf(),
-            gameFieldFactory,
+            itemFactory,
             gameProperties,
             gameOverState,
             victoryState
@@ -385,8 +393,8 @@ internal class MapStateTest {
         assertEquals(1, gameModel.mobs.size)
 
         mapState.handleInput(StateProperties.moveRight)
-        assertEquals(hero.maximumHealth - coward.attackDamage - passive.attackDamage - 2 * aggressive.attackDamage, hero.health)
-        assertEquals(aggressive.maximumHealth - 2 * hero.attackDamage, aggressive.health)
+        assertEquals(hero.maximumHealth - coward.attackDamage - passive.attackDamage - aggressive.attackDamage, hero.health)
+        assertEquals(aggressive.maximumHealth - hero.attackDamage, aggressive.health)
     }
 
     @Test
@@ -397,10 +405,11 @@ internal class MapStateTest {
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val itemFactory = ItemFactoryImpl()
-        val gameFieldFactory = GameFieldFactoryImpl(3, 3, itemFactory)
         val gameProperties = mockk<GameProperties>(relaxed = true)
         every { gameProperties.levelsOrder } returns listOf("confuse")
         every { gameProperties.confusionTime } returns 2
+        every { gameProperties.mapWidth } returns 3
+        every { gameProperties.mapHeight } returns 3
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
         val mapState = MapState(
@@ -408,7 +417,7 @@ internal class MapStateTest {
             mapView,
             gameSound,
             mapOf(),
-            gameFieldFactory,
+            itemFactory,
             gameProperties,
             gameOverState,
             victoryState

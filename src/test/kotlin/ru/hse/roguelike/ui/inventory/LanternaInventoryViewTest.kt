@@ -4,7 +4,7 @@ import com.googlecode.lanterna.TextCharacter
 import com.googlecode.lanterna.graphics.BasicTextImage
 import io.mockk.*
 import org.junit.jupiter.api.Test
-import ru.hse.roguelike.factory.ItemFactoryImpl
+import ru.hse.roguelike.factory.item.ItemFactoryImpl
 import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.property.ColorProperties

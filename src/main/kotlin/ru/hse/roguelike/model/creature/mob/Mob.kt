@@ -20,6 +20,11 @@ interface Mob : Creature {
     var moveStrategy: MoveStrategy
 
     /**
+     * Описание моба
+     */
+    val description: String
+
+    /**
      * Делает 1 ход
      * @param gameField игровое поле, на котором находится моб
      *

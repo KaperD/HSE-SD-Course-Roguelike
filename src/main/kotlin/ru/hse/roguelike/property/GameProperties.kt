@@ -20,6 +20,8 @@ interface GameProperties {
     val fireDamage: Int
     val levelsOrder: List<String>
     val confusionTime: Int
+    val numberOfItemsOnRandomMap: Int
+    val numberOfMobsOnRandomMap: Int
 }
 
 /**
@@ -42,6 +44,8 @@ class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : Game
     override val fireDamage: Int
     override val levelsOrder: List<String>
     override val confusionTime: Int
+    override val numberOfItemsOnRandomMap: Int
+    override val numberOfMobsOnRandomMap: Int
 
     init {
         val properties = Properties().apply {
@@ -62,5 +66,7 @@ class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : Game
         fireDamage = "fire.damage".loadInt()
         levelsOrder = properties.getProperty("levels.order").split(",")
         confusionTime = "confusion.time".loadInt()
+        numberOfItemsOnRandomMap = "number.of.items.on.random.map".loadInt()
+        numberOfMobsOnRandomMap = "number.of.mobs.on.random.map".loadInt()
     }
 }

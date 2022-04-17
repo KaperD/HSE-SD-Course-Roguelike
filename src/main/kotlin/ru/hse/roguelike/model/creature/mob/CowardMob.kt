@@ -8,5 +8,6 @@ class CowardMob(
     maximumHealth: Int,
     attackDamage: Int,
     position: Position,
-    vision: Int
-) : BaseMob(health, maximumHealth, attackDamage, position, CowardStrategy(vision), MobType.Coward)
+    vision: Int,
+    description: String
+) : BaseMob(health, maximumHealth, attackDamage, position, CowardStrategy(vision), MobType.Coward, description)

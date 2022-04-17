@@ -16,7 +16,7 @@ internal class CowardStrategyTest {
     fun `test hero is too far`() {
         val gameField = GameField(createEmptyGameField(5))
         val cowardStrategy = CowardStrategy(2)
-        val mob = CowardMob(100, 100, 1, Position(0, 0), 2)
+        val mob = CowardMob(100, 100, 1, Position(0, 0), 2, "")
         val hero = Hero(100, 100, 1, Position(4, 4), mutableListOf())
         gameField.get(mob.position).creature = mob
         gameField.get(hero.position).creature = hero
@@ -29,7 +29,7 @@ internal class CowardStrategyTest {
     fun `test step away from hero`() {
         val gameField = GameField(createEmptyGameField(10))
         val cowardStrategy = CowardStrategy(5)
-        val mob = CowardMob(100, 100, 1, Position(4, 4), 5)
+        val mob = CowardMob(100, 100, 1, Position(4, 4), 5, "")
         val hero = Hero(100, 100, 1, Position(5, 7), mutableListOf())
         gameField.get(mob.position).creature = mob
         gameField.get(hero.position).creature = hero
@@ -41,7 +41,7 @@ internal class CowardStrategyTest {
     fun  `test cannot see hero`() {
         val gameFieldList = createEmptyGameField(10)
         val cowardStrategy = CowardStrategy(5)
-        val mob = CowardMob(100, 100, 1, Position(4, 4), 5)
+        val mob = CowardMob(100, 100, 1, Position(4, 4), 5, "")
         val hero = Hero(100, 100, 1, Position(5, 7), mutableListOf())
         gameFieldList[3][4] = Cell(GroundType.Stone, mutableListOf(), null)
         gameFieldList[5][4] = Cell(GroundType.Stone, mutableListOf(), null)
@@ -58,7 +58,7 @@ internal class CowardStrategyTest {
     fun  `test better to stay `() {
         val gameFieldList = createEmptyGameField(10)
         val cowardStrategy = CowardStrategy(6)
-        val mob = CowardMob(100, 100, 1, Position(2, 2), 6)
+        val mob = CowardMob(100, 100, 1, Position(2, 2), 6, "")
         val hero = Hero(100, 100, 1, Position(4, 2), mutableListOf())
         gameFieldList[2][1] = Cell(GroundType.Water, mutableListOf(), null)
         gameFieldList[1][2] = Cell(GroundType.Water, mutableListOf(), null)
@@ -74,7 +74,7 @@ internal class CowardStrategyTest {
     fun `test mob in a corner and hero on the same column`() {
         val gameField = GameField(createEmptyGameField(10))
         val cowardStrategy = CowardStrategy(6)
-        val mob = CowardMob(100, 100, 1, Position(0, 0), 6)
+        val mob = CowardMob(100, 100, 1, Position(0, 0), 6, "")
         val hero = Hero(100, 100, 1, Position(0, 5), mutableListOf())
         gameField.get(mob.position).creature = mob
         gameField.get(hero.position).creature = hero
