@@ -2,6 +2,7 @@ package ru.hse.roguelike.state
 
 import ru.hse.roguelike.factory.item.ItemFactory
 import ru.hse.roguelike.factory.mob.FantasyMobFactory
+import ru.hse.roguelike.factory.mob.SwampMobFactory
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.GameModel
@@ -124,14 +125,18 @@ class MapState(
     }
 
     private fun moveToNextLevel() {
-        val levelName = levelIterator.next()
+        val (levelName, mobsType) = levelIterator.next()
+        val mobsFactory = when (mobsType) {
+            "fantasy" -> FantasyMobFactory()
+            else -> SwampMobFactory()
+        }
         val (field, mobs, heroPosition) = if (levelName == "?") {
             GameField.builder()
                 .generateRandom()
                 .withWidth(gameProperties.mapWidth)
                 .withHeight(gameProperties.mapHeight)
                 .withItemFactory(itemFactory)
-                .withMobFactory(FantasyMobFactory())
+                .withMobFactory(mobsFactory)
                 .withNumberOfMobs(gameProperties.numberOfMobsOnRandomMap)
                 .withNumberOfItems(gameProperties.numberOfItemsOnRandomMap)
                 .build()
@@ -141,7 +146,7 @@ class MapState(
                 .withWidth(gameProperties.mapWidth)
                 .withHeight(gameProperties.mapHeight)
                 .withItemFactory(itemFactory)
-                .withMobFactory(FantasyMobFactory())
+                .withMobFactory(mobsFactory)
                 .build()
         }
         gameModel.hero.position = heroPosition
