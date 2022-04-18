@@ -43,16 +43,31 @@ class GameField(
     fun get(position: Position): Cell = field[position.y][position.x]
 
     companion object {
+        /**
+         * Builder игрового поля
+         */
         fun builder() = FieldBuilder()
     }
 }
 
+/**
+ * Builder игрового поля
+ */
 class FieldBuilder {
+    /**
+     * Сгенерировать случайное игровое поле
+     */
     fun generateRandom() = RandomFieldBuilder()
 
+    /**
+     * Загрузить поле из файла
+     */
     fun loadFromFile(levelName: String) = FileFieldBuilder(levelName)
 }
 
+/**
+ * Базовый builder игрового поля
+ */
 sealed class BaseFieldBuilder {
     protected var width: Int? = null
     protected var height: Int? = null

@@ -8,6 +8,9 @@ import ru.hse.roguelike.model.creature.mob.PassiveMob
 import ru.hse.roguelike.model.creature.mob.decorator.CloneMobDecorator
 import ru.hse.roguelike.property.StringProperties
 
+/**
+ * Создает мобов, которые живут в болоте
+ */
 class SwampMobFactory : MobFactory {
 
     override fun createCoward(position: Position): Mob {

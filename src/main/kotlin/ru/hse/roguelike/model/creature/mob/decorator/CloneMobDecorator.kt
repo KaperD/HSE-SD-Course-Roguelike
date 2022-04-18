@@ -5,9 +5,9 @@ import ru.hse.roguelike.model.creature.mob.Mob
 import kotlin.random.Random
 
 /**
- * Декоратор, который иногда клонирует моба
+ * Декоратор, который при каждом ходе с вероятностью [cloneProbability] клонирует моба
  *
- * @param baseMob   Моб, на которого будет навешан декоратор
+ * @param baseMob Моб, на которого будет навешан декоратор
  */
 class CloneMobDecorator(
     private val baseMob: Mob,

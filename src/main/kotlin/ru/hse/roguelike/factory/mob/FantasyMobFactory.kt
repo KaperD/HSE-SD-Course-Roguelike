@@ -7,6 +7,9 @@ import ru.hse.roguelike.model.creature.mob.Mob
 import ru.hse.roguelike.model.creature.mob.PassiveMob
 import ru.hse.roguelike.property.StringProperties
 
+/**
+ * Создает мобов в фентезийном стиле
+ */
 class FantasyMobFactory : MobFactory {
 
     override fun createCoward(position: Position): Mob {
