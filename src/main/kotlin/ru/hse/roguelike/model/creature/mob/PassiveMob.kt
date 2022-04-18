@@ -9,4 +9,7 @@ class PassiveMob(
     attackDamage: Int,
     position: Position,
     description: String
-) : BaseMob(health, maximumHealth, attackDamage, position, PassiveStrategy(), MobType.Passive, description)
+) : BaseMob(health, maximumHealth, attackDamage, position, PassiveStrategy(), MobType.Passive, description) {
+
+    override fun clone(): Mob = PassiveMob(health, maximumHealth, attackDamage, position, description)
+}

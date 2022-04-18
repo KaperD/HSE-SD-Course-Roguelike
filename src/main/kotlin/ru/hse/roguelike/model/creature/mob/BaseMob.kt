@@ -7,7 +7,7 @@ import kotlin.math.min
 /**
  * Базовый класс для мобов
  */
-open class BaseMob protected constructor(
+abstract class BaseMob(
     health: Int,
     maximumHealth: Int,
     attackDamage: Int,

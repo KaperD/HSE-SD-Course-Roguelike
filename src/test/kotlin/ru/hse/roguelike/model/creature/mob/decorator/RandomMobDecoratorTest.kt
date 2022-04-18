@@ -22,22 +22,22 @@ internal class RandomMobDecoratorTest {
         val field = GameField(List(2) { List(2) { Cell(GroundType.Land, mutableListOf(), null) } })
         field.get(0, 0).creature = mobState
 
-        mobState = mobState.move(field)
+        mobState = mobState.move(field).first()
         assertIs<PassiveMob>(mobState)
         assertEquals(position, mobState.position)
 
         mobState = RandomMobDecorator(mobState, 2)
-        mobState = mobState.move(field)
+        mobState = mobState.move(field).first()
         assertIs<RandomMobDecorator>(mobState)
         assertNotEquals(Position(0, 0), mobState.position)
 
         position = mobState.position
-        mobState = mobState.move(field)
+        mobState = mobState.move(field).first()
         assertIs<PassiveMob>(mobState)
         assertNotEquals(position, mobState.position)
 
         position = mobState.position
-        mobState = mobState.move(field)
+        mobState = mobState.move(field).first()
         assertIs<PassiveMob>(mobState)
         assertEquals(position, mobState.position)
     }

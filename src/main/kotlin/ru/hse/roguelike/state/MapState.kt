@@ -82,15 +82,17 @@ class MapState(
                     else -> {}
                 }
             }
-            gameModel.mobs = gameModel.mobs.mapNotNull {
-                val newMobState = it.move(gameModel.field)
-                if (newMobState.health <= 0) {
-                    increaseHeroExperienceBy(gameProperties.mobKillExperience)
-                    gameModel.field.get(newMobState.position).creature = null
-                    null
-                } else {
-                    gameModel.field.get(newMobState.position).creature = newMobState
-                    newMobState
+            gameModel.mobs = gameModel.mobs.flatMap {
+                val newMobsStates = it.move(gameModel.field)
+                newMobsStates.mapNotNull { newMobState ->
+                    if (newMobState.health <= 0) {
+                        increaseHeroExperienceBy(gameProperties.mobKillExperience)
+                        gameModel.field.get(newMobState.position).creature = null
+                        null
+                    } else {
+                        gameModel.field.get(newMobState.position).creature = newMobState
+                        newMobState
+                    }
                 }
             }
             drawWholeField()

@@ -8,6 +8,17 @@ class AggressiveMob(
     maximumHealth: Int,
     attackDamage: Int,
     position: Position,
-    vision: Int,
+    private val vision: Int,
     description: String
-) : BaseMob(health, maximumHealth, attackDamage, position, AggressiveStrategy(vision), MobType.Aggressive, description)
+) : BaseMob(
+    health,
+    maximumHealth,
+    attackDamage,
+    position,
+    AggressiveStrategy(vision),
+    MobType.Aggressive,
+    description
+) {
+
+    override fun clone(): Mob = AggressiveMob(health, maximumHealth, attackDamage, position, vision, description)
+}

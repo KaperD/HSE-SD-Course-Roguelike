@@ -11,7 +11,7 @@ import kotlin.random.Random
  * (текущая позиция героя не рассматривается)
  * @param seed Сид для инициализации случайности
  */
-class RandomStrategy(seed: Int = 0) : MoveStrategy {
+class RandomStrategy(seed: Int = Random.nextInt()) : MoveStrategy {
     private val rand = Random(seed)
     override fun move(gameField: GameField, mob: Mob): Position {
         val availableNextPositions = getAvailableNextPositions(gameField, mob.position)

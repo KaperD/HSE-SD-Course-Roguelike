@@ -12,7 +12,7 @@ import ru.hse.roguelike.model.creature.strategy.RandomStrategy
  * @param baseMob   Моб, на которого будет навешан декоратор
  * @param timeLimit Количество шагов, в пределах которых декоратор будет действовать на моба
  */
-class RandomMobDecorator(baseMob: Mob, private var timeLimit: Int) : MobDecorator(baseMob) {
+class RandomMobDecorator(private val baseMob: Mob, private var timeLimit: Int) : MobDecorator(baseMob) {
     private val oldMoveStrategy: MoveStrategy = baseMob.moveStrategy
 
     init {
@@ -20,14 +20,14 @@ class RandomMobDecorator(baseMob: Mob, private var timeLimit: Int) : MobDecorato
         baseMob.moveStrategy = RandomStrategy()
     }
 
-    override fun move(gameField: GameField): Mob {
+    override fun move(gameField: GameField): List<Mob> {
         val movedMob = super.move(gameField)
         timeLimit -= 1
         return if (timeLimit == 0) {
-            movedMob.moveStrategy = oldMoveStrategy
+            movedMob.find { it == baseMob }?.moveStrategy = oldMoveStrategy
             movedMob
         } else {
-            this
+            movedMob.map { if (it == baseMob) this else it }
         }
     }
 }

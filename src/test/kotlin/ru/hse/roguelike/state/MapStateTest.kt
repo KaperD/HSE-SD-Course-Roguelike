@@ -315,7 +315,7 @@ internal class MapStateTest {
         val gameSound = mockk<GameSound>(relaxed = true)
         val itemFactory = ItemFactoryImpl()
         val gameProperties = mockk<GameProperties>(relaxed = true)
-        every { gameProperties.levelsOrder } returns listOf("with_mobs" to "")
+        every { gameProperties.levelsOrder } returns listOf("with_mobs" to "fantasy")
         every { gameProperties.confusionTime } returns 0
         every { gameProperties.mapWidth } returns 4
         every { gameProperties.mapHeight } returns 3
@@ -360,7 +360,7 @@ internal class MapStateTest {
         val gameSound = mockk<GameSound>(relaxed = true)
         val itemFactory = ItemFactoryImpl()
         val gameProperties = mockk<GameProperties>(relaxed = true)
-        every { gameProperties.levelsOrder } returns listOf("attack" to "")
+        every { gameProperties.levelsOrder } returns listOf("attack" to "fantasy")
         every { gameProperties.confusionTime } returns 0
         every { gameProperties.mapWidth } returns 5
         every { gameProperties.mapHeight } returns 3

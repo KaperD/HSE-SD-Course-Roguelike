@@ -5,6 +5,7 @@ import ru.hse.roguelike.model.creature.mob.AggressiveMob
 import ru.hse.roguelike.model.creature.mob.CowardMob
 import ru.hse.roguelike.model.creature.mob.Mob
 import ru.hse.roguelike.model.creature.mob.PassiveMob
+import ru.hse.roguelike.model.creature.mob.decorator.CloneMobDecorator
 import ru.hse.roguelike.property.StringProperties
 
 class SwampMobFactory : MobFactory {
@@ -27,13 +28,15 @@ class SwampMobFactory : MobFactory {
         val poisonousMoldHealth = 50
         val poisonousMoldAttackDamage = 5
         val poisonousMoldVision = 4
-        return AggressiveMob(
-            poisonousMoldHealth,
-            poisonousMoldHealth,
-            poisonousMoldAttackDamage,
-            position,
-            poisonousMoldVision,
-            StringProperties.poisonousMoldDescription
+        return CloneMobDecorator(
+            AggressiveMob(
+                poisonousMoldHealth,
+                poisonousMoldHealth,
+                poisonousMoldAttackDamage,
+                position,
+                poisonousMoldVision,
+                StringProperties.poisonousMoldDescription
+            )
         )
     }
 
