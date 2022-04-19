@@ -5,6 +5,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import ru.hse.roguelike.controller.MapController
 import ru.hse.roguelike.factory.item.ItemFactoryImpl
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.model.*
@@ -34,15 +35,13 @@ internal class MapStateTest {
         val gameProperties = GamePropertiesImpl()
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
+        val mapController = MapController(gameModel, mapView, gameSound, itemFactory, gameProperties)
         val mapState = MapState(
-            gameModel,
-            mapView,
-            gameSound,
-            mapOf(InputType.I to anotherState),
-            itemFactory,
-            gameProperties,
+            mapController,
             gameOverState,
-            victoryState
+            victoryState,
+            gameSound,
+            mapOf(InputType.I to anotherState)
         )
 
         val aField = gameModel.field
@@ -104,15 +103,13 @@ internal class MapStateTest {
         every { gameProperties.mapHeight } returns 2
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
+        val mapController = MapController(gameModel, mapView, gameSound, itemFactory, gameProperties)
         val mapState = MapState(
-            gameModel,
-            mapView,
-            gameSound,
-            mapOf(InputType.I to anotherState),
-            itemFactory,
-            gameProperties,
+            mapController,
             gameOverState,
-            victoryState
+            victoryState,
+            gameSound,
+            mapOf(InputType.I to anotherState)
         )
 
         val aField = gameModel.field
@@ -156,15 +153,13 @@ internal class MapStateTest {
         every { gameProperties.mapHeight } returns 2
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
+        val mapController = MapController(gameModel, mapView, gameSound, itemFactory, gameProperties)
         val mapState = MapState(
-            gameModel,
-            mapView,
-            gameSound,
-            mapOf(),
-            itemFactory,
-            gameProperties,
+            mapController,
             gameOverState,
-            victoryState
+            victoryState,
+            gameSound,
+            mapOf()
         )
 
         mapState.activate()
@@ -193,15 +188,13 @@ internal class MapStateTest {
         every { gameProperties.mapHeight } returns 2
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
+        val mapController = MapController(gameModel, mapView, gameSound, itemFactory, gameProperties)
         val mapState = MapState(
-            gameModel,
-            mapView,
-            gameSound,
-            mapOf(),
-            itemFactory,
-            gameProperties,
+            mapController,
             gameOverState,
-            victoryState
+            victoryState,
+            gameSound,
+            mapOf()
         )
 
         mapState.activate()
@@ -277,15 +270,13 @@ internal class MapStateTest {
         every { gameProperties.mapHeight } returns 2
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
+        val mapController = MapController(gameModel, mapView, gameSound, itemFactory, gameProperties)
         val mapState = MapState(
-            gameModel,
-            mapView,
-            gameSound,
-            mapOf(),
-            itemFactory,
-            gameProperties,
+            mapController,
             gameOverState,
-            victoryState
+            victoryState,
+            gameSound,
+            mapOf()
         )
 
         mapState.activate()
@@ -321,15 +312,13 @@ internal class MapStateTest {
         every { gameProperties.mapHeight } returns 3
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
+        val mapController = MapController(gameModel, mapView, gameSound, itemFactory, gameProperties)
         val mapState = MapState(
-            gameModel,
-            mapView,
-            gameSound,
-            mapOf(),
-            itemFactory,
-            gameProperties,
+            mapController,
             gameOverState,
-            victoryState
+            victoryState,
+            gameSound,
+            mapOf()
         )
 
         mapState.activate()
@@ -366,15 +355,13 @@ internal class MapStateTest {
         every { gameProperties.mapHeight } returns 3
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
+        val mapController = MapController(gameModel, mapView, gameSound, itemFactory, gameProperties)
         val mapState = MapState(
-            gameModel,
-            mapView,
-            gameSound,
-            mapOf(),
-            itemFactory,
-            gameProperties,
+            mapController,
             gameOverState,
-            victoryState
+            victoryState,
+            gameSound,
+            mapOf()
         )
 
         mapState.activate()
@@ -412,15 +399,13 @@ internal class MapStateTest {
         every { gameProperties.mapHeight } returns 3
         val gameOverState = mockk<State>()
         val victoryState = mockk<State>()
+        val mapController = MapController(gameModel, mapView, gameSound, itemFactory, gameProperties)
         val mapState = MapState(
-            gameModel,
-            mapView,
-            gameSound,
-            mapOf(),
-            itemFactory,
-            gameProperties,
+            mapController,
             gameOverState,
-            victoryState
+            victoryState,
+            gameSound,
+            mapOf()
         )
 
         mapState.activate()

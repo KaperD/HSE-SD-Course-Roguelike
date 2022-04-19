@@ -4,6 +4,7 @@ import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import ru.hse.roguelike.controller.MapFreeModeController
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.model.*
 import ru.hse.roguelike.model.creature.Hero
@@ -26,7 +27,8 @@ internal class MapFreeModeStateTest {
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val anotherState = mockk<State>()
-        val mapFreeModeState = MapFreeModeState(gameModel, mapView, gameSound, mapOf(InputType.I to anotherState))
+        val mapFreeModeController = MapFreeModeController(gameModel, mapView, gameSound)
+        val mapFreeModeState = MapFreeModeState(mapFreeModeController, gameSound, mapOf(InputType.I to anotherState))
 
         mapFreeModeState.activate()
         verify { mapView.set(0, 0, field.get(0, 0)) }
@@ -86,7 +88,8 @@ internal class MapFreeModeStateTest {
         val gameModel = GameModel(field, mutableListOf(), hero)
         val mapView = mockk<MapView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
-        val mapFreeModeState = MapFreeModeState(gameModel, mapView, gameSound, mapOf())
+        val mapFreeModeController = MapFreeModeController(gameModel, mapView, gameSound)
+        val mapFreeModeState = MapFreeModeState(mapFreeModeController, gameSound, mapOf())
         mapFreeModeState.activate()
 
         mapFreeModeState.handleInput(StateProperties.freeModeCursorUp)

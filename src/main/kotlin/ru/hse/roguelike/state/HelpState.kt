@@ -10,7 +10,7 @@ import ru.hse.roguelike.ui.message.MessageView
  * Показывает назначение клавиш
  */
 class HelpState(
-    override val view: MessageView,
+    val view: MessageView,
     override val gameSound: GameSound,
     override val states: Map<InputType, State>
 ) : State() {

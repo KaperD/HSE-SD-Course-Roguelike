@@ -10,7 +10,7 @@ import ru.hse.roguelike.ui.message.MessageView
  * Из данного состояния нельзя перейти ни в какие другие
  */
 class GameOverState(
-    override val view: MessageView,
+    val view: MessageView,
     override val gameSound: GameSound
 ) : State() {
     override val states: Map<InputType, State> = emptyMap()

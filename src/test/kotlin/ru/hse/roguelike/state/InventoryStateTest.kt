@@ -4,6 +4,7 @@ import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import ru.hse.roguelike.controller.InventoryController
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.creature.Hero
@@ -25,7 +26,8 @@ internal class InventoryStateTest {
         val inventoryView = mockk<InventoryView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
         val anotherState = mockk<State>()
-        val inventoryState = InventoryState(hero, inventoryView, gameSound, mapOf(InputType.M to anotherState))
+        val inventoryController = InventoryController(hero, inventoryView, gameSound)
+        val inventoryState = InventoryState(inventoryController, gameSound, mapOf(InputType.M to anotherState))
 
         inventoryState.activate()
         verify { inventoryView.setHeroStats(hero) }
@@ -69,7 +71,8 @@ internal class InventoryStateTest {
         val hero = Hero(100, 100, 10, Position(0, 0), mutableListOf(item1, item2))
         val inventoryView = mockk<InventoryView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
-        val inventoryState = InventoryState(hero, inventoryView, gameSound, mapOf())
+        val inventoryController = InventoryController(hero, inventoryView, gameSound)
+        val inventoryState = InventoryState(inventoryController, gameSound, mapOf())
 
         inventoryState.activate()
         verify { inventoryView.setHeroStats(hero) }
@@ -119,7 +122,8 @@ internal class InventoryStateTest {
         val hero = Hero(100, 104, 10, Position(0, 0), mutableListOf(item1, item2, item3, item4))
         val inventoryView = mockk<InventoryView>(relaxed = true)
         val gameSound = mockk<GameSound>(relaxed = true)
-        val inventoryState = InventoryState(hero, inventoryView, gameSound, mapOf())
+        val inventoryController = InventoryController(hero, inventoryView, gameSound)
+        val inventoryState = InventoryState(inventoryController, gameSound, mapOf())
 
         inventoryState.activate()
 
