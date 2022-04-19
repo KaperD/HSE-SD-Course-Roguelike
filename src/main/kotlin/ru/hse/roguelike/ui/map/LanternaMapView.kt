@@ -117,11 +117,10 @@ class LanternaMapView(
         else -> throw IllegalStateException("Unknown creature type")
     }
 
-    private fun Mob.type(): String = when (this) {
-        is CowardMob -> StringProperties.coward
-        is AggressiveMob -> StringProperties.aggressive
-        is PassiveMob -> StringProperties.passive
-        else -> throw IllegalStateException("Unknown mob type")
+    private fun Mob.type(): String = when (mobType) {
+        MobType.Coward -> StringProperties.coward
+        MobType.Aggressive -> StringProperties.aggressive
+        MobType.Passive -> StringProperties.passive
     }
 
     private fun Cell.representation(): Pair<Char, Color> = when {
