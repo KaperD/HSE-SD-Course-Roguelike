@@ -5,6 +5,7 @@ import ru.hse.roguelike.model.creature.mob.AggressiveMob
 import ru.hse.roguelike.model.creature.mob.CowardMob
 import ru.hse.roguelike.model.creature.mob.Mob
 import ru.hse.roguelike.model.creature.mob.PassiveMob
+import ru.hse.roguelike.model.creature.mob.state.OrdinaryMobState
 import ru.hse.roguelike.property.StringProperties
 
 /**
@@ -16,13 +17,17 @@ class FantasyMobFactory : MobFactory {
         val skeletonHealth = 100
         val skeletonAttackDamage = 10
         val skeletonVision = 4
+        val skeletonHealthThreshold = 20
+        val skeletonPassiveHeal = 5
         return CowardMob(
             skeletonHealth,
             skeletonHealth,
             skeletonAttackDamage,
             position,
             skeletonVision,
-            StringProperties.skeletonDescription
+            StringProperties.skeletonDescription,
+            OrdinaryMobState(skeletonHealthThreshold),
+            skeletonPassiveHeal
         )
     }
 
@@ -30,25 +35,33 @@ class FantasyMobFactory : MobFactory {
         val dragonHealth = 150
         val dragonAttackDamage = 16
         val dragonVision = 6
+        val dragonHealthThreshold = 20
+        val dragonPassiveHeal = 6
         return AggressiveMob(
             dragonHealth,
             dragonHealth,
             dragonAttackDamage,
             position,
             dragonVision,
-            StringProperties.dragonDescription
+            StringProperties.dragonDescription,
+            OrdinaryMobState(dragonHealthThreshold),
+            dragonPassiveHeal
         )
     }
 
     override fun createPassive(position: Position): Mob {
         val magicianHealth = 150
         val magicianAttackDamage = 16
+        val magicianHealthThreshold = 20
+        val magicianPassiveHeal = 6
         return PassiveMob(
             magicianHealth,
             magicianHealth,
             magicianAttackDamage,
             position,
-            StringProperties.magicianDescription
+            StringProperties.magicianDescription,
+            OrdinaryMobState(magicianHealthThreshold),
+            magicianPassiveHeal
         )
     }
 }

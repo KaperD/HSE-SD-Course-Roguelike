@@ -95,6 +95,7 @@ class MapController(
                 }
                 if (gameProperties.confusionTime > 0) {
                     val confusedCreature = RandomMobDecorator(newCellCreature, gameProperties.confusionTime)
+                    newCell.creature = confusedCreature
                     gameModel.mobs = gameModel.mobs.map { if (it == newCellCreature) confusedCreature else it }
                 }
             } else {

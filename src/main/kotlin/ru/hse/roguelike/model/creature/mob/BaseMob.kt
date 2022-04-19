@@ -1,6 +1,7 @@
 package ru.hse.roguelike.model.creature.mob
 
 import ru.hse.roguelike.model.Position
+import ru.hse.roguelike.model.creature.mob.state.MobState
 import ru.hse.roguelike.model.creature.strategy.MoveStrategy
 import kotlin.math.min
 
@@ -12,9 +13,11 @@ abstract class BaseMob(
     maximumHealth: Int,
     attackDamage: Int,
     override var position: Position,
+    override var state: MobState,
     override var moveStrategy: MoveStrategy,
     override val mobType: MobType,
-    override val description: String
+    override val description: String,
+    override var passiveHeal: Int
 ) : Mob {
 
     override var health: Int = health
