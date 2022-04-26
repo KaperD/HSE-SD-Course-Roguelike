@@ -8,7 +8,10 @@ import org.junit.jupiter.api.Test
 import ru.hse.roguelike.controller.MapController
 import ru.hse.roguelike.factory.item.ItemFactoryImpl
 import ru.hse.roguelike.input.InputType
-import ru.hse.roguelike.model.*
+import ru.hse.roguelike.model.GameField
+import ru.hse.roguelike.model.GameModel
+import ru.hse.roguelike.model.GroundType
+import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.model.creature.mob.AggressiveMob
 import ru.hse.roguelike.model.creature.mob.CowardMob
@@ -19,7 +22,10 @@ import ru.hse.roguelike.property.GamePropertiesImpl
 import ru.hse.roguelike.property.StateProperties
 import ru.hse.roguelike.sound.GameSound
 import ru.hse.roguelike.ui.map.MapView
-import kotlin.test.*
+import kotlin.test.assertContentEquals
+import kotlin.test.assertEquals
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 internal class MapStateTest {
 
@@ -380,7 +386,10 @@ internal class MapStateTest {
         assertEquals(1, gameModel.mobs.size)
 
         mapState.handleInput(StateProperties.moveRight)
-        assertEquals(hero.maximumHealth - coward.attackDamage - passive.attackDamage - aggressive.attackDamage, hero.health)
+        assertEquals(
+            hero.maximumHealth - coward.attackDamage - passive.attackDamage - aggressive.attackDamage,
+            hero.health
+        )
         assertEquals(aggressive.maximumHealth - hero.attackDamage, aggressive.health)
     }
 
@@ -421,5 +430,42 @@ internal class MapStateTest {
         assertIs<PassiveMob>(gameModel.mobs[0])
 
         assertTrue(position1 != Position(1, 2) || position2 != Position(1, 2))
+    }
+
+    @Test
+    fun `test mobs passive heal`() {
+        val hero = Hero(1000, 1000, 10, Position(1, 1), mutableListOf())
+        val initField = GameField(listOf())
+        val gameModel = GameModel(initField, mutableListOf(), hero)
+        val mapView = mockk<MapView>(relaxed = true)
+        val gameSound = mockk<GameSound>(relaxed = true)
+        val itemFactory = ItemFactoryImpl()
+        val gameProperties = mockk<GameProperties>(relaxed = true)
+        every { gameProperties.levelsOrder } returns listOf("passive_heal" to "")
+        every { gameProperties.confusionTime } returns 0
+        every { gameProperties.mapWidth } returns 3
+        every { gameProperties.mapHeight } returns 3
+        val gameOverState = mockk<State>()
+        val victoryState = mockk<State>()
+        val mapController = MapController(gameModel, mapView, gameSound, itemFactory, gameProperties)
+        val mapState = MapState(
+            mapController,
+            gameOverState,
+            victoryState,
+            gameSound,
+            mapOf()
+        )
+
+        mapState.activate()
+
+        val mob = gameModel.mobs.first()
+
+        assertEquals(mob.health, mob.maximumHealth)
+        mapState.handleInput(InputType.ArrowRight)
+        assertTrue(mob.health < mob.maximumHealth)
+        val health = mob.health
+
+        mapState.handleInput(InputType.ArrowLeft)
+        assertEquals(health + mob.passiveHeal, mob.health)
     }
 }
