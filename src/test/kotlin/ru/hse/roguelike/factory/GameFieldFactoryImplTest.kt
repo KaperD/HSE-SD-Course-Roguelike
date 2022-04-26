@@ -1,9 +1,12 @@
 package ru.hse.roguelike.factory
 
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.Position
+import ru.hse.roguelike.model.creature.mob.Mob
+import ru.hse.roguelike.model.creature.mob.MobType
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -15,16 +18,13 @@ internal class GameFieldFactoryImplTest {
         val width = 3
         val height = 2
         val factory = GameFieldFactoryImpl(width, height, ItemFactoryImpl())
-        val (field, heroPosition) = factory.getByLevelName("test")
+        val (field, mobs, heroPosition) = factory.getByLevelName("test")
 
         assertEquals(width, field.width)
         assertEquals(height, field.height)
 
-        for (y in 0 until height) {
-            for (x in 0 until width) {
-                assertNull(field.get(x, y).creature)
-            }
-        }
+        assertEquals(listOf(MobType.Coward, MobType.Passive, MobType.Aggressive), mobs.map { it.mobType })
+        assertTrue { mobs.all { it.health == 100 && it.maximumHealth == 100 } }
 
         assertEquals(GroundType.Land, field.get(0, 0).groundType)
         assertEquals(GroundType.Land, field.get(1, 0).groundType)
@@ -34,6 +34,12 @@ internal class GameFieldFactoryImplTest {
         assertEquals(GroundType.LevelEnd, field.get(2, 1).groundType)
         assertTrue(field.get(0, 0).items.isNotEmpty())
         assertEquals("healing_salve", field.get(0, 1).items.first().id)
+        assertEquals(null, field.get(0, 0).creature as? Mob)
+        assertEquals(MobType.Coward, (field.get(1, 0).creature as Mob).mobType)
+        assertEquals(null, field.get(2, 0).creature as? Mob)
+        assertEquals(MobType.Aggressive, (field.get(0, 1).creature as Mob).mobType)
+        assertEquals(null, field.get(1, 1).creature as? Mob)
+        assertEquals(MobType.Passive, (field.get(2, 1).creature as Mob).mobType)
 
         assertEquals(Position(1, 0), heroPosition)
     }

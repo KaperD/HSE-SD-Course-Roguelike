@@ -92,7 +92,7 @@ internal class LanternaInventoryViewTest {
 
     @Test
     fun `test set chosen item`() {
-        val width = 51
+        val width = 101
         val height = 51
         val baseImage = Image(BasicTextImage(width, height))
         val image = slot<Image>()
@@ -106,7 +106,7 @@ internal class LanternaInventoryViewTest {
         val itemFactory = ItemFactoryImpl()
         val item1 = itemFactory.getById("javelin")
         val item2 = itemFactory.getById("tango")
-        item2.apply(Hero(10, 100, Position(0, 0), mutableListOf(item2)))
+        item2.apply(Hero(10, 100, 10, Position(0, 0), mutableListOf(item2)))
         inventoryView.setItems(listOf(item1, item2), 0)
         inventoryView.show()
         verify { window.show(baseImage) }
@@ -153,7 +153,7 @@ internal class LanternaInventoryViewTest {
                     ColorProperties.titleColor.textColor,
                     ColorProperties.defaultColor.textColor
                 )[0],
-                image.captured.getCharacterAt(26 + i, 26)
+                image.captured.getCharacterAt(51 + i, 26)
             )
         }
         for ((i, c) in "${StringProperties.itemType} = ${item2.itemType}".withIndex()) {
@@ -163,7 +163,7 @@ internal class LanternaInventoryViewTest {
                     ColorProperties.textColor.textColor,
                     ColorProperties.defaultColor.textColor
                 )[0],
-                image.captured.getCharacterAt(26 + i, 27)
+                image.captured.getCharacterAt(51 + i, 27)
             )
         }
     }
@@ -179,7 +179,7 @@ internal class LanternaInventoryViewTest {
         every { window.show(capture(image)) } answers { }
 
         val inventoryView = LanternaInventoryView(window)
-        val hero = Hero(90, 100, Position(0, 0), mutableListOf())
+        val hero = Hero(90, 100, 10, Position(0, 0), mutableListOf())
         inventoryView.setHeroStats(hero)
         inventoryView.show()
 

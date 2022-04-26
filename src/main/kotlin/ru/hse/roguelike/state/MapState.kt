@@ -5,6 +5,8 @@ import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.model.GameModel
 import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.Position
+import ru.hse.roguelike.model.creature.mob.Mob
+import ru.hse.roguelike.model.creature.mob.decorator.RandomMobDecorator
 import ru.hse.roguelike.property.GameProperties
 import ru.hse.roguelike.property.StateProperties
 import ru.hse.roguelike.sound.GameSound
@@ -45,24 +47,50 @@ class MapState(
 
     private fun tryMoveHeroTo(x: Int, y: Int): State {
         return if (canMoveHeroTo(x, y)) {
-            moveHeroTo(x, y)
             val newCell = gameModel.field.get(x, y)
-            if (newCell.items.isNotEmpty()) {
-                hero.items.addAll(newCell.items)
-                newCell.items.clear()
-            }
-            when (newCell.groundType) {
-                GroundType.Fire -> hero.health -= gameProperties.fireDamage
-                GroundType.LevelEnd -> {
-                    if (levelIterator.hasNext()) {
-                        moveToNextLevel()
-                        drawWholeField()
-                    } else {
-                        return victoryState
-                    }
+            val newCellCreature = newCell.creature
+            if (newCellCreature is Mob) {
+                newCellCreature.health -= hero.attackDamage
+                hero.health -= newCellCreature.attackDamage
+                if (newCellCreature.health <= 0) {
+                    increaseHeroExperienceBy(gameProperties.mobKillExperience)
+                    newCell.creature = null
+                    gameModel.mobs = gameModel.mobs.filter { it != newCellCreature }
                 }
-                else -> {}
+                if (gameProperties.confusionTime > 0) {
+                    val confusedCreature = RandomMobDecorator(newCellCreature, gameProperties.confusionTime)
+                    gameModel.mobs = gameModel.mobs.map { if (it == newCellCreature) confusedCreature else it }
+                }
+            } else {
+                moveHeroTo(x, y)
+                if (newCell.items.isNotEmpty()) {
+                    hero.items.addAll(newCell.items)
+                    newCell.items.clear()
+                }
+                when (newCell.groundType) {
+                    GroundType.Fire -> hero.health -= gameProperties.fireDamage
+                    GroundType.LevelEnd -> {
+                        if (levelIterator.hasNext()) {
+                            moveToNextLevel()
+                        } else {
+                            return victoryState
+                        }
+                    }
+                    else -> {}
+                }
             }
+            gameModel.mobs = gameModel.mobs.mapNotNull {
+                val newMobState = it.move(gameModel.field)
+                if (newMobState.health <= 0) {
+                    increaseHeroExperienceBy(gameProperties.mobKillExperience)
+                    gameModel.field.get(newMobState.position).creature = null
+                    null
+                } else {
+                    gameModel.field.get(newMobState.position).creature = newMobState
+                    newMobState
+                }
+            }
+            drawWholeField()
             drawHeroStats()
             if (heroIsDead()) {
                 gameOverState
@@ -75,35 +103,43 @@ class MapState(
         }
     }
 
+    private fun increaseHeroExperienceBy(amount: Int) {
+        hero.experienceForNextLevel -= amount
+        if (hero.experienceForNextLevel <= 0) {
+            val extraExperience = -hero.experienceForNextLevel
+            val levelChange = 1 + extraExperience / gameProperties.newLevelExperienceAmount
+            val restExtraExperience = extraExperience % gameProperties.newLevelExperienceAmount
+            hero.experienceForNextLevel = gameProperties.newLevelExperienceAmount - restExtraExperience
+            hero.level += levelChange
+            hero.health += gameProperties.newLevelHealthChange * levelChange
+            hero.maximumHealth += gameProperties.newLevelMaximumHealthChange * levelChange
+            hero.attackDamage += gameProperties.newLevelAttackDamageChange * levelChange
+        }
+    }
+
     private fun heroIsDead(): Boolean {
         return hero.health <= 0
     }
 
     private fun moveToNextLevel() {
         val levelName = levelIterator.next()
-        val (field, heroPosition) = gameFieldFactory.getByLevelName(levelName)
+        val (field, mobs, heroPosition) = gameFieldFactory.getByLevelName(levelName)
         gameModel.hero.position = heroPosition
+        gameModel.mobs = mobs
         field.get(heroPosition).creature = gameModel.hero
         gameModel.field = field
     }
 
     private fun moveHeroTo(x: Int, y: Int) {
-        val (oldHeroX, oldHeroY) = hero.position
         gameModel.field.get(hero.position).creature = null
         hero.position = Position(x, y)
         gameModel.field.get(hero.position).creature = hero
-        drawCell(oldHeroX, oldHeroY)
-        drawCell(x, y)
     }
 
     private fun canMoveHeroTo(x: Int, y: Int): Boolean {
         return x in 0 until gameModel.field.width &&
             y in 0 until gameModel.field.height &&
-            gameModel.field.get(x, y).groundType in passableGroundTypes
-    }
-
-    private fun drawCell(x: Int, y: Int) {
-        view.set(x, y, gameModel.field.get(x, y))
+            gameModel.field.get(x, y).groundType.isPassable
     }
 
     private fun drawHeroStats() {
@@ -117,9 +153,5 @@ class MapState(
                 view.set(x, y, field.get(x, y))
             }
         }
-    }
-
-    companion object {
-        private val passableGroundTypes = setOf(GroundType.LevelEnd, GroundType.Land, GroundType.Fire)
     }
 }

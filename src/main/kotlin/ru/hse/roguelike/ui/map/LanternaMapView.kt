@@ -3,18 +3,22 @@ package ru.hse.roguelike.ui.map
 import ru.hse.roguelike.model.Cell
 import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.GroundType.*
-import ru.hse.roguelike.model.creature.Creature
-import ru.hse.roguelike.model.creature.Hero
+import ru.hse.roguelike.model.creature.*
+import ru.hse.roguelike.model.creature.mob.*
+import ru.hse.roguelike.property.ColorProperties.aggressiveMobColor
 import ru.hse.roguelike.property.ColorProperties.borderColor
+import ru.hse.roguelike.property.ColorProperties.cowardMobColor
 import ru.hse.roguelike.property.ColorProperties.fireColor
 import ru.hse.roguelike.property.ColorProperties.heroColor
 import ru.hse.roguelike.property.ColorProperties.highlightColor
 import ru.hse.roguelike.property.ColorProperties.itemColor
 import ru.hse.roguelike.property.ColorProperties.landColor
 import ru.hse.roguelike.property.ColorProperties.levelEndColor
+import ru.hse.roguelike.property.ColorProperties.passiveMobColor
 import ru.hse.roguelike.property.ColorProperties.stoneColor
 import ru.hse.roguelike.property.ColorProperties.waterColor
 import ru.hse.roguelike.property.StringProperties
+import ru.hse.roguelike.property.StringProperties.attackDamage
 import ru.hse.roguelike.property.StringProperties.cellInfo
 import ru.hse.roguelike.property.StringProperties.cellType
 import ru.hse.roguelike.property.StringProperties.creatureInfo
@@ -23,11 +27,14 @@ import ru.hse.roguelike.property.StringProperties.hero
 import ru.hse.roguelike.property.StringProperties.heroStats
 import ru.hse.roguelike.property.StringProperties.itemsCount
 import ru.hse.roguelike.property.StringProperties.type
+import ru.hse.roguelike.property.ViewProperties.aggressiveMobSymbol
+import ru.hse.roguelike.property.ViewProperties.cowardMobSymbol
 import ru.hse.roguelike.property.ViewProperties.fireSymbol
 import ru.hse.roguelike.property.ViewProperties.heroSymbol
 import ru.hse.roguelike.property.ViewProperties.itemSymbol
 import ru.hse.roguelike.property.ViewProperties.landSymbol
 import ru.hse.roguelike.property.ViewProperties.levelEndSymbol
+import ru.hse.roguelike.property.ViewProperties.passiveMobSymbol
 import ru.hse.roguelike.property.ViewProperties.stoneSymbol
 import ru.hse.roguelike.property.ViewProperties.waterSymbol
 import ru.hse.roguelike.ui.Color
@@ -69,7 +76,10 @@ class LanternaMapView(
         infoImage.drawText {
             appendTitle("$heroStats:")
             appendLine("$health = ${hero.health}/${hero.maximumHealth}")
+            appendLine("$attackDamage = ${hero.attackDamage}")
             appendLine("$itemsCount = ${hero.items.size}")
+            appendLine("${StringProperties.level} = ${hero.level}")
+            appendLine("${StringProperties.experienceForNextLevel} = ${hero.experienceForNextLevel}")
         }
     }
 
@@ -95,13 +105,32 @@ class LanternaMapView(
         is Hero -> """
             $type = $hero
             ${StringProperties.health} = $health/$maximumHealth
+            ${StringProperties.attackDamage} = $attackDamage
+            $itemsCount = ${items.size}
+            ${StringProperties.level} = $level
+        """.trimIndent()
+        is Mob -> """
+            $type = ${type()}
+            ${StringProperties.health} = $health/$maximumHealth
+            ${StringProperties.attackDamage} = $attackDamage
         """.trimIndent()
         else -> throw IllegalStateException("Unknown creature type")
     }
 
+    private fun Mob.type(): String = when (mobType) {
+        MobType.Coward -> StringProperties.coward
+        MobType.Aggressive -> StringProperties.aggressive
+        MobType.Passive -> StringProperties.passive
+    }
+
     private fun Cell.representation(): Pair<Char, Color> = when {
-        creature != null -> when (creature) {
+        creature != null -> when (val creature = creature) {
             is Hero -> heroSymbol to heroColor
+            is Mob -> when (creature.mobType) {
+                MobType.Coward -> cowardMobSymbol to cowardMobColor
+                MobType.Aggressive -> aggressiveMobSymbol to aggressiveMobColor
+                MobType.Passive -> passiveMobSymbol to passiveMobColor
+            }
             else -> throw IllegalStateException("Unknown creature type")
         }
         items.isNotEmpty() -> itemSymbol to itemColor

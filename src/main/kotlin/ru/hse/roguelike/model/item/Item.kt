@@ -17,6 +17,7 @@ sealed class Item {
     abstract val isUsed: Boolean
     abstract val healthChange: Int
     abstract val maximumHealthChange: Int
+    abstract val attackDamageChange: Int
 
     /**
      * Проверяет возможность применить данный предмет к герою
@@ -33,6 +34,7 @@ sealed class Item {
         require(canApply(hero)) { "Can't apply item" }
         hero.maximumHealth = max(1, hero.maximumHealth + maximumHealthChange)
         hero.health = max(1, hero.health + healthChange)
+        hero.attackDamage += attackDamageChange
     }
 
     /**
@@ -43,6 +45,7 @@ sealed class Item {
     open fun cancel(hero: Hero) {
         hero.health = max(1, hero.health - healthChange)
         hero.maximumHealth = max(1, hero.maximumHealth - maximumHealthChange)
+        hero.attackDamage -= attackDamageChange
     }
 
     abstract fun clone(): Item

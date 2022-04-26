@@ -1,5 +1,5 @@
 # HSE-SD-Course-Roguelike
-[![codecov](https://codecov.io/gh/KaperD/HSE-SD-Course-Roguelike/branch/02-implementation/graph/badge.svg?token=N9JGE19CZV)](https://codecov.io/gh/KaperD/HSE-SD-Course-Roguelike)
+[![codecov](https://codecov.io/gh/KaperD/HSE-SD-Course-Roguelike/branch/03-mobs/graph/badge.svg?token=N9JGE19CZV)](https://codecov.io/gh/KaperD/HSE-SD-Course-Roguelike)
 
 ## Build and run
 We use `Gradle` as build system

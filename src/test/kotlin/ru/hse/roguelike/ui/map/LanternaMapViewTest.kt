@@ -40,8 +40,8 @@ internal class LanternaMapViewTest {
         mapView.set(3, 0, Cell(GroundType.Stone, mutableListOf(ReusableItem("id", "name", "desc", ItemType.Body)), null))
         mapView.set(0, 1, Cell(GroundType.Water, mutableListOf(), null))
         mapView.set(1, 1, Cell(GroundType.LevelEnd, mutableListOf(), null))
-        mapView.set(2, 1, Cell(GroundType.Fire, mutableListOf(ReusableItem("id", "name", "desc", ItemType.Body)), Hero(10, 100, Position(2, 1), mutableListOf())))
-        mapView.set(3, 1, Cell(GroundType.LevelEnd, mutableListOf(), Hero(10, 100, Position(2, 1), mutableListOf())))
+        mapView.set(2, 1, Cell(GroundType.Fire, mutableListOf(ReusableItem("id", "name", "desc", ItemType.Body)), Hero(10, 100, 10, Position(2, 1), mutableListOf())))
+        mapView.set(3, 1, Cell(GroundType.LevelEnd, mutableListOf(), Hero(10, 100, 10, Position(2, 1), mutableListOf())))
         mapView.show()
         verify { window.show(baseImage) }
         confirmVerified(window)
@@ -132,8 +132,8 @@ internal class LanternaMapViewTest {
         mapView.setHighlighted(3, 0, Cell(GroundType.Stone, mutableListOf(ReusableItem("id", "name", "desc", ItemType.Body)), null))
         mapView.setHighlighted(0, 1, Cell(GroundType.Water, mutableListOf(), null))
         mapView.setHighlighted(1, 1, Cell(GroundType.LevelEnd, mutableListOf(), null))
-        mapView.setHighlighted(2, 1, Cell(GroundType.Fire, mutableListOf(ReusableItem("id", "name", "desc", ItemType.Body)), Hero(10, 100, Position(2, 1), mutableListOf())))
-        mapView.setHighlighted(3, 1, Cell(GroundType.LevelEnd, mutableListOf(), Hero(10, 100, Position(2, 1), mutableListOf())))
+        mapView.setHighlighted(2, 1, Cell(GroundType.Fire, mutableListOf(ReusableItem("id", "name", "desc", ItemType.Body)), Hero(10, 100, 10, Position(2, 1), mutableListOf())))
+        mapView.setHighlighted(3, 1, Cell(GroundType.LevelEnd, mutableListOf(), Hero(10, 100, 10, Position(2, 1), mutableListOf())))
         mapView.show()
         verify { window.show(baseImage) }
         confirmVerified(window)
@@ -271,10 +271,10 @@ internal class LanternaMapViewTest {
         mapView.setCellInfo(Cell(GroundType.Land, mutableListOf(ReusableItem("id", "name", "desc", ItemType.Body)), null))
         mapView.show()
         check(GroundType.Land)
-        mapView.setCellInfo(Cell(GroundType.Land, mutableListOf(), Hero(10, 100, Position(0, 0), mutableListOf())))
+        mapView.setCellInfo(Cell(GroundType.Land, mutableListOf(), Hero(10, 100, 10, Position(0, 0), mutableListOf())))
         mapView.show()
         check(GroundType.Land)
-        mapView.setCellInfo(Cell(GroundType.Land, mutableListOf(ReusableItem("id", "name", "desc", ItemType.Body)), Hero(10, 100, Position(0, 0), mutableListOf())))
+        mapView.setCellInfo(Cell(GroundType.Land, mutableListOf(ReusableItem("id", "name", "desc", ItemType.Body)), Hero(10, 100, 10, Position(0, 0), mutableListOf())))
         mapView.show()
         check(GroundType.Land)
     }
@@ -314,7 +314,7 @@ internal class LanternaMapViewTest {
                     image.captured.getCharacterAt(5 + i, 1)
                 )
             }
-            for ((i, c) in "${StringProperties.itemsCount} = ${hero.items.size}".withIndex()) {
+            for ((i, c) in "${StringProperties.attackDamage} = ${hero.attackDamage}".withIndex()) {
                 assertEquals(
                     TextCharacter.fromCharacter(
                         c,
@@ -324,9 +324,19 @@ internal class LanternaMapViewTest {
                     image.captured.getCharacterAt(5 + i, 2)
                 )
             }
+            for ((i, c) in "${StringProperties.itemsCount} = ${hero.items.size}".withIndex()) {
+                assertEquals(
+                    TextCharacter.fromCharacter(
+                        c,
+                        ColorProperties.textColor.textColor,
+                        ColorProperties.defaultColor.textColor
+                    )[0],
+                    image.captured.getCharacterAt(5 + i, 3)
+                )
+            }
         }
 
-        val hero = Hero(10, 100, Position(0, 0), mutableListOf())
+        val hero = Hero(10, 100, 10, Position(0, 0), mutableListOf())
         mapView.setHeroStats(hero)
         mapView.show()
         check(hero)

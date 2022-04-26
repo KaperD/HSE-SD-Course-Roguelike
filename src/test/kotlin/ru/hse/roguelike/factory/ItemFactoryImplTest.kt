@@ -13,7 +13,7 @@ internal class ItemFactoryImplTest {
     @Test
     fun `test get by id returns copies`() {
         val factory = ItemFactoryImpl()
-        val hero = Hero(20, 100, Position(1, 1), mutableListOf())
+        val hero = Hero(20, 100, 10, Position(1, 1), mutableListOf())
         val id = factory.getRandom().id
         val first = factory.getById(id)
         val second = factory.getById(id)
@@ -34,7 +34,7 @@ internal class ItemFactoryImplTest {
     @Test
     fun `test get random returns copies`() {
         val factory = ItemFactoryImpl()
-        val hero = Hero(20, 100, Position(1, 1), mutableListOf())
+        val hero = Hero(20, 100, 10, Position(1, 1), mutableListOf())
         val first = factory.getRandom()
         val second: Item = run {
             var item = factory.getRandom()
