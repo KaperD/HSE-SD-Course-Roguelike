@@ -3,6 +3,6 @@
 ...
 ==
 ==
-1 2 1 5 passive
+1 2 passive
 ==
 1 1

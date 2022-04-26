@@ -1,7 +1,10 @@
 package ru.hse.roguelike.state
 
-import ru.hse.roguelike.factory.GameFieldFactory
+import ru.hse.roguelike.factory.item.ItemFactory
+import ru.hse.roguelike.factory.mob.FantasyMobFactory
+import ru.hse.roguelike.factory.mob.SwampMobFactory
 import ru.hse.roguelike.input.InputType
+import ru.hse.roguelike.model.GameField
 import ru.hse.roguelike.model.GameModel
 import ru.hse.roguelike.model.GroundType
 import ru.hse.roguelike.model.Position
@@ -22,7 +25,7 @@ class MapState(
     override val view: MapView,
     override val gameSound: GameSound,
     override val states: Map<InputType, State>,
-    private val gameFieldFactory: GameFieldFactory,
+    private val itemFactory: ItemFactory,
     private val gameProperties: GameProperties,
     private val gameOverState: State,
     private val victoryState: State,
@@ -79,15 +82,17 @@ class MapState(
                     else -> {}
                 }
             }
-            gameModel.mobs = gameModel.mobs.mapNotNull {
-                val newMobState = it.move(gameModel.field)
-                if (newMobState.health <= 0) {
-                    increaseHeroExperienceBy(gameProperties.mobKillExperience)
-                    gameModel.field.get(newMobState.position).creature = null
-                    null
-                } else {
-                    gameModel.field.get(newMobState.position).creature = newMobState
-                    newMobState
+            gameModel.mobs = gameModel.mobs.flatMap {
+                val newMobsStates = it.move(gameModel.field)
+                newMobsStates.mapNotNull { newMobState ->
+                    if (newMobState.health <= 0) {
+                        increaseHeroExperienceBy(gameProperties.mobKillExperience)
+                        gameModel.field.get(newMobState.position).creature = null
+                        null
+                    } else {
+                        gameModel.field.get(newMobState.position).creature = newMobState
+                        newMobState
+                    }
                 }
             }
             drawWholeField()
@@ -122,8 +127,30 @@ class MapState(
     }
 
     private fun moveToNextLevel() {
-        val levelName = levelIterator.next()
-        val (field, mobs, heroPosition) = gameFieldFactory.getByLevelName(levelName)
+        val (levelName, mobsType) = levelIterator.next()
+        val mobsFactory = when (mobsType) {
+            "fantasy" -> FantasyMobFactory()
+            else -> SwampMobFactory()
+        }
+        val (field, mobs, heroPosition) = if (levelName == "?") {
+            GameField.builder()
+                .generateRandom()
+                .withWidth(gameProperties.mapWidth)
+                .withHeight(gameProperties.mapHeight)
+                .withItemFactory(itemFactory)
+                .withMobFactory(mobsFactory)
+                .withNumberOfMobs(gameProperties.numberOfMobsOnRandomMap)
+                .withNumberOfItems(gameProperties.numberOfItemsOnRandomMap)
+                .build()
+        } else {
+            GameField.builder()
+                .loadFromFile(levelName)
+                .withWidth(gameProperties.mapWidth)
+                .withHeight(gameProperties.mapHeight)
+                .withItemFactory(itemFactory)
+                .withMobFactory(mobsFactory)
+                .build()
+        }
         gameModel.hero.position = heroPosition
         gameModel.mobs = mobs
         field.get(heroPosition).creature = gameModel.hero

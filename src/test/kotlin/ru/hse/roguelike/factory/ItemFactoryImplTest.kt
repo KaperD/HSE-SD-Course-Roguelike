@@ -2,6 +2,7 @@ package ru.hse.roguelike.factory
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import ru.hse.roguelike.factory.item.ItemFactoryImpl
 import ru.hse.roguelike.model.Position
 import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.model.item.Item

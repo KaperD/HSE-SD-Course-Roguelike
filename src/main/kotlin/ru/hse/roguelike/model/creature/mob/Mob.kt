@@ -20,15 +20,20 @@ interface Mob : Creature {
     var moveStrategy: MoveStrategy
 
     /**
+     * Описание моба
+     */
+    val description: String
+
+    /**
      * Делает 1 ход
      * @param gameField игровое поле, на котором находится моб
      *
-     * @return новое состояние моба
+     * @return новое состояние моба и, возможно, новые мобы
      */
-    fun move(gameField: GameField): Mob {
+    fun move(gameField: GameField): List<Mob> {
         val newPosition = moveStrategy.move(gameField, this)
         if (newPosition == position) {
-            return this
+            return listOf(this)
         }
         val oldCell = gameField.get(position)
         val newCell = gameField.get(newPosition)
@@ -41,8 +46,13 @@ interface Mob : Creature {
             newCell.creature = this
             position = newPosition
         }
-        return this
+        return listOf(this)
     }
+
+    /**
+     * Создает копию моба
+     */
+    fun clone(): Mob
 }
 
 enum class MobType {

@@ -7,13 +7,14 @@ import kotlin.math.min
 /**
  * Базовый класс для мобов
  */
-open class BaseMob protected constructor(
+abstract class BaseMob(
     health: Int,
     maximumHealth: Int,
     attackDamage: Int,
     override var position: Position,
     override var moveStrategy: MoveStrategy,
-    override val mobType: MobType
+    override val mobType: MobType,
+    override val description: String
 ) : Mob {
 
     override var health: Int = health

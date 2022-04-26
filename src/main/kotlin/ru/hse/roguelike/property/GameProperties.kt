@@ -18,8 +18,10 @@ interface GameProperties {
     val newLevelMaximumHealthChange: Int
     val newLevelAttackDamageChange: Int
     val fireDamage: Int
-    val levelsOrder: List<String>
+    val levelsOrder: List<Pair<String, String>>
     val confusionTime: Int
+    val numberOfItemsOnRandomMap: Int
+    val numberOfMobsOnRandomMap: Int
 }
 
 /**
@@ -40,8 +42,10 @@ class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : Game
     override val newLevelAttackDamageChange: Int
 
     override val fireDamage: Int
-    override val levelsOrder: List<String>
+    override val levelsOrder: List<Pair<String, String>>
     override val confusionTime: Int
+    override val numberOfItemsOnRandomMap: Int
+    override val numberOfMobsOnRandomMap: Int
 
     init {
         val properties = Properties().apply {
@@ -60,7 +64,11 @@ class GamePropertiesImpl(propertiesFileName: String = "/game.properties") : Game
         newLevelMaximumHealthChange = "new.level.maximum.health.change".loadInt()
         newLevelAttackDamageChange = "new.level.attack.damage.change".loadInt()
         fireDamage = "fire.damage".loadInt()
-        levelsOrder = properties.getProperty("levels.order").split(",")
+        levelsOrder = properties.getProperty("levels.order")
+            .split(",")
+            .map { it.split(" ", limit = 2).let { list -> list[0] to list.getOrElse(1) { "" } } }
         confusionTime = "confusion.time".loadInt()
+        numberOfItemsOnRandomMap = "number.of.items.on.random.map".loadInt()
+        numberOfMobsOnRandomMap = "number.of.mobs.on.random.map".loadInt()
     }
 }

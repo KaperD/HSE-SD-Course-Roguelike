@@ -1,4 +1,4 @@
-package ru.hse.roguelike.factory
+package ru.hse.roguelike.factory.item
 
 import ru.hse.roguelike.model.item.Item
 

@@ -8,5 +8,9 @@ class CowardMob(
     maximumHealth: Int,
     attackDamage: Int,
     position: Position,
-    vision: Int
-) : BaseMob(health, maximumHealth, attackDamage, position, CowardStrategy(vision), MobType.Coward)
+    private val vision: Int,
+    description: String
+) : BaseMob(health, maximumHealth, attackDamage, position, CowardStrategy(vision), MobType.Coward, description) {
+
+    override fun clone(): Mob = CowardMob(health, maximumHealth, attackDamage, position, vision, description)
+}

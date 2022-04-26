@@ -3,8 +3,8 @@
 .....
 ==
 ==
-4 1 1000 10 aggressive 6
-0 1 1 20 coward 6
-1 2 1 5 passive
+4 1 aggressive
+0 1 coward
+1 2 passive
 ==
 1 1

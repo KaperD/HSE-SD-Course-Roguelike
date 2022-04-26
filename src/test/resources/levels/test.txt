@@ -4,8 +4,8 @@
 0 0 ?
 0 1 healing_salve
 ==
-1 0 100 10 coward 6
-2 1 100 20 passive
-0 1 100 10 aggressive 6
+1 0 coward
+2 1 passive
+0 1 aggressive
 ==
 1 0

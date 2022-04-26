@@ -32,8 +32,8 @@
 43 12 healing_salve
 1 1 ?
 == Mobs
-4 22 100 10 coward 6
-10 22 100 10 aggressive 6
-13 22 100 10 passive
+4 22 coward
+10 22 aggressive
+13 22 passive
 == Hero position
 0 0

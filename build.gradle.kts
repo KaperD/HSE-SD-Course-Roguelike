@@ -16,6 +16,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.github.czyzby:noise4j:0.1.0")
     implementation("com.googlecode.lanterna:lanterna:3.1.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     testImplementation(kotlin("test"))
