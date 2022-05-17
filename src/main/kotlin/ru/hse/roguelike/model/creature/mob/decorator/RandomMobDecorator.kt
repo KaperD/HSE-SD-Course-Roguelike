@@ -1,8 +1,8 @@
 package ru.hse.roguelike.model.creature.mob.decorator
 
 import ru.hse.roguelike.model.GameField
+import ru.hse.roguelike.model.creature.Hero
 import ru.hse.roguelike.model.creature.mob.Mob
-import ru.hse.roguelike.model.creature.strategy.MoveStrategy
 import ru.hse.roguelike.model.creature.strategy.RandomStrategy
 
 /**
@@ -13,21 +13,32 @@ import ru.hse.roguelike.model.creature.strategy.RandomStrategy
  * @param timeLimit Количество шагов, в пределах которых декоратор будет действовать на моба
  */
 class RandomMobDecorator(private val baseMob: Mob, private var timeLimit: Int) : MobDecorator(baseMob) {
-    private val oldMoveStrategy: MoveStrategy = baseMob.moveStrategy
+    private val randomMoveStrategy = RandomStrategy()
 
     init {
         require(timeLimit > 0) { "Time limit must be positive: $timeLimit" }
-        baseMob.moveStrategy = RandomStrategy()
     }
 
     override fun move(gameField: GameField): List<Mob> {
-        val movedMob = super.move(gameField)
         timeLimit -= 1
+        val newPosition = randomMoveStrategy.move(gameField, this)
+        if (newPosition != position) {
+            val oldCell = gameField.get(position)
+            val newCell = gameField.get(newPosition)
+            val newCellCreature = newCell.creature
+            if (newCellCreature is Hero) {
+                newCellCreature.health -= attackDamage
+                health -= newCellCreature.attackDamage
+            } else {
+                oldCell.creature = null
+                newCell.creature = this
+                position = newPosition
+            }
+        }
         return if (timeLimit == 0) {
-            movedMob.find { it == baseMob }?.moveStrategy = oldMoveStrategy
-            movedMob
+            listOf(baseMob)
         } else {
-            movedMob.map { if (it == baseMob) this else it }
+            listOf(this)
         }
     }
 }

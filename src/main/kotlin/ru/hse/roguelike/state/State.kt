@@ -2,7 +2,6 @@ package ru.hse.roguelike.state
 
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.sound.GameSound
-import ru.hse.roguelike.ui.View
 
 /**
  * Состояние игры.
@@ -10,10 +9,6 @@ import ru.hse.roguelike.ui.View
  * что будет происходить при нажатии определенной кнопки пользователем.
  */
 abstract class State {
-    /**
-     * Сущность для вывода на экран
-     */
-    protected abstract val view: View
 
     /**
      * Сущность для создания звуков
@@ -39,9 +34,7 @@ abstract class State {
         val action = actionByInputType[type]
         val newState = states[type]
         return if (action != null) {
-            action().also {
-                view.show()
-            }
+            action()
         } else if (newState != null) {
             newState
         } else {

@@ -6,6 +6,7 @@ import ru.hse.roguelike.model.creature.mob.CowardMob
 import ru.hse.roguelike.model.creature.mob.Mob
 import ru.hse.roguelike.model.creature.mob.PassiveMob
 import ru.hse.roguelike.model.creature.mob.decorator.CloneMobDecorator
+import ru.hse.roguelike.model.creature.mob.state.OrdinaryMobState
 import ru.hse.roguelike.property.StringProperties
 
 /**
@@ -17,13 +18,17 @@ class SwampMobFactory : MobFactory {
         val frogHealth = 70
         val frogAttackDamage = 5
         val frogVision = 3
+        val frogHealthThreshold = 20
+        val frogPassiveHeal = 4
         return CowardMob(
             frogHealth,
             frogHealth,
             frogAttackDamage,
             position,
             frogVision,
-            StringProperties.frogDescription
+            StringProperties.frogDescription,
+            OrdinaryMobState(frogHealthThreshold),
+            frogPassiveHeal
         )
     }
 
@@ -31,6 +36,8 @@ class SwampMobFactory : MobFactory {
         val poisonousMoldHealth = 50
         val poisonousMoldAttackDamage = 5
         val poisonousMoldVision = 4
+        val poisonousHealthThreshold = 20
+        val poisonousPassiveHeal = 3
         return CloneMobDecorator(
             AggressiveMob(
                 poisonousMoldHealth,
@@ -38,7 +45,9 @@ class SwampMobFactory : MobFactory {
                 poisonousMoldAttackDamage,
                 position,
                 poisonousMoldVision,
-                StringProperties.poisonousMoldDescription
+                StringProperties.poisonousMoldDescription,
+                OrdinaryMobState(poisonousHealthThreshold),
+                poisonousPassiveHeal
             )
         )
     }
@@ -46,12 +55,16 @@ class SwampMobFactory : MobFactory {
     override fun createPassive(position: Position): Mob {
         val crocodileHealth = 150
         val crocodileAttackDamage = 30
+        val crocodileHealthThreshold = 40
+        val crocodilePassiveHeal = 5
         return PassiveMob(
             crocodileHealth,
             crocodileHealth,
             crocodileAttackDamage,
             position,
-            StringProperties.crocodileDescription
+            StringProperties.crocodileDescription,
+            OrdinaryMobState(crocodileHealthThreshold),
+            crocodilePassiveHeal
         )
     }
 }

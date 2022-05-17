@@ -2,6 +2,9 @@ package ru.hse.roguelike
 
 import com.googlecode.lanterna.TerminalSize
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory
+import ru.hse.roguelike.controller.InventoryController
+import ru.hse.roguelike.controller.MapController
+import ru.hse.roguelike.controller.MapFreeModeController
 import ru.hse.roguelike.factory.item.ItemFactoryImpl
 import ru.hse.roguelike.input.InputType
 import ru.hse.roguelike.input.LanternaGameInput
@@ -55,21 +58,27 @@ fun main(args: Array<String>) {
 
         val states = mutableMapOf<InputType, State>()
 
-        val inventoryState = InventoryState(hero, inventoryView, gameSound, states)
+        val inventoryController = InventoryController(hero, inventoryView, gameSound)
+        val inventoryState = InventoryState(inventoryController, gameSound, states)
         val helpState = HelpState(LanternaMessageView(window), gameSound, states)
-        val mapFreeModeState =
-            MapFreeModeState(gameModel, LanternaMapView(window, mapWidth, mapHeight), gameSound, states)
+        val mapFreeModeController =
+            MapFreeModeController(gameModel, LanternaMapView(window, mapWidth, mapHeight), gameSound)
+        val mapFreeModeState = MapFreeModeState(mapFreeModeController, gameSound, states)
         val gameOverState = GameOverState(LanternaMessageView(window), gameSound)
         val victoryState = VictoryState(LanternaMessageView(window), gameSound)
-        val mapState = MapState(
+        val mapController = MapController(
             gameModel,
             LanternaMapView(window, mapWidth, mapHeight),
             gameSound,
-            states,
             itemFactory,
-            gameProperties,
+            gameProperties
+        )
+        val mapState = MapState(
+            mapController,
             gameOverState,
-            victoryState
+            victoryState,
+            gameSound,
+            states
         )
 
         states.putAll(
